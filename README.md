@@ -1,3 +1,5 @@
-# Fabacti
+# Fabacti ®️
 
-Consultoria en tecnologías e información 
+Consultoria en tecnologías de la información 
+©️ 2026
+
