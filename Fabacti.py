@@ -1,7 +1,6 @@
 import datetime
 
 import streamlit as st
-import suds
 
 import suds.client
 
