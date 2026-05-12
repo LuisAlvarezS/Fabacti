@@ -14,6 +14,6 @@ if __name__ == '__main__':
     st.set_page_config(
         page_title="FABACTI",
         layout="wide",
-        initial_sidebar_state = "expanded",
-    )
+        initial_sidebar_state = "expanded"
+        )
     fabacti()
