@@ -18,9 +18,9 @@ FUENTESNOTICIAS = ['France24','DW Español','Xataka','ComputerHoy','Xataka.com',
                    'Eldiario.es','Jotdown.es','Elconfidencialdigital.com']
 
 st.write(ENCABEZADO)
-st.write(DERECHOSAUTOR)
 
-st.write(' :red[NOTICIAS] :registered: :blue[Noticias y novedades sobre tecnologías de la información y las comunicaciones] ')
+
+st.title(' :red[NOTICIAS] ')
 
 # Noticias
 tema = 'Colombia'
@@ -55,3 +55,4 @@ for i in range(1,totalarticulos):
             if contenido != None:
                 st.write(contenido)
         st.divider()
+st.write(DERECHOSAUTOR)
