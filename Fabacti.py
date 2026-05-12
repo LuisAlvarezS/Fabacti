@@ -2,8 +2,12 @@ import streamlit as st
 
 
 def fabacti():
-  st.write('Vamos para adelante con Fabacti con toda')
-  st.write('cambios')
+  # Encabezado
+  st.write(" :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]")
+  st.write(":copyright: 2024 Todos los derechos reservados de autor :red[FABACTI] :registered:")
+
+  st.write(' ... Vamos para adelante con Fabacti con toda ...')
+  st.write(' .. cambios ...')
 
 if __name__ == '__main__':
     st.set_page_config(
