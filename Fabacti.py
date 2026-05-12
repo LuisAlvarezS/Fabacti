@@ -10,7 +10,7 @@ def obtener_trm(fecha):
     URL_TRM = 'https://www.superfinanciera.gov.co/SuperfinancieraWebServiceTRM/TCRMServicesWebService/TCRMServicesWebService?WSDL'
 
     try:
-        client = Client(URL_TRM, location=co.URL_TRM, faults=True)
+        client = Client(URL_TRM, location = URL_TRM, faults=True)
         trm =  client.service.queryTCRM(fecha)
     except Exception as e:
         return str(e)
