@@ -2,7 +2,7 @@ import datetime
 
 import streamlit as st
 
-from suds.client import Client
+import suds.client
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm(fecha):
@@ -10,7 +10,7 @@ def obtener_trm(fecha):
     URL_TRM = 'https://www.superfinanciera.gov.co/SuperfinancieraWebServiceTRM/TCRMServicesWebService/TCRMServicesWebService?WSDL'
 
     try:
-        client = Client(URL_TRM, location = URL_TRM, faults=True)
+        client = suds.client.Client(URL_TRM, location = URL_TRM, faults=True)
         trm =  client.service.queryTCRM(fecha)
     except Exception as e:
         return str(e)
