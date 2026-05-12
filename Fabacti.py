@@ -4,7 +4,7 @@ import streamlit as st
 def fabacti():
   # Encabezado
   st.write(" :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]")
-  st.write(":copyright: 2024 Todos los derechos reservados de autor :red[FABACTI] :registered:")
+  st.write(":copyright: 2026 Todos los derechos reservados de autor :red[FABACTI] :registered:")
 
   st.write(' ... Vamos para adelante con Fabacti con toda ...')
   st.write(' .. cambios ...')
