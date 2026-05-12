@@ -2,7 +2,8 @@ import datetime
 
 import streamlit as st
 
-import suds.client
+import suds
+from datetime import datetime
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm(fecha):
