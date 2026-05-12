@@ -8,6 +8,7 @@ def fabacti():
 
   st.write(' ... Vamos para adelante con Fabacti con toda ...')
   st.write(' .. cambios ...')
+  st.write(' ... cambios 2 ...')
 
 if __name__ == '__main__':
     st.set_page_config(
