@@ -1,18 +1,22 @@
 
+import requests
 import streamlit as st
-from suds.client import Client
 from datetime import datetime
+
 import constantes as const
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm(fecha):
-    #URL de referencia para consulta de la TRM (Tasa Representativa del Mercado). Valor de referencia del dolar USA
-    URL_TRM = 'https://www.superfinanciera.gov.co/SuperfinancieraWebServiceTRM/TCRMServicesWebService/TCRMServicesWebService?WSDL'
-
-    try:
-        client = suds.client.Client(URL_TRM, location = URL_TRM, faults=True)
-        trm =  client.service.queryTCRM(fecha)
-    except Exception as e:
-        return str(e)
-    #trm = 3776.07
-    return trm[4}
+    # Realizar la solicitud
+    response = requests.get(const.URL_TRM, timeout=10)
+    response.raise_for_status()
+        
+    data = response.json()
+        
+    if not data:
+        #rint(f"No se encontró TRM para la fecha {fecha}")
+        return None
+    # Extraer valor y fecha
+    trm_valor = float(data[0]["valor"])
+    trm_fecha = data[0]["vigenciadesde"].split("T")[0]
+    return {"fecha": trm_fecha, "valor": trm_valor}

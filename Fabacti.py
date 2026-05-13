@@ -7,12 +7,12 @@ import constantes as const
 def fabacti():
   # Encabezado
   st.write(const.ENCABEZADO)
-  fecha = datetime.now()
-  trm = float(obtener_trm(fecha))
-  
-  ftrm = '${:,.2f} '.format(trm)
+  #fecha = datetime.now()
+  fecha = datetime.now().strftime("%Y-%m-%d")
+  trm = obtener_trm(fecha)  
+  #ftrm = '${:,.2f} '.format(trm)
 
-  st.write(f" :blue[La TRM del día {fecha.strftime('%d-%m-%Y')} es de :red[{ftrm}]]")
+  st.write(f"TRM {trm['fecha']}: ${trm['valor']:,.2f} COP/USD")
  
   st.write(' ...En construccion  ...')
 
