@@ -22,10 +22,10 @@ def fabacti():
   # Encabezado
   st.write(" :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]")
   fecha = datetime.now()
-  trm = float(obtener_trm(fecha))
-  ftrm = '${:,.2f} '.format(trm)
+  #trm = float(obtener_trm(fecha))
+  #ftrm = '${:,.2f} '.format(trm)
 
-  st.write(f" :blue[La TRM del día {fecha.strftime('%Y-%m-%d')} es de :red[{ftrm}]]")
+  #st.write(f" :blue[La TRM del día {fecha.strftime('%Y-%m-%d')} es de :red[{ftrm}]]")
  
   st.write(' ...En construccion  ...')
 
