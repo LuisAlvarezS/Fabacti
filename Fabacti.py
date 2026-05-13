@@ -13,7 +13,7 @@ def fabacti():
   ftrm = '${:,.2f} '.format(trm)
 
   #st.write(f"TRM ${trm['valor']:,.2f} COP/USD")
-  st.metric('**TRM  - Dólar**', ftrm, 0, border = False, width='stretch', height='content', chart_type='line',help=co.NOTASTRM)
+  st.metric('**TRM  - Dólar**', ftrm, 0, border = False, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
   st.write(' ...En construccion  ...')
 
   st.write(const.COPYRIGHT)
