@@ -1,6 +1,6 @@
 
 import streamlit as st
-import datetime
+from datetime import datetime
 from funciones import obtener_trm
 import constantes as const
 
