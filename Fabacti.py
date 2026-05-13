@@ -10,10 +10,10 @@ def fabacti():
   #fecha = datetime.now()
   fecha = datetime.now().strftime("%Y-%m-%d")
   trm = obtener_trm(fecha)  
-  #ftrm = '${:,.2f} '.format(trm)
+  ftrm = '${:,.2f} '.format(trm)
 
-  st.write(f"TRM {trm['fecha']}: ${trm['valor']:,.2f} COP/USD")
- 
+  #st.write(f"TRM ${trm['valor']:,.2f} COP/USD")
+  st.metric('**TRM  - Dólar**', ftrm, 0, border = False, width='stretch', height='content', chart_type='line',help=co.NOTASTRM)
   st.write(' ...En construccion  ...')
 
   st.write(const.COPYRIGHT)
