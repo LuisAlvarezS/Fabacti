@@ -2,12 +2,8 @@ import datetime
 
 import streamlit as st
 
-<<<<<<< HEAD
 #from suds.client import Client
 
-=======
-#import suds
->>>>>>> 96c15f7dd5b17a063f8dfc9089cbf7054c26485e
 from datetime import datetime
 
 # Funcion para consultar el TRM dada una fecha
@@ -28,8 +24,8 @@ def fabacti():
   # Encabezado
   st.write(" :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]")
   fecha = datetime.now()
-  #trm = float(obtener_trm(fecha))
-  trm = 3775.07
+  trm = float(obtener_trm(fecha))
+  
   ftrm = '${:,.2f} '.format(trm)
 
   st.write(f" :blue[La TRM del día {fecha.strftime('%d-%m-%Y')} es de :red[{ftrm}]]")
