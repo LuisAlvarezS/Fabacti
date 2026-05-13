@@ -26,7 +26,7 @@ def fabacti():
   trm = 3775.07
   ftrm = '${:,.2f} '.format(trm)
 
-  st.write(f" :blue[La TRM del día {fecha.strftime('%Y-%m-%d')} es de :red[{ftrm}]]")
+  st.write(f" :blue[La TRM del día {fecha.strftime('%d-%m-%Y')} es de :red[{ftrm}]]")
  
   st.write(' ...En construccion  ...')
 
