@@ -18,4 +18,5 @@ def obtener_trm(fecha):
     # Extraer valor y fecha
     trm_valor = float(data[0]["valor"])
     trm_fecha = data[0]["vigenciadesde"].split("T")[0]
-    return {"fecha": trm_fecha, "valor": trm_valor}
+    return(trm_valor) 
+    #{"fecha": trm_fecha, "valor": trm_valor}
