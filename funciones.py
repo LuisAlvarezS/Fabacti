@@ -3,12 +3,11 @@ import requests
 import streamlit as st
 from datetime import datetime
 
-import constantes as const
-
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm(fecha):
     # Realizar la solicitud
-    response = requests.get(const.URL_TRM, timeout=10)
+    URL_TRM = f"https://www.datos.gov.co/resource/32sa-8pi3.json?vigenciadesde={fecha}T00:00:00.000"
+    response = requests.get(URL_TRM, timeout=10)
     response.raise_for_status()
         
     data = response.json()
