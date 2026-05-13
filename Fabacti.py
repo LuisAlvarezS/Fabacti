@@ -2,7 +2,7 @@ import datetime
 
 import streamlit as st
 
-import suds
+#import suds
 from datetime import datetime
 
 # Funcion para consultar el TRM dada una fecha
