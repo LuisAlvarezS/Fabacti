@@ -1,20 +1,27 @@
 
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 from funciones import frase, obtener_trm
 import constantes as const
 
 def fabacti():
   # Encabezado
   st.write(const.ENCABEZADO)
-  #fecha = datetime.now()
-  fecha = datetime.now().strftime("%Y-%m-%d")
+  st.write(const.fechapantalla())
 
+  fechahoy = datetime.now()
+  ayer = fechahoy - timedelta(days=1)
+  proximasemana = fechahoy + timedelta(days=6)
+  fecha = datetime.now().strftime("%Y-%m-%d")
+  ayer = ayer.strftime("%Y-%m-%d")
+  proximasemana = proximasemana.strftime("%Y-%m-%d")
   trm = obtener_trm(fecha)  
   ftrm = '${:,.2f} '.format(trm)
-
-  #st.write(f"TRM ${trm['valor']:,.2f} COP/USD")
-  st.metric('**TRM  - Dólar**', ftrm, 0, border = True, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
+  trmayer = obtener_trm(ayer)
+  ftrmayer = '${:,.2f} '.format(trmayer)
+  deltatrm = trm - trmayer
+  fdeltatrm = '${:,.2f} '.format(deltatrm)
+  st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, border = True, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
 
   # Obtener frase del dia
   wfrase, wautor = frase()
