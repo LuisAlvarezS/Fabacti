@@ -2,6 +2,7 @@
 import requests
 import streamlit as st
 from datetime import datetime
+import json
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm(fecha):
@@ -26,7 +27,7 @@ def frase():
     url = 'https://frasedeldia.azurewebsites.net/api/phrase'
     try:
         resp = requests.get(url)
-        texto = st.json.loads(resp.text)
+        texto = json.loads(resp.text)
         frase = texto['phrase']
         autor = texto['author']
     except:
