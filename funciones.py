@@ -21,6 +21,7 @@ def obtener_trm(fecha):
     return(trm_valor) 
     #{"fecha": trm_fecha, "valor": trm_valor}
 
+# Funcion para obtener la frase del dia
 def frase():
     url = 'https://frasedeldia.azurewebsites.net/api/phrase'
     try:
