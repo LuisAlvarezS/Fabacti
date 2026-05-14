@@ -7,7 +7,6 @@ import constantes as const
 def fabacti():
   # Encabezado
   st.write(const.ENCABEZADO)
-  st.write(fechapantalla())
 
   fechahoy = datetime.now()
   ayer = fechahoy - timedelta(days=1)
