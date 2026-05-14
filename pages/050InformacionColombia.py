@@ -5,8 +5,6 @@ import json
 
 import constantes as const
 
-from funciones import encabezado    
-
 st.write('<style>div.block-container{padding-top:2.5rem;}</style>', unsafe_allow_html=True)
 st.write(const.ENCABEZADO)
 
