@@ -1,13 +1,13 @@
 
 import streamlit as st
 from datetime import datetime, timedelta
-from funciones import frase, obtener_trm
+from funciones import fechapantalla, frase, obtener_trm
 import constantes as const
 
 def fabacti():
   # Encabezado
   st.write(const.ENCABEZADO)
-  st.write(const.fechapantalla())
+  st.write(fechapantalla())
 
   fechahoy = datetime.now()
   ayer = fechahoy - timedelta(days=1)
