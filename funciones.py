@@ -20,3 +20,15 @@ def obtener_trm(fecha):
     trm_fecha = data[0]["vigenciadesde"].split("T")[0]
     return(trm_valor) 
     #{"fecha": trm_fecha, "valor": trm_valor}
+
+def frase():
+    url = 'https://frasedeldia.azurewebsites.net/api/phrase'
+    try:
+        resp = requests.get(url)
+        texto = st.json.loads(resp.text)
+        frase = texto['phrase']
+        autor = texto['author']
+    except:
+        frase = 'La suerte existe, pero tiene que encontrarte trabajando.'
+        autor = 'Pablo Picasso'
+    return(frase, autor)

@@ -1,7 +1,7 @@
 
 import streamlit as st
 from datetime import datetime
-from funciones import obtener_trm
+from funciones import frase, obtener_trm
 import constantes as const
 
 def fabacti():
@@ -9,11 +9,19 @@ def fabacti():
   st.write(const.ENCABEZADO)
   #fecha = datetime.now()
   fecha = datetime.now().strftime("%Y-%m-%d")
+
   trm = obtener_trm(fecha)  
   ftrm = '${:,.2f} '.format(trm)
 
   #st.write(f"TRM ${trm['valor']:,.2f} COP/USD")
-  st.metric('**TRM  - Dólar**', ftrm, 0, border = False, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
+  st.metric('**TRM  - Dólar**', ftrm, 0, border = True, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
+
+  # Obtener frase del dia
+  wfrase, wautor = frase()
+  st.write(f'**FRASE DEL DIA**') 
+  st.write(wfrase)
+  st.write(' [' + wautor + ']')
+
   st.write(' ...En construccion  ...')
 
   st.write(const.COPYRIGHT)
