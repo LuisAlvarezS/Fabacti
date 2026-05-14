@@ -21,7 +21,7 @@ def fabacti():
   deltatrm = trm - trmayer
   fdeltatrm = '${:,.2f} '.format(deltatrm)
 
-  trm, frases = st.columns(2)  
+  trm, frases = st.columns(2, border = True, width='stretch', height='content')  
   trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm, border = True, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
 
   # Obtener frase del dia
