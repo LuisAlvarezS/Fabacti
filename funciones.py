@@ -14,13 +14,9 @@ def obtener_trm(fecha):
     data = response.json()
         
     if not data:
-        #rint(f"No se encontró TRM para la fecha {fecha}")
         return None
-    # Extraer valor y fecha
     trm_valor = float(data[0]["valor"])
-    trm_fecha = data[0]["vigenciadesde"].split("T")[0]
     return(trm_valor) 
-    #{"fecha": trm_fecha, "valor": trm_valor}
 
 # Funcion para obtener la frase del dia
 def frase():
