@@ -20,8 +20,8 @@ def obtener_trm(fecha):
 
 # Funcion para obtener la frase del dia
 def frase():
-    url = 'https://frasedeldia.azurewebsites.net/api/phrase'
     try:
+        url = 'https://frasedeldia.azurewebsites.net/api/phrase'
         resp = requests.get(url)
         texto = json.loads(resp.text)
         frase = texto['phrase']
