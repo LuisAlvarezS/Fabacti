@@ -1,7 +1,7 @@
 
 import streamlit as st
 from datetime import datetime, timedelta
-from funciones import fechapantalla, frase, obtener_trm
+from funciones import frase, obtener_trm
 import constantes as const
 
 def fabacti():
