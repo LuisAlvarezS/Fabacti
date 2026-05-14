@@ -20,13 +20,14 @@ def fabacti():
   ftrmayer = '${:,.2f} '.format(trmayer)
   deltatrm = trm - trmayer
   fdeltatrm = '${:,.2f} '.format(deltatrm)
-  st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, border = True, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
+  trm, frase = st.columns(2)  
+  trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm, border = True, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
 
   # Obtener frase del dia
   wfrase, wautor = frase()
-  st.write(f'**FRASE DEL DIA**') 
-  st.write(wfrase)
-  st.write(' [' + wautor + ']')
+  frase.write(f'**FRASE DEL DIA**') 
+  frase.write(wfrase)
+  frase.write(' [' + wautor + ']')
 
   st.write(' ...En construccion  ...')
 
