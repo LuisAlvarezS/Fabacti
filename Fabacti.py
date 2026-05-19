@@ -1,6 +1,7 @@
 
 import streamlit as st
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from funciones import frase, obtener_trm
 import constantes as const
 
@@ -10,10 +11,10 @@ def fabacti():
   # Encabezado
   st.write(const.ENCABEZADO)
 
-  #fechahoy = datetime.now()
+  fechahoy = datetime.now(tz=ZoneInfo("America/Bogota"))  
   #ayer = fechahoy - timedelta(days=1)
   #proximasemana = fechahoy + timedelta(days=6)
-  fecha = datetime.now().strftime(" %A, %d de %B de %Y")
+  fecha = fechahoy.strftime(" %A, %d de %B de %Y")
   st.write(fecha)
   #ayer = ayer.strftime("%Y-%m-%d")
   #proximasemana = proximasemana.strftime("%Y-%m-%d")
@@ -25,7 +26,7 @@ def fabacti():
   deltatrm = trm - trmayer
   fdeltatrm = '${:,.2f} '.format(deltatrm)
   listatrm.reverse()
-  
+
   trm, frases = st.columns(2, border = True)  
   trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
 
