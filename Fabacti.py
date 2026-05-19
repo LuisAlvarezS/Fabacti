@@ -14,15 +14,15 @@ def fabacti():
   #fecha = datetime.now().strftime("%Y-%m-%d")
   #ayer = ayer.strftime("%Y-%m-%d")
   #proximasemana = proximasemana.strftime("%Y-%m-%d")
-  trm, trmayer, lista = obtener_trm()  
+  trm, trmayer, listatrm = obtener_trm()  
   ftrm = '${:,.2f} '.format(trm)
-  trmayer = obtener_trm(trmayer)
+  #trmayer = obtener_trm(trmayer)
   ftrmayer = '${:,.2f} '.format(trmayer)
   deltatrm = trmayer - trm
   fdeltatrm = '${:,.2f} '.format(deltatrm)
 
   trm, frases = st.columns(2, border = True)  
-  trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm, width='stretch', height='content', chart_type='line',help=const.NOTASTRM)
+  trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
 
   # Obtener frase del dia
   wfrase, wautor = frase()
