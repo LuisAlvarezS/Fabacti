@@ -3,7 +3,7 @@ import streamlit as st
 from datetime import datetime, timedelta
 import locale
 
-from funciones import frase, obtener_trm
+from funciones import frase, obtener_trm, obtenerpyp, mostrartodopyp
 import constantes as const
 
 def fabacti():
@@ -30,7 +30,11 @@ def fabacti():
   fdeltatrm = '${:,.2f} '.format(deltatrm)
   listatrm.reverse()
 
-  trm, frases = st.columns(2, border = True)  
+  #  Mostrar todo los dias pico de placa
+  picoyplaca, parte_resaltar = mostrartodopyp()
+  mensajepicoyplaca = f' **Pico y Placa** ' 
+
+  trm, frases, picoplaca = st.columns(3, border = True)  
   trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
 
   # Obtener frase del dia
@@ -39,6 +43,11 @@ def fabacti():
   frases.write(f'**FRASE DEL DIA**') 
   frases.write(wfrase)
   frases.write(' [' + wautor + ']')
+
+  with picoplaca:
+        st.write(mensajepicoyplaca)
+        st.write(f'**Hoy** :red[**{parte_resaltar}**]')
+        st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
 
   st.write(' ...En construccion  ...')
 

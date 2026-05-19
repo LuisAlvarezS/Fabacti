@@ -3,6 +3,7 @@ import streamlit as st
 import requests
 from datetime import datetime
 import json
+import constantes as co
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
@@ -34,3 +35,23 @@ def frase():
         autor = 'Pablo Picasso'
     return(frase, autor)
 
+def obtenerpyp():
+    fecha = datetime.now()
+    dia = fecha.weekday()
+    wpyp = co.PYP[dia]
+    ndia = co.DIAS[dia].capitalize()
+    wpyp2 = co.PYP[dia+1]
+    ndia2 = co.DIAS[dia+1].capitalize()
+    return(wpyp, ndia, wpyp2, ndia2)
+
+def mostrartodopyp():
+    fecha = datetime.now()
+    ndia = fecha.weekday()
+    texto = ''
+    contador = 0
+    for dia in co.DIAS:
+        if ndia == contador:
+            resaltar = dia + ': ' + co.PYP[contador]
+        texto = texto + dia + ': ' + co.PYP[contador] + '  '
+        contador += 1
+    return(texto, resaltar)
