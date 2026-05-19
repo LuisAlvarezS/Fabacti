@@ -16,7 +16,7 @@ def fabacti():
   #proximasemana = proximasemana.strftime("%Y-%m-%d")
   trm, trmayer, lista = obtener_trm()  
   ftrm = '${:,.2f} '.format(trm)
-  trmayer = obtener_trm(ayer)
+  trmayer = obtener_trm(trmayer)
   ftrmayer = '${:,.2f} '.format(trmayer)
   deltatrm = trmayer - trm
   fdeltatrm = '${:,.2f} '.format(deltatrm)

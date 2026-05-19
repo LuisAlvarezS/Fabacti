@@ -9,7 +9,7 @@ import locale
 def obtener_trm():
     # Realizar la solicitud
     #URL_TRM = f"https://www.datos.gov.co/resource/32sa-8pi3.json?vigenciadesde={fecha}T00:00:00.000"
-    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=1&$order=vigenciadesde%20DESC"
+    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=30&$order=vigenciadesde%20DESC"
     response = requests.get(URL_TRM, timeout=10)
     response.raise_for_status()
         
