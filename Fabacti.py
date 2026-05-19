@@ -12,40 +12,36 @@ def fabacti():
   st.write(const.ENCABEZADO)
 
   fechahoy = datetime.now()  
-  #ayer = fechahoy - timedelta(days=1)
-  #proximasemana = fechahoy + timedelta(days=6)
   fecha = fechahoy.strftime(" %A, %d de %B de %Y")
   st.write(fecha)
-  #ayer = ayer.strftime("%Y-%m-%d")
-  #proximasemana = proximasemana.strftime("%Y-%m-%d")
   listatrm = obtener_trm()
   trm = float(listatrm[0])
   ftrm = '${:,.2f} '.format(trm)
   trmayer = float(listatrm[1])
-  #ftrmayer = '${:,.2f} '.format(trmayer)
   deltatrm = trm - trmayer
   fdeltatrm = '${:,.2f} '.format(deltatrm)
   listatrm.reverse()
 
   #  Mostrar todo los dias pico de placa
   picoyplaca, parte_resaltar = mostrartodopyp()
-  mensajepicoyplaca = f' **Pico y Placa** ' 
+  mensajepicoyplaca = f' **Pico y Placa hoy** ' 
 
-  st.success(mensajepicoyplaca + '  ' + parte_resaltar + '  ' + 'para hoy')
   trm, frases, picoplaca = st.columns(3, border = True)  
-  trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
-
-  # Obtener frase del dia
-  wfrase, wautor = frase()
   
-  frases.write(f'**FRASE DEL DIA**') 
-  frases.write(wfrase)
-  frases.write(' [' + wautor + ']')
+  with trm:
+    st.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
+  
+  with frases:
+    # Obtener frase del dia
+    wfrase, wautor = frase()
+    st.write(f'**FRASE DEL DIA**') 
+    st.write(wfrase)
+    st.write(' [' + wautor + ']')
 
   with picoplaca:
-        st.write(mensajepicoyplaca)
-        st.write(f'**Hoy** :red[**{parte_resaltar}**]')
-        st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
+    st.write(mensajepicoyplaca)
+    st.write(f'**Hoy** :red[**{parte_resaltar}**]')
+    st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
 
   st.write(' ...En construccion  ...')
 
