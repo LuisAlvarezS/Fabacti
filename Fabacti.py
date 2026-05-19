@@ -22,10 +22,6 @@ def fabacti():
   fdeltatrm = '${:,.2f} '.format(deltatrm)
   listatrm.reverse()
 
-  #  Mostrar todo los dias pico de placa
-  picoyplaca, parte_resaltar = mostrartodopyp()
-  mensajepicoyplaca = f' **Pico y Placa hoy** ' 
-
   trm, frases, picoplaca = st.columns(3, border = True)  
   
   with trm:
@@ -39,7 +35,8 @@ def fabacti():
     st.write(' [' + wautor + ']')
 
   with picoplaca:
-    st.write(mensajepicoyplaca)
+    picoyplaca, parte_resaltar = mostrartodopyp()
+    st.write(f' **Pico y Placa**')
     st.write(f'**Hoy** :red[**{parte_resaltar}**]')
     st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
 
