@@ -13,7 +13,7 @@ def fabacti():
   # Encabezado
   st.write(const.ENCABEZADO)
   try:
-        locale.setlocale(locale.LC_TIME, 'Spanish_Spain')
+        locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
   except:
         locale.setlocale(locale.LC_TIME, 'es_CO.UTF-8')
   
