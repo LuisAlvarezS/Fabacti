@@ -18,6 +18,7 @@ def obtener_trm(fecha):
     if not data:
         return None
     trm_valor = float(data[0]["valor"])
+    st.write(f"TRM para la fecha {fecha}: {trm_valor}")
     return(trm_valor) 
 
 # Funcion para obtener la frase del dia
