@@ -15,6 +15,7 @@ def fabacti():
   ayer = ayer.strftime("%Y-%m-%d")
   proximasemana = proximasemana.strftime("%Y-%m-%d")
   trm = obtener_trm(fecha)  
+  st.write(trm)
   ftrm = '${:,.2f} '.format(trm)
   trmayer = obtener_trm(ayer)
   ftrmayer = '${:,.2f} '.format(trmayer)
