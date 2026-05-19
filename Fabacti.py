@@ -1,17 +1,20 @@
 
 import streamlit as st
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
+import locale
+
 from funciones import frase, obtener_trm
 import constantes as const
 
 def fabacti():
   proceso = st.text('Cargando información, por favor espere...')
+  
+  locale.setlocale(locale.LC_TIME, "es_CO.UTF-8")
 
   # Encabezado
   st.write(const.ENCABEZADO)
 
-  fechahoy = datetime.now(tz=ZoneInfo("America/Bogota"))  
+  fechahoy = datetime.now()  
   #ayer = fechahoy - timedelta(days=1)
   #proximasemana = fechahoy + timedelta(days=6)
   fecha = fechahoy.strftime(" %A, %d de %B de %Y")
