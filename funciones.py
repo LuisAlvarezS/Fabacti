@@ -20,10 +20,7 @@ def obtener_trm():
     listatrm = []
     for registro in data:
         listatrm.append(float(registro["valor"]))
-    #return listatrm
-    st.write(listatrm)
-    #trm_valor = float(data[0]["valor"])
-    return(listatrm[0], listatrm[1], listatrm) 
+    return(listatrm) 
 
 # Funcion para obtener la frase del dia
 def frase():

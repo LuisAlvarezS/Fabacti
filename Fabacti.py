@@ -14,10 +14,11 @@ def fabacti():
   #fecha = datetime.now().strftime("%Y-%m-%d")
   #ayer = ayer.strftime("%Y-%m-%d")
   #proximasemana = proximasemana.strftime("%Y-%m-%d")
-  trm, trmayer, listatrm = obtener_trm()  
+  listatrm = obtener_trm()
+  trm = float(listatrm[0])
   ftrm = '${:,.2f} '.format(trm)
-  #trmayer = obtener_trm(trmayer)
-  ftrmayer = '${:,.2f} '.format(trmayer)
+  trmayer = float(listatrm[1])
+  #ftrmayer = '${:,.2f} '.format(trmayer)
   deltatrm = trmayer - trm
   fdeltatrm = '${:,.2f} '.format(deltatrm)
 
