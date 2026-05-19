@@ -1,7 +1,6 @@
 
 import streamlit as st
 from datetime import datetime, timedelta
-import locale
 
 from funciones import frase, obtener_trm, obtenerpyp, mostrartodopyp
 import constantes as const
@@ -9,8 +8,6 @@ import constantes as const
 def fabacti():
   proceso = st.text('Cargando información, por favor espere...')
   
-  locale.setlocale(locale.LC_TIME, "Spanish_Spain.UTF-8")
-
   # Encabezado
   st.write(const.ENCABEZADO)
 
