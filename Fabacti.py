@@ -1,4 +1,6 @@
 
+import locale
+
 import streamlit as st
 from datetime import datetime, timedelta
 
@@ -10,7 +12,11 @@ def fabacti():
   
   # Encabezado
   st.write(const.ENCABEZADO)
-
+  try:
+        locale.setlocale(locale.LC_TIME, 'Spanish_Spain')
+  except:
+        locale.setlocale(locale.LC_TIME, 'es_CO.UTF-8')
+  
   fechahoy = datetime.now()  
   fecha = fechahoy.strftime(" %A, %d de %B de %Y")
   st.write(fecha)
