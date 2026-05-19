@@ -6,7 +6,7 @@ import json
 import locale
 
 # Funcion para consultar el TRM dada una fecha
-def obtener_trm(fecha):
+def obtener_trm():
     # Realizar la solicitud
     #URL_TRM = f"https://www.datos.gov.co/resource/32sa-8pi3.json?vigenciadesde={fecha}T00:00:00.000"
     URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=1&$order=vigenciadesde%20DESC"
@@ -17,9 +17,13 @@ def obtener_trm(fecha):
         
     if not data:
         return None
-    trm_valor = float(data[0]["valor"])
-    st.write(f"TRM para la fecha {fecha}: {trm_valor}")
-    return(trm_valor) 
+    listatrm = []
+    for registro in data:
+        listatrm.append(float(registro["valor"]))
+    #return listatrm
+    st.write(listatrm)
+    #trm_valor = float(data[0]["valor"])
+    return(listatrm[0]) 
 
 # Funcion para obtener la frase del dia
 def frase():
