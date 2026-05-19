@@ -9,7 +9,7 @@ import constantes as const
 def fabacti():
   proceso = st.text('Cargando información, por favor espere...')
   
-  locale.setlocale(locale.LC_TIME, "es-ES.UTF-8")
+  locale.setlocale(locale.LC_TIME, "Spanish_Spain.UTF-8")
 
   # Encabezado
   st.write(const.ENCABEZADO)
