@@ -23,7 +23,7 @@ def obtener_trm():
     #return listatrm
     st.write(listatrm)
     #trm_valor = float(data[0]["valor"])
-    return(listatrm[0]) 
+    return(listatrm[0], listatrm[1], listatrm) 
 
 # Funcion para obtener la frase del dia
 def frase():
