@@ -31,6 +31,7 @@ def fabacti():
   picoyplaca, parte_resaltar = mostrartodopyp()
   mensajepicoyplaca = f' **Pico y Placa** ' 
 
+  st.success(mensajepicoyplaca + '  ' + parte_resaltar + '  ' + 'para hoy')
   trm, frases, picoplaca = st.columns(3, border = True)  
   trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
 
