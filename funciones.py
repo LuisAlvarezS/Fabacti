@@ -3,7 +3,6 @@ import streamlit as st
 import requests
 from datetime import datetime
 import json
-import locale
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():

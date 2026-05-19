@@ -5,13 +5,16 @@ from funciones import frase, obtener_trm
 import constantes as const
 
 def fabacti():
+  proceso = st.text('Cargando información, por favor espere...')
+
   # Encabezado
   st.write(const.ENCABEZADO)
 
   #fechahoy = datetime.now()
   #ayer = fechahoy - timedelta(days=1)
   #proximasemana = fechahoy + timedelta(days=6)
-  #fecha = datetime.now().strftime("%Y-%m-%d")
+  fecha = datetime.now().strftime(" %A, %d de %B de %Y")
+  st.write(fecha)
   #ayer = ayer.strftime("%Y-%m-%d")
   #proximasemana = proximasemana.strftime("%Y-%m-%d")
   listatrm = obtener_trm()
@@ -22,6 +25,7 @@ def fabacti():
   deltatrm = trm - trmayer
   fdeltatrm = '${:,.2f} '.format(deltatrm)
   listatrm.reverse()
+  
   trm, frases = st.columns(2, border = True)  
   trm.metric('**TRM  - Dólar**', ftrm, fdeltatrm,chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
 
@@ -35,6 +39,7 @@ def fabacti():
   st.write(' ...En construccion  ...')
 
   st.write(const.COPYRIGHT)
+  proceso.empty()
 
 if __name__ == '__main__':
     st.set_page_config(
