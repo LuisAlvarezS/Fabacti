@@ -19,7 +19,7 @@ def fabacti():
   ftrm = '${:,.2f} '.format(trm)
   trmayer = float(listatrm[1])
   #ftrmayer = '${:,.2f} '.format(trmayer)
-  deltatrm = trmayer - trm
+  deltatrm = trm - trmayer
   fdeltatrm = '${:,.2f} '.format(deltatrm)
 
   trm, frases = st.columns(2, border = True)  
