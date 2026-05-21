@@ -42,7 +42,7 @@ def fabacti():
     st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
 
   with libro:
-    st.text('Libro del Día', help=const.NOTASLIBRO)
+    st.text('Libro recomendado', help=const.NOTASLIBRO)
     libro = obtener_imagen_aleatoria('img/')
     st.image(libro, width=200)
 
