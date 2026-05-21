@@ -1,4 +1,9 @@
 
+import os
+import random
+
+from anyio import Path
+
 import streamlit as st
 import requests
 from datetime import datetime
@@ -55,3 +60,20 @@ def mostrartodopyp():
         texto = texto + dia + ': ' + co.PYP[contador] + '  '
         contador += 1
     return(texto, resaltar)
+
+def obtener_imagen_aleatoria(ruta_directorio):
+    extensiones = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'}
+    
+    try:
+        imagenes = [
+            os.path.join(ruta_directorio, archivo)
+            for archivo in os.listdir(ruta_directorio)
+            if Path(archivo).suffix.lower() in extensiones
+        ]
+        
+        if imagenes:
+            return random.choice(imagenes)
+        return None
+    except FileNotFoundError:
+        #print(f"Error: El directorio '{ruta_directorio}' no existe")
+        return None

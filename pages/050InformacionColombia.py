@@ -57,8 +57,8 @@ with regiones:
     wregiones = json.loads(respregiones.text)
     total = len(wregiones)
     for i in range (total):
-        st.write(f'**{wregiones[i]['name']}**')
-        st.write(f'*{wregiones[i]['description']}*')
+        st.write(f"**{wregiones[i]['name']}**")
+        st.write(f"*{wregiones[i]['description']}*")
 
 with departamentos:
         urldepartamentos = 'https://api-colombia.com/api/v1/Department'
@@ -77,7 +77,7 @@ with departamentos:
             else:
                 wpoblacionc = '{:,.0f}'.format(float(wdepartamentos[i]['cityCapital']['population']))
 
-            st.write(f' **{wdepartamentos[i]['name']}**: {wdepartamentos[i]['description']} con una poblacion de {wpoblaciond}. Su capital es **{wcapitald}** cuya **poblacion** es {wpoblacionc}')
+            st.write(f" **{wdepartamentos[i]['name']}**: {wdepartamentos[i]['description']} con una poblacion de {wpoblaciond}. Su capital es **{wcapitald}** cuya **poblacion** es {wpoblacionc}")
 
 with presidentes:
     urlcolombia = 'https://api-colombia.com/api/v1/President'
