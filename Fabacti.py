@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import datetime, timedelta
 
-from funciones import frase, obtener_imagen_aleatoria, obtener_trm, obtenerpyp, mostrartodopyp
+from funciones import frase, obtener_imagen_aleatoria, obtener_trm, mostrartodopyp
 import constantes as const
 
 def fabacti():
