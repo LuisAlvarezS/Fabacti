@@ -150,3 +150,4 @@ def dtfactual():
     datos = obtener_indicador('DTF')
     dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
     return(dtf)
+
