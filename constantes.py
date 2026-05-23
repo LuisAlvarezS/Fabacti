@@ -8,6 +8,7 @@ NOTASTRM = "La tasa de cambio representativa del mercado TRM es la cantidad de p
 NOTASPICOYPLACA = 'El Pico y Placa es un sistema de restricción vehicular en Colombia que limita la circulación de vehículos en ciertas horas y días, basado en el último dígito de la placa.'
 NOTASFRASE = 'La frase del día es una cita inspiradora que se actualiza diariamente, diseñada para motivar y ofrecer una perspectiva positiva a los lectores. Fuente: rasedeldia.azurewebsites.net/api/phrase'
 NOTASLIBRO = 'El libro del día es una recomendación literaria que se actualiza diariamente, ofreciendo a los lectores una selección de obras destacadas para fomentar la lectura y el conocimiento. Fuente: En construcción'
+NOTASDTF = 'El DTF Referencias es el promedio ponderado de las tasas efectivas de captación de los CDT a 90 días que reconoce el sistema financiero a sus clientes y sirve como indicador de referencia relacionado con el costo del dinero en el tiempo.'
 
 
 PYP = ['1-7','0-3','4-6','5-9','2-8','No Aplica','No Aplica']

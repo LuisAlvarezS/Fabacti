@@ -2,18 +2,18 @@
 import streamlit as st
 from datetime import datetime, timedelta
 
-from funciones import frase, obtener_imagen_aleatoria, obtener_trm, mostrartodopyp
+from funciones import dtfactual, frase, obtener_imagen_aleatoria, obtener_trm, mostrartodopyp
 import constantes as const
 
 def fabacti():
-  proceso = st.text('Cargando la información requeridsa, ... por favor espere ...')
+  proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
   # Encabezado
   st.write(const.ENCABEZADO)
   fechahoy = datetime.now()  
-  ndia = const.DIAS[fechahoy.weekday() - 1]
+  ndia = const.DIAS[fechahoy.weekday()]
   nmes = const.MESES[fechahoy.month - 1]
-  st.write(ndia + ',' + str(fechahoy.day - 1) + ' de ' + nmes + ' de ' + str(fechahoy.year))
+  st.write(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year))
 
   listatrm = obtener_trm()
   trm = float(listatrm[0])
@@ -23,11 +23,20 @@ def fabacti():
   fdeltatrm = '{:,.2f} '.format(deltatrm)
   listatrm.reverse()
 
-  trm, picoplaca, frases, libro = st.columns(4, border = True)  
+  # Obtener DTF
+  #dtf = dtfactual()
+  dtf = str('{:,.2f} '.format(float(dtfactual())))
+  #dtfhistorico, deltadtf = dtftodos()
+  #deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
+
+  trm, dtf1, picoplaca, frases, libro = st.columns(5, border = True)  
   
   with trm:
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=const.NOTASTRM)
   
+  with dtf1:
+    dtf1.metric('**DTF**', dtf + ' %', 0, border = False, width='stretch', height='content',  help=const.NOTASDTF)
+
   with frases:
     # Obtener frase del dia
     wfrase, wautor = frase()
