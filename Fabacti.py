@@ -2,7 +2,7 @@
 import streamlit as st
 from datetime import datetime, timedelta
 
-from funciones import dtfactual, frase, obtener_imagen_aleatoria, obtener_trm, mostrartodopyp
+import funciones as fu
 import constantes as const
 
 def fabacti():
@@ -15,7 +15,7 @@ def fabacti():
   nmes = const.MESES[fechahoy.month - 1]
   st.write(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year))
 
-  listatrm = obtener_trm()
+  listatrm = fu.obtener_trm()
   trm = float(listatrm[0])
   ftrm = '${:,.2f} '.format(trm)
   trmayer = float(listatrm[1])
@@ -25,7 +25,7 @@ def fabacti():
 
   # Obtener DTF
   #dtf = dtfactual()
-  dtf = str('{:,.2f} '.format(float(dtfactual())))
+  dtf = str('{:,.2f} '.format(float(fu.dtfactual())))
   #dtfhistorico, deltadtf = dtftodos()
   #deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
 
@@ -39,20 +39,20 @@ def fabacti():
 
   with frases:
     # Obtener frase del dia
-    wfrase, wautor = frase()
+    wfrase, wautor = fu.frase()
     st.text('FRASE DEL DIA', help=const.NOTASFRASE) 
     st.write(wfrase)
     st.write(' [' + wautor + ']')
 
   with picoplaca:
-    picoyplaca, parte_resaltar = mostrartodopyp()
+    picoyplaca, parte_resaltar = fu.mostrartodopyp()
     st.text('Pico y Placa', help=const.NOTASPICOYPLACA)
     st.write(f'**Hoy** :red[**{parte_resaltar}**]')
     st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
 
   with libro:
     st.text('Libro recomendado', help=const.NOTASLIBRO)
-    libro = obtener_imagen_aleatoria('img/')
+    libro = fu.obtener_imagen_aleatoria('img/')
     st.image(libro, width=200)
 
   st.write(' ...En construccion  ...')
