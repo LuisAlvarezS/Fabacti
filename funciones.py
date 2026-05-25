@@ -60,7 +60,7 @@ def mostrartodopyp():
             resaltar = dia + ': ' + co.PYP[contador]
         texto = texto + dia + ': ' + co.PYP[contador] + '  '
         contador += 1
-    return(texto, resaltar)
+    return(texto, resaltar) 
 
 def obtener_imagen_aleatoria(ruta_directorio):
     extensiones = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'}
