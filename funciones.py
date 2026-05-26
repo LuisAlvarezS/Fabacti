@@ -219,3 +219,13 @@ def dtftodos():
     conn.close()
     dfanterior = df['valor'][len(df)-2]
     return(df, dfanterior)
+
+def evento(fecha):
+    wfecha = str(fecha.strftime("%Y%m%d"))
+    conn = sqlite3.connect(co.BD)
+    cursor = conn.cursor()
+    consulta = "select evento from eventos where fecha =  '" + wfecha + "'"
+    cursor.execute(consulta)
+    res = cursor.fetchone()
+    conn.close()
+    return(res[0])

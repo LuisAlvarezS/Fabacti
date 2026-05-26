@@ -11,8 +11,10 @@ def fabacti():
   fechahoy = datetime.now()  
   ndia = co.DIAS[fechahoy.weekday()]
   nmes = co.MESES[fechahoy.month - 1]
-  st.success(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year))
 
+  wevento = fu.evento(fechahoy)
+  st.success(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento )
+  
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
