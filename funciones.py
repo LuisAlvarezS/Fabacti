@@ -211,6 +211,7 @@ def dtfactual():
     conn.close()
     return(df['valor'][0])
 
+# Devuelve la lista hitorica del DTF
 def dtftodos():
     conn = sqlite3.connect(co.BD)
     consulta= 'select valor from dtf order by fechainicio' 
