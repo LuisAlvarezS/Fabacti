@@ -174,3 +174,4 @@ def dtfhistoricos():
     listafinal.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
     return(listafinal)
 
+
