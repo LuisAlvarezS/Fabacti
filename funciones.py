@@ -1,6 +1,7 @@
 
 import os
 import random
+import sqlite3
 
 from anyio import Path
 
@@ -10,6 +11,7 @@ from datetime import datetime, timedelta
 import json
 import constantes as co
 import xmltodict
+import pandas as pd
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
@@ -152,11 +154,11 @@ def obtener_indicador(indicador, periodicidad, fecha, flow ):
     return(datos)
 
 # Funcion para obtener el DTF actual, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
-def dtfactual():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'LATEST')
-    dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
-    return(dtf)
+# def dtfactual():
+#     fechahoy = datetime.now()
+#     datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'LATEST')
+#     dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
+#     return(dtf)
 
 # Funcion para obtener el DTF historico, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
 def dtfhistoricos():
@@ -174,4 +176,45 @@ def dtfhistoricos():
     listafinal.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
     return(listafinal)
 
+def almacenardtf():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'LATEST')
+    dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
+    f1 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsDimension']['@value']
+    f2 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][6]['generic:ObsDimension']['@value']
 
+    conn = sqlite3.connect(co.BD)
+    consulta= 'select count(*)  as total from dtf where  fechainicio >= ' + f1 + ' and  fechafin <= ' + f2 
+    df = pd.read_sql_query(consulta, conn)
+    totales = df['total'][0]
+
+    if totales == 0:
+        cursor = conn.cursor()
+        sqlinser = 'insert into dtf ( fechainicio, fechafin, valor) values ( ?, ?, ?)'
+        datos = (f1, f2, dtf )
+        cursor.execute(sqlinser, datos)
+        conn.commit()
+        cursor.close()
+    conn.close()
+    return()
+
+def dtfactual():
+    fecha = datetime.now()
+    wfecha = fecha.strftime("%Y%m%d")
+    conn = sqlite3.connect(co.BD)
+    consulta= 'select count(*) as total from dtf where ' + wfecha + ' between fechainicio and fechafin' 
+    df = pd.read_sql_query(consulta, conn)
+    if df['total'][0] == 0:
+        almacenardtf()
+    consulta= 'select valor from dtf where ' + wfecha + ' between fechainicio and fechafin' 
+    df = pd.read_sql_query(consulta, conn)
+    conn.close()
+    return(df['valor'][0])
+
+def dtftodos():
+    conn = sqlite3.connect(co.BD)
+    consulta= 'select valor from dtf order by fechainicio' 
+    df = pd.read_sql_query(consulta, conn)
+    conn.close()
+    dfanterior = df['valor'][len(df)-2]
+    return(df, dfanterior)

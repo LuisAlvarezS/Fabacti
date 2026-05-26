@@ -25,12 +25,14 @@ def fabacti():
   listatrm.reverse()
   
 # Proceso de DTF
-  dtf = fu.dtfactual()
-  dtf = str('{:,.2f} '.format(float(dtf)))
-  datos = fu.dtfhistoricos()
-  dtfhistorico = datos
-  deltadtf = '{:,.2f} '.format(float(dtf) - float(datos[1]))
-
+  # dtf = fu.dtfactual()
+  # dtf = str('{:,.2f} '.format(float(dtf)))
+  # datos = fu.dtfhistoricos()
+  # dtfhistorico = datos
+  # deltadtf = '{:,.2f} '.format(float(dtf) - float(datos[1]))
+  dtf = str('{:,.2f} '.format(float(fu.dtfactual())))
+  dtfhistorico, deltadtf = fu.dtftodos()
+  deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
   proceso.empty()
 
   trm, dtf1, picoplaca, frases, libro = st.columns(5, border = True)  

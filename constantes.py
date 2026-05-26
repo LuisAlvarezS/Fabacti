@@ -14,7 +14,7 @@ NOTASDTF = 'El DTF Referencias es el promedio ponderado de las tasas efectivas d
 PYP = ['1-7','0-3','4-6','5-9','2-8','No Aplica','No Aplica']
 DIAS = ['Lunes','Martes','Miercoles','Jueves','Viernes', 'Sabado', 'Domingo']
 MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-
+BD = 'datos/fabacti.db'
 
 # URL Noticias
 KEY_NEWSAPI = 'a039a8295b894d07bf4b4c2d2601359c'
