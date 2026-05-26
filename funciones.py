@@ -16,7 +16,6 @@ import pandas as pd
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
     # Realizar la solicitud
-    #URL_TRM = f"https://www.datos.gov.co/resource/32sa-8pi3.json?vigenciadesde={fecha}T00:00:00.000"
     URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=30&$order=vigenciadesde%20DESC"
     response = requests.get(URL_TRM, timeout=10)
     response.raise_for_status()
@@ -42,17 +41,6 @@ def frase():
         frase = 'La suerte existe, pero tiene que encontrarte trabajando.'
         autor = 'Pablo Picasso'
     return(frase, autor)
-
-# Funcion para obtener el pico y placa del dia, la fuente es la Secretaria de Movilidad de Medellin
-# Los datos se cambian semestralmente manualmente y se guardan en la variabla PYP en el archivo constantes.py
-# def obtenerpyp():
-#     fecha = datetime.now()
-#     dia = fecha.weekday()
-#     wpyp = co.PYP[dia]
-#     ndia = co.DIAS[dia].capitalize()
-#     wpyp2 = co.PYP[dia+1]
-#     ndia2 = co.DIAS[dia+1].capitalize()
-#     return(wpyp, ndia, wpyp2, ndia2)
 
 # Funcion para mostrar todos los dias con su pico y placa, resaltando el dia actual
 def mostrartodopyp():
@@ -87,9 +75,6 @@ def obtener_imagen_aleatoria(ruta_directorio):
 
 # Funcion para obtener un indicador del Banco de la Republica de Colombia  
 def obtener_indicador(indicador, periodicidad, fecha, flow ):
-    #periodicid  ad = 'DAILY'
-    #if indicador == 'COLCAP':
-    #    periodicidad = 'MONTHLY'
     # URL del servicio web SOAP Endpoint
     url = "https://totoro.banrep.gov.co/OCDEv1.0/Services/NSIStdV21WsService"
     # Encabecezado de la solicitud
@@ -152,29 +137,6 @@ def obtener_indicador(indicador, periodicidad, fecha, flow ):
     except:
         datos = ''
     return(datos)
-
-# Funcion para obtener el DTF actual, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
-# def dtfactual():
-#     fechahoy = datetime.now()
-#     datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'LATEST')
-#     dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
-#     return(dtf)
-
-# Funcion para obtener el DTF historico, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
-# def dtfhistoricos():
-#     fechahoy = datetime.now()
-#     datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'HIST')
-#     datos1 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']
-#     lista_dtf = []
-#     for obs in datos1:
-#         lista_dtf.append(obs['generic:ObsValue']['@value'])
-#     lista_dtf.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
-#     listafinal = []
-#     for i in range(1, 80):
-#         listafinal.append('{:,.2f} '.format(float(lista_dtf[i])))
-#     listafinal = list(dict.fromkeys(listafinal))  # Eliminar valores duplicados
-#     listafinal.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
-#     return(listafinal)
 
 def almacenardtf():
     fechahoy = datetime.now()
