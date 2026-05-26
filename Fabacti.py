@@ -28,8 +28,8 @@ def fabacti():
   dtf = fu.dtfactual()
   dtf = str('{:,.2f} '.format(float(dtf)))
   
-  datos = fu.dtftodos()
-  st.write(datos)
+  #datos = fu.dtftodos()
+  #st.write(datos)
   #dtfhistorico, deltadtf = dtftodos()
   #deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
 
