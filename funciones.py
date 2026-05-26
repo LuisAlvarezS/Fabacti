@@ -84,7 +84,7 @@ def obtener_imagen_aleatoria(ruta_directorio):
         return None
 
 # Funcion para obtener un indicador del Banco de la Republica de Colombia  
-def obtener_indicador(indicador, periodicidad, fecha ):
+def obtener_indicador(indicador, periodicidad, fecha, flow ):
     #periodicid  ad = 'DAILY'
     #if indicador == 'COLCAP':
     #    periodicidad = 'MONTHLY'
@@ -129,9 +129,9 @@ def obtener_indicador(indicador, periodicidad, fecha ):
     </quer:Structure>
     </quer:ReturnDetails>
     <quer:DataWhere>
-    <quer:DataSetID operator="equal">DF_""" + indicador + """_""" + periodicidad + """_LATEST</quer:DataSetID>
+    <quer:DataSetID operator="equal">DF_""" + indicador + """_""" + periodicidad + """_""" + flow + """</quer:DataSetID>
     <quer:Dataflow>
-    <Ref agencyID="ESTAT" id="DF_""" + indicador + """_""" + periodicidad + """_LATEST" version="1.0" local="false"
+    <Ref agencyID="ESTAT" id="DF_""" + indicador + """_""" + periodicidad + """_""" + flow + """" version="1.0" local="false"
     class="Dataflow" package="datastructure"/>
     </quer:Dataflow>
     </quer:DataWhere>
@@ -154,13 +154,23 @@ def obtener_indicador(indicador, periodicidad, fecha ):
 # Funcion para obtener el DTF actual, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
 def dtfactual():
     fechahoy = datetime.now()
-    datos = obtener_indicador('DTF', 'DAILY', fechahoy)
+    datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'LATEST')
     dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
     return(dtf)
 
 # Funcion para obtener el DTF historico, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
-# def dtftodos():
-#     fechahoy = datetime.now() - timedelta(days=365)
-#     datos = obtener_indicador('DTF', 'DAILY', fechahoy)
-#     #dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
-#     return(datos)
+def dtfhistoricos():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'HIST')
+    datos1 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']
+    lista_dtf = []
+    for obs in datos1:
+        lista_dtf.append(obs['generic:ObsValue']['@value'])
+    lista_dtf.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
+    listafinal = []
+    for i in range(1, 80):
+        listafinal.append('{:,.2f} '.format(float(lista_dtf[i])))
+    listafinal = list(dict.fromkeys(listafinal))  # Eliminar valores duplicados
+    listafinal.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
+    return(listafinal)
+

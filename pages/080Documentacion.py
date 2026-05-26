@@ -1,7 +1,7 @@
 import streamlit as st
 
-import constantes as const
+import constantes as co
 
 st.write(" En construccion :construction:  ... por favor vuelva pronto ... ")
 
-st.write(const.COPYRIGHT)
+st.write(co.COPYRIGHT)

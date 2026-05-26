@@ -6,8 +6,6 @@ import funciones as fu
 import constantes as co
 
 def fabacti():
-  proceso = st.text('Cargando la información requerida, ... por favor espere ...')
-
   # Encabezado
   st.write(co.ENCABEZADO)
   fechahoy = datetime.now()  
@@ -15,6 +13,9 @@ def fabacti():
   nmes = co.MESES[fechahoy.month - 1]
   st.write(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year))
 
+  proceso = st.text('Cargando la información requerida, ... por favor espere ...')
+
+# Proceso de TRM
   listatrm = fu.obtener_trm()
   trm = float(listatrm[0])
   ftrm = '${:,.2f} '.format(trm)
@@ -22,16 +23,15 @@ def fabacti():
   deltatrm = trm - trmayer
   fdeltatrm = '{:,.2f} '.format(deltatrm)
   listatrm.reverse()
-
-  # Obtener DTF
-  #dtf = dtfactual()
+  
+# Proceso de DTF
   dtf = fu.dtfactual()
   dtf = str('{:,.2f} '.format(float(dtf)))
-  
-  #datos = fu.dtftodos()
-  #st.write(datos)
-  #dtfhistorico, deltadtf = dtftodos()
-  #deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
+  datos = fu.dtfhistoricos()
+  dtfhistorico = datos
+  deltadtf = '{:,.2f} '.format(float(dtf) - float(datos[1]))
+
+  proceso.empty()
 
   trm, dtf1, picoplaca, frases, libro = st.columns(5, border = True)  
   
@@ -39,7 +39,7 @@ def fabacti():
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
-    dtf1.metric('**DTF**', dtf + ' %', 0, border = False, width='stretch', height='content',  help=co.NOTASDTF)
+    dtf1.metric('**DTF**', dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
   with frases:
     # Obtener frase del dia
@@ -58,8 +58,6 @@ def fabacti():
     st.text('Libro recomendado', help=co.NOTASLIBRO)
     libro = fu.obtener_imagen_aleatoria('img/')
     st.image(libro, width=200)
-
-  st.write(' ...En construccion  ...')
 
   st.write(co .COPYRIGHT)
   proceso.empty()
