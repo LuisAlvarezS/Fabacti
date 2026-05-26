@@ -11,7 +11,7 @@ def fabacti():
   fechahoy = datetime.now()  
   ndia = co.DIAS[fechahoy.weekday()]
   nmes = co.MESES[fechahoy.month - 1]
-  st.write(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year))
+  st.success(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year))
 
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
