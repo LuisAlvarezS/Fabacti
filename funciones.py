@@ -161,20 +161,20 @@ def obtener_indicador(indicador, periodicidad, fecha, flow ):
 #     return(dtf)
 
 # Funcion para obtener el DTF historico, se utiliza la función obtener_indicador para consultar el servicio web del Banco de la Republica de Colombia
-def dtfhistoricos():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'HIST')
-    datos1 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']
-    lista_dtf = []
-    for obs in datos1:
-        lista_dtf.append(obs['generic:ObsValue']['@value'])
-    lista_dtf.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
-    listafinal = []
-    for i in range(1, 80):
-        listafinal.append('{:,.2f} '.format(float(lista_dtf[i])))
-    listafinal = list(dict.fromkeys(listafinal))  # Eliminar valores duplicados
-    listafinal.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
-    return(listafinal)
+# def dtfhistoricos():
+#     fechahoy = datetime.now()
+#     datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'HIST')
+#     datos1 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']
+#     lista_dtf = []
+#     for obs in datos1:
+#         lista_dtf.append(obs['generic:ObsValue']['@value'])
+#     lista_dtf.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
+#     listafinal = []
+#     for i in range(1, 80):
+#         listafinal.append('{:,.2f} '.format(float(lista_dtf[i])))
+#     listafinal = list(dict.fromkeys(listafinal))  # Eliminar valores duplicados
+#     listafinal.reverse()  # Invertir el orden de la lista para mostrar los valores más recientes al final
+#     return(listafinal)
 
 def almacenardtf():
     fechahoy = datetime.now()
