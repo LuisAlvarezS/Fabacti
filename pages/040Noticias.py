@@ -4,10 +4,11 @@ from datetime import datetime
 import json
 import requests
 
-import constantes as const
+import constantes as co
 
-st.write(const.ENCABEZADO)
-
+# Encabezado
+st.write( ":red[FABACTI] :registered: ")
+st.sidebar.write(co.ENCABEZADO)
 
 st.title(' :red[NOTICIAS] ')
 
@@ -16,7 +17,7 @@ tema = 'Colombia'
 fecha = datetime.now()
 fecha = fecha.strftime('%Y%m%d')
 
-url = f'https://newsapi.org/v2/everything?q={tema}&from={fecha}&sortBy=publishedAt&apiKey={const.KEY_NEWSAPI}'
+url = f'https://newsapi.org/v2/everything?q={tema}&from={fecha}&sortBy=publishedAt&apiKey={co.KEY_NEWSAPI}'
 resp = requests.get(url)
 texto = json.loads(resp.text)
 articulos = texto['articles']
@@ -25,7 +26,7 @@ totalarticulos = len(articulos)
 for i in range(1,totalarticulos):
     fuente = texto['articles'][i]['source']['name']
     fechapublicacion = texto['articles'][i]['publishedAt']
-    if fuente in const.FUENTESNOTICIAS:
+    if fuente in co.FUENTESNOTICIAS:
         c1, c2, c3, c4, c5 = st.columns(5)
         with c1:
            autor = texto['articles'][i]['author']
@@ -44,4 +45,4 @@ for i in range(1,totalarticulos):
             if contenido != None:
                 st.write(contenido)
         st.divider()
-st.write(const.DERECHOSAUTOR)
+st.write(co.COPYRIGHT)

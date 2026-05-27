@@ -1,5 +1,10 @@
 import streamlit as st
 import funciones as fu
+import constantes as co
+
+# Encabezado
+st.write( ":red[FABACTI] :registered: ")
+st.sidebar.write(co.ENCABEZADO)
 
 eventos, dtf = st.tabs(['Eventos','DTF'])
 

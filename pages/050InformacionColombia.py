@@ -3,10 +3,13 @@ import streamlit as st
 import requests
 import json
 
-import constantes as const
+import constantes as co
 
 st.write('<style>div.block-container{padding-top:2.5rem;}</style>', unsafe_allow_html=True)
-st.write(const.ENCABEZADO)
+
+# Encabezado
+st.write( ":red[FABACTI] :registered: ")
+st.sidebar.write(co.ENCABEZADO)
 
 infognal , regiones, departamentos, presidentes, constitucion = st.tabs(["Informacion General","Regiones","Departamentos","Presidentes","Constitucion"]) 
 
