@@ -212,3 +212,17 @@ def obtener_fecha_hora_local(zona: str = None) -> datetime:
             return datetime.now()
     except Exception as e:
         raise ValueError(f"Error al obtener la hora: {e}")
+    
+def eventos():
+    conn = sqlite3.connect(co.BD)
+    sqlsp = "select fecha, evento from eventos"
+    df = pd.read_sql_query(sqlsp, conn)
+    conn.close()
+    return(df)
+
+def datosdtf():
+    conn = sqlite3.connect(co.BD)
+    sqlsp = "select fechainicio, fechafin, valor from dtf order by fechainicio"
+    df = pd.read_sql_query(sqlsp, conn)
+    conn.close()
+    return(df)
