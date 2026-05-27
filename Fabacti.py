@@ -7,7 +7,8 @@ import constantes as co
 
 def fabacti():
   # Encabezado
-  st.write(co.ENCABEZADO)
+  st.write( ":red[FABACTI] :registered: ")
+  st.sidebar.write(co.ENCABEZADO)
 
   fechacol = fu.obtener_fecha_hora_local("America/Bogota")
   fechahoy = fechacol.date()  
