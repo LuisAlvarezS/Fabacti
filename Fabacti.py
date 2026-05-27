@@ -8,7 +8,9 @@ import constantes as co
 def fabacti():
   # Encabezado
   st.write(co.ENCABEZADO)
-  fechahoy = datetime.now()  
+
+  fechacol = fu.obtener_fecha_hora_local("America/Bogota")
+  fechahoy = fechacol.date()  
   ndia = co.DIAS[fechahoy.weekday()]
   nmes = co.MESES[fechahoy.month - 1]
 

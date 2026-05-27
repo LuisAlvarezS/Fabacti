@@ -13,6 +13,8 @@ import constantes as co
 import xmltodict
 import pandas as pd
 
+from zoneinfo import ZoneInfo
+
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
     # Realizar la solicitud
@@ -195,3 +197,18 @@ def evento(fecha):
         res = res[0]
     conn.close()
     return(res)
+
+def obtener_fecha_hora_local(zona: str = None) -> datetime:
+    """
+    Retorna la fecha y hora local actual.
+    Si se especifica una zona horaria válida (ej. 'America/Bogota'),
+    devuelve la hora en esa zona.
+    """
+    try:
+        if zona:
+            return datetime.now(ZoneInfo(zona))
+        else:
+            # Hora local del sistema
+            return datetime.now()
+    except Exception as e:
+        raise ValueError(f"Error al obtener la hora: {e}")
