@@ -189,5 +189,9 @@ def evento(fecha):
     consulta = "select evento from eventos where fecha =  '" + wfecha + "'"
     cursor.execute(consulta)
     res = cursor.fetchone()
+    if res is None:
+        res = 'No hay eventos registrados para hoy'
+    else:
+        res = res[0]
     conn.close()
-    return(res[0])
+    return(res)
