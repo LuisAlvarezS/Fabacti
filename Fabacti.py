@@ -55,7 +55,7 @@ def fabacti():
     st.write(' [' + wautor + ']')
 
   with picoplaca:
-    picoyplaca, parte_resaltar = fu.mostrartodopyp()
+    picoyplaca, parte_resaltar = fu.mostrartodopyp(fechahoy)
     st.text('Pico y Placa', help=co.NOTASPICOYPLACA)
     st.write(f'**Hoy** :red[**{parte_resaltar}**]')
     st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])

@@ -45,8 +45,8 @@ def frase():
     return(frase, autor)
 
 # Funcion para mostrar todos los dias con su pico y placa, resaltando el dia actual
-def mostrartodopyp():
-    fecha = datetime.now()
+def mostrartodopyp(fecha):
+    # fecha = datetime.now()
     ndia = fecha.weekday()
     texto = ''
     contador = 0
