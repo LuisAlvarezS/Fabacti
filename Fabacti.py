@@ -78,7 +78,7 @@ if __name__ == '__main__':
         )
     # fu.registrar_usuario('admin', 'admin')
 
-#    ac.acceso()
-#    if 'usuario' in st.session_state:
-#        fabacti(usuario=st.session_state['usuario'])
-    fabacti()
+    ac.acceso()
+    if 'usuario' in st.session_state:
+        fabacti(usuario=st.session_state['usuario'])
+    #fabacti()
