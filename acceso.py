@@ -12,7 +12,7 @@ def generarmenu(usuario):
         st.write(f"**{usuario}**")
         st.page_link("Fabacti.py", label="Fabacti")
         st.page_link("pages/040Noticias.py", label="Noticias")
-        botonsalir = st.button("Cerrar sesión")
+        botonsalir = st.form_submit_button("Cerrar sesión")
         if botonsalir:
              st.session_state.clear()
              st.rerun()
