@@ -2,16 +2,18 @@ import streamlit as st
 import funciones as fu
 import constantes as co
 
-# Encabezado
-st.write( ":red[FABACTI] :registered: ")
-st.sidebar.write(co.ENCABEZADO)
 
-eventos, dtf = st.tabs(['Eventos','DTF'])
+if 'usuario' in st.session_state:
+    # Encabezado
+    st.write( ":red[FABACTI] :registered: ")
+    st.sidebar.write(co.ENCABEZADO)
 
-with eventos:
-    dserveventos = fu.eventos()
-    st.dataframe(dserveventos, hide_index = True, column_config={'id_evento': None})
+    eventos, dtf = st.tabs(['Eventos','DTF'])
 
-with dtf:
-    dservdtf = fu.datosdtf()
-    st.dataframe(dservdtf, hide_index = True, column_config={'iddtf': None})
+    with eventos:
+        dserveventos = fu.eventos()
+        st.dataframe(dserveventos, hide_index = True, column_config={'id_evento': None})
+
+    with dtf:
+        dservdtf = fu.datosdtf()
+        st.dataframe(dservdtf, hide_index = True, column_config={'iddtf': None})

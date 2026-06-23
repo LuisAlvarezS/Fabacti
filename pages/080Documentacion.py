@@ -2,11 +2,12 @@ import streamlit as st
 
 import constantes as co
 
+if 'usuario' in st.session_state:
 
-# Encabezado
-st.write( ":red[FABACTI] :registered: ")
-st.sidebar.write(co.ENCABEZADO)
+    # Encabezado
+    st.write( ":red[FABACTI] :registered: ")
+    st.sidebar.write(co.ENCABEZADO)
 
-st.write(" En construccion :construction:  ... por favor vuelva pronto ... ")
+    st.write(" En construccion :construction:  ... por favor vuelva pronto ... ")
 
-st.write(co.COPYRIGHT)
+    st.write(co.COPYRIGHT)
