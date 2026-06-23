@@ -30,5 +30,4 @@ def acceso():
                 st.rerun()
             else:
                 st.error("Credenciales incorrectas")
-    st.login_form.clear()  # Clear the login form if it exists
     return()
