@@ -35,12 +35,9 @@ def fabacti():
   listatrm.reverse()
   
 # Proceso de DTF
-  # dtf = fu.dtfactual()
-  # dtf = str('{:,.2f} '.format(float(dtf)))
-  # datos = fu.dtfhistoricos()
-  # dtfhistorico = datos
-  # deltadtf = '{:,.2f} '.format(float(dtf) - float(datos[1]))
   valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
+  fechainicio_dtf = datetime.strptime(str(fechainicio_dtf), "%d%m%Y").date()
+  fechafin_dtf = datetime.strptime(str(fechafin_dtf), "%d%m%Y").date()
   dtf = str('{:,.2f} '.format(float(valor_dtf)))
   dtfhistorico, deltadtf = fu.dtftodos()
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
@@ -52,7 +49,7 @@ def fabacti():
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
-    dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf.strftime("%Y-%m-%d")) + ' - ' + str(fechafin_dtf.strftime("%Y-%m-%d")), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
+    dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' - ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
   with frases:
     # Obtener frase del dia
