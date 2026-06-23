@@ -82,4 +82,4 @@ if 'usuario' in st.session_state:
     st.divider()  
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
-    st.rerun()
+    st.page_link("Iniciar sesión", page="Fabacti.py")
