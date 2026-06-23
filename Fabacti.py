@@ -2,7 +2,7 @@
 import sys
 
 import streamlit as st
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 
 import funciones as fu
 import constantes as co
@@ -78,8 +78,7 @@ if __name__ == '__main__':
         layout="wide",
         initial_sidebar_state = "expanded"
         )
-    # fu.registrar_usuario('admin', 'admin')
-
+    st.sidebar.write(co.ENCABEZADO)
     ac.acceso()
     if 'usuario' in st.session_state:
         fabacti(usuario=st.session_state['usuario'])
