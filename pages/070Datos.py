@@ -17,3 +17,5 @@ if 'usuario' in st.session_state:
     with dtf:
         dservdtf = fu.datosdtf()
         st.dataframe(dservdtf, hide_index = True, column_config={'iddtf': None})
+else:
+    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    

@@ -124,3 +124,5 @@ if 'usuario' in st.session_state:
             st.write(warticulos[int(wseleccion)]['content'])
         else:
             st.write('Debe seleccionar el numero del articulo')
+else:
+    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
