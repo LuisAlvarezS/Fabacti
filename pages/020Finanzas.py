@@ -1,6 +1,6 @@
 import streamlit as st
 
-from datetime import datetime, date
+from datetime import date
 import yfinance as yf
 
 import constantes as co
