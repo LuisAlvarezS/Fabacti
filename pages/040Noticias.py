@@ -30,7 +30,7 @@ if 'usuario' in st.session_state:
         if fuente in co.FUENTESNOTICIAS:
             c1, c2, c3, c4, c5 = st.columns(5)
             with c1:
-            autor = texto['articles'][i]['author']
+                autor = texto['articles'][i]['author']
             if autor != None:
                     st.write(fuente + '\n\n' + texto['articles'][i]['author'] + '\n\n Fecha: ' + fechapublicacion)
             with c2:
@@ -47,3 +47,5 @@ if 'usuario' in st.session_state:
                     st.write(contenido)
             st.divider()
     st.write(co.COPYRIGHT)
+else:
+    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
