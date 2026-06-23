@@ -14,7 +14,7 @@ def fabacti(usuario=None):
   st.write( ":red[FABACTI] :registered: ")
   st.write('**Usuario** :blue[**' + usuario + '**]')
   st.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
-  st.sidebar.write(co.ENCABEZADO)
+#  st.sidebar.write(co.ENCABEZADO)
 
   fechacol = fu.obtener_fecha_hora_local("America/Bogota")
   fechahoy = fechacol.date()  
