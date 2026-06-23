@@ -1,13 +1,17 @@
 
+import sys
+
 import streamlit as st
 from datetime import datetime, timedelta
 
 import funciones as fu
 import constantes as co
+import acceso as ac
 
-def fabacti():
+def fabacti(usuario=None):
   # Encabezado
   st.write( ":red[FABACTI] :registered: ")
+  st.write('**Bienvenido(a)** :blue[**' + usuario + '**] a tu aplicación de consulta de información financiera y eventos importantes. Aquí podrás encontrar datos actualizados sobre la TRM, DTF, pico y placa, frases inspiradoras del día y recomendaciones de libros. ¡Explora y mantente informado!')
   st.sidebar.write(co.ENCABEZADO)
 
   fechacol = fu.obtener_fecha_hora_local("America/Bogota")
@@ -75,4 +79,8 @@ if __name__ == '__main__':
         layout="wide",
         initial_sidebar_state = "expanded"
         )
-    fabacti()
+    # fu.registrar_usuario('admin', 'admin')
+
+    ac.acceso()
+    if 'usuario' in st.session_state:
+        fabacti(usuario=st.session_state['usuario'])

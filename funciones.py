@@ -12,6 +12,7 @@ import json
 import constantes as co
 import xmltodict
 import pandas as pd
+import bcrypt
 
 from zoneinfo import ZoneInfo
 
@@ -215,14 +216,48 @@ def obtener_fecha_hora_local(zona: str = None) -> datetime:
     
 def eventos():
     conn = sqlite3.connect(co.BD)
-    sqlsp = "select fecha, evento from eventos"
+    sqlsp = "select fecha, evento from eventos order by fecha DESC"
     df = pd.read_sql_query(sqlsp, conn)
     conn.close()
     return(df)
 
 def datosdtf():
     conn = sqlite3.connect(co.BD)
-    sqlsp = "select fechainicio, fechafin, valor from dtf order by fechainicio"
+    sqlsp = "select fechainicio, fechafin, valor from dtf order by fechainicio DESC"
     df = pd.read_sql_query(sqlsp, conn)
     conn.close()
     return(df)
+
+def registrar_usuario(nombre: str, clave: str):
+    if not nombre  or not clave:
+        raise ValueError("Usuario y clave no pueden estar vacíos.")
+
+    # Generar hash seguro con bcrypt
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(clave.encode("utf-8"), salt)
+
+    conn = sqlite3.connect("datos/fabacti.db")
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO usuarios (nombre, clave) VALUES (?, ?)",
+            (nombre, hashed.decode("utf-8"))
+        )
+        conn.commit()
+        print(f"Usuario '{nombre}' registrado correctamente.")
+    except sqlite3.IntegrityError:
+        print(f"Error: el usuario '{nombre}' ya existe.")
+    finally:
+        conn.close()
+
+def verificar_usuario(nombre: str, clave: str) -> bool:
+    conn = sqlite3.connect("datos/fabacti.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT clave FROM usuarios WHERE nombre = ?", (nombre,))
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        stored_hash = row[0].encode("utf-8")
+        return bcrypt.checkpw(clave.encode("utf-8"), stored_hash)
+    return False
