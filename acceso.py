@@ -29,7 +29,8 @@ def acceso():
         if submitted:
             if fu.verificar_usuario(username, password):
                 st.session_state['usuario'] = username
-                generarmenu(username)
+                #generarmenu(username)
+                st.form("login_form").empty()  # Clear the form
                 st.rerun()
             else:
                 st.error("Credenciales incorrectas")
