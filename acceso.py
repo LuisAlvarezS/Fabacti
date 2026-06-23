@@ -12,10 +12,10 @@ def generarmenu(usuario):
         st.write(f"**{usuario}**")
         st.page_link("Fabacti.py", label="Fabacti")
         st.page_link("pages/040Noticias.py", label="Noticias")
-        # botonsalir = st.button("Cerrar sesión")
-        # if botonsalir:
-        #     st.session_state.clear()
-        #     st.rerun()
+        botonsalir = st.button("Cerrar sesión")
+        if botonsalir:
+             st.session_state.clear()
+             st.rerun()
 
 def acceso():
     if 'usuario' in st.session_state:
