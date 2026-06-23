@@ -79,4 +79,6 @@ if 'usuario' in st.session_state:
 
         except:
             break
-    st.divider()   
+    st.divider()  
+else:
+    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
