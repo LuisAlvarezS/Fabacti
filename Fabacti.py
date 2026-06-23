@@ -8,8 +8,8 @@ import funciones as fu
 import constantes as co
 import acceso as ac
 
-#def fabacti(usuario=None):
-def fabacti():
+def fabacti(usuario=None):
+#def fabacti():
   # Encabezado
   st.write( ":red[FABACTI] :registered: ")
 #  st.write('**Bienvenido(a)** :blue[**' + usuario + '**] a tu aplicación de consulta de información financiera y eventos importantes. Aquí podrás encontrar datos actualizados sobre la TRM, DTF, pico y placa, frases inspiradoras del día y recomendaciones de libros. ¡Explora y mantente informado!')
@@ -36,6 +36,7 @@ def fabacti():
   
 # Proceso de DTF
   valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
+  
   dtf = str('{:,.2f} '.format(float(valor_dtf)))
   dtfhistorico, deltadtf = fu.dtftodos()
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
@@ -81,4 +82,4 @@ if __name__ == '__main__':
     ac.acceso()
     if 'usuario' in st.session_state:
         fabacti(usuario=st.session_state['usuario'])
-    #fabacti()
+#    fabacti()
