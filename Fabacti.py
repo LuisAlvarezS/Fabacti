@@ -9,7 +9,7 @@ import constantes as co
 import acceso as ac
 
 def fabacti(usuario=None):
-  st.login_form.clear() 
+#  st.login_form.clear() 
    
   # Encabezado
   st.write( ":red[FABACTI] :registered: ")
