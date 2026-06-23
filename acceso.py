@@ -26,7 +26,6 @@ def acceso():
         if submitted:
             if fu.verificar_usuario(username, password):
                 st.session_state['usuario'] = username
-                del st.session_state["login_form"]
                 st.rerun()
             else:
                 st.error("Credenciales incorrectas")
