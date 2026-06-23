@@ -26,7 +26,7 @@ def acceso():
         if submitted:
             if fu.verificar_usuario(username, password):
                 st.session_state['usuario'] = username
-                st.session_state['login_form'] = False
+                del st.session_state['login_form']
     
                 st.rerun()
             else:
