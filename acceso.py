@@ -26,8 +26,8 @@ def acceso():
         if submitted:
             if fu.verificar_usuario(username, password):
                 st.session_state['usuario'] = username
-                st.login_form.clear()  # Clear the login form if it exists
-              #generarmenu(username)
+                st.login['login_form'] = False
+    
                 st.rerun()
             else:
                 st.error("Credenciales incorrectas")

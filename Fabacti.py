@@ -9,8 +9,7 @@ import constantes as co
 import acceso as ac
 
 def fabacti(usuario=None):
-#  st.login_form.clear() 
-   
+  
   # Encabezado
   st.write( ":red[FABACTI] :registered: ")
   st.write('**Usuario** :blue[**' + usuario + '**]')
@@ -84,4 +83,3 @@ if __name__ == '__main__':
     ac.acceso()
     if 'usuario' in st.session_state:
         fabacti(usuario=st.session_state['usuario'])
-#    fabacti()
