@@ -171,12 +171,12 @@ def dtfactual():
     df = pd.read_sql_query(consulta, conn)
     if df['total'][0] == 0:
         almacenardtf()
-    consulta= 'select valor from dtf where ' + wfecha + ' between fechainicio and fechafin' 
+    consulta= 'select fechainicio, fechafin, valor from dtf where ' + wfecha + ' between fechainicio and fechafin' 
     df = pd.read_sql_query(consulta, conn)
     conn.close()
-    return(df['valor'][0])
+    return(df['valor'][0], df['fechainicio'][0], df['fechafin'][0])
 
-# Devuelve la lista hitorica del DTF
+# Devuelve la lista historica del DTF
 def dtftodos():
     conn = sqlite3.connect(co.BD)
     consulta= 'select valor from dtf order by fechainicio' 

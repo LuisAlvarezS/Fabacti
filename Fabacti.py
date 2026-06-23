@@ -40,7 +40,8 @@ def fabacti():
   # datos = fu.dtfhistoricos()
   # dtfhistorico = datos
   # deltadtf = '{:,.2f} '.format(float(dtf) - float(datos[1]))
-  dtf = str('{:,.2f} '.format(float(fu.dtfactual())))
+  valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
+  dtf = str('{:,.2f} '.format(float(valor_dtf)))
   dtfhistorico, deltadtf = fu.dtftodos()
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
   proceso.empty()
@@ -51,7 +52,7 @@ def fabacti():
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
-    dtf1.metric('**DTF**', dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
+    dtf1.metric('**DTF**' + fechainicio_dtf + ' - ' + fechafin_dtf, dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
   with frases:
     # Obtener frase del dia
