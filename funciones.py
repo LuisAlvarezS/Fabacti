@@ -12,7 +12,7 @@ import json
 import constantes as co
 import xmltodict
 import pandas as pd
-import bcrypt
+#import bcrypt
 
 from zoneinfo import ZoneInfo
 
@@ -228,36 +228,36 @@ def datosdtf():
     conn.close()
     return(df)
 
-def registrar_usuario(nombre: str, clave: str):
-    if not nombre  or not clave:
-        raise ValueError("Usuario y clave no pueden estar vacíos.")
+# def registrar_usuario(nombre: str, clave: str):
+#     if not nombre  or not clave:
+#         raise ValueError("Usuario y clave no pueden estar vacíos.")
 
-    # Generar hash seguro con bcrypt
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(clave.encode("utf-8"), salt)
+#     # Generar hash seguro con bcrypt
+#     salt = bcrypt.gensalt()
+#     hashed = bcrypt.hashpw(clave.encode("utf-8"), salt)
 
-    conn = sqlite3.connect("datos/fabacti.db")
-    cursor = conn.cursor()
-    try:
-        cursor.execute(
-            "INSERT INTO usuarios (nombre, clave) VALUES (?, ?)",
-            (nombre, hashed.decode("utf-8"))
-        )
-        conn.commit()
-        print(f"Usuario '{nombre}' registrado correctamente.")
-    except sqlite3.IntegrityError:
-        print(f"Error: el usuario '{nombre}' ya existe.")
-    finally:
-        conn.close()
+#     conn = sqlite3.connect("datos/fabacti.db")
+#     cursor = conn.cursor()
+#     try:
+#         cursor.execute(
+#             "INSERT INTO usuarios (nombre, clave) VALUES (?, ?)",
+#             (nombre, hashed.decode("utf-8"))
+#         )
+#         conn.commit()
+#         print(f"Usuario '{nombre}' registrado correctamente.")
+#     except sqlite3.IntegrityError:
+#         print(f"Error: el usuario '{nombre}' ya existe.")
+#     finally:
+#         conn.close()
 
-def verificar_usuario(nombre: str, clave: str) -> bool:
-    conn = sqlite3.connect("datos/fabacti.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT clave FROM usuarios WHERE nombre = ?", (nombre,))
-    row = cursor.fetchone()
-    conn.close()
+# def verificar_usuario(nombre: str, clave: str) -> bool:
+#     conn = sqlite3.connect("datos/fabacti.db")
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT clave FROM usuarios WHERE nombre = ?", (nombre,))
+#     row = cursor.fetchone()
+#     conn.close()
 
-    if row:
-        stored_hash = row[0].encode("utf-8")
-        return bcrypt.checkpw(clave.encode("utf-8"), stored_hash)
-    return False
+#     if row:
+#         stored_hash = row[0].encode("utf-8")
+#         return bcrypt.checkpw(clave.encode("utf-8"), stored_hash)
+#     return False
