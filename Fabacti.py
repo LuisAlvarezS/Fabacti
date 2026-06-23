@@ -8,7 +8,8 @@ import funciones as fu
 import constantes as co
 import acceso as ac
 
-def fabacti(usuario=None):
+#def fabacti(usuario=None):
+def fabacti():
   # Encabezado
   st.write( ":red[FABACTI] :registered: ")
   st.write('**Bienvenido(a)** :blue[**' + usuario + '**] a tu aplicación de consulta de información financiera y eventos importantes. Aquí podrás encontrar datos actualizados sobre la TRM, DTF, pico y placa, frases inspiradoras del día y recomendaciones de libros. ¡Explora y mantente informado!')
@@ -81,6 +82,7 @@ if __name__ == '__main__':
         )
     # fu.registrar_usuario('admin', 'admin')
 
-    ac.acceso()
-    if 'usuario' in st.session_state:
-        fabacti(usuario=st.session_state['usuario'])
+#    ac.acceso()
+#    if 'usuario' in st.session_state:
+#        fabacti(usuario=st.session_state['usuario'])
+    fabacti()
