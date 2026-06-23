@@ -82,4 +82,4 @@ if 'usuario' in st.session_state:
     st.divider()  
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
-    st.button("Iniciar sesión", on_click=lambda: st.session_state.clear())
+    st.button("Iniciar sesión", on_click=lambda: st.page('Fabacti'))
