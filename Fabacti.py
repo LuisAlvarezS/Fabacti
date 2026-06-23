@@ -12,7 +12,7 @@ def fabacti(usuario=None):
 #def fabacti():
   # Encabezado
   st.write( ":red[FABACTI] :registered: ")
-#  st.write('**Bienvenido(a)** :blue[**' + usuario + '**] a tu aplicación de consulta de información financiera y eventos importantes. Aquí podrás encontrar datos actualizados sobre la TRM, DTF, pico y placa, frases inspiradoras del día y recomendaciones de libros. ¡Explora y mantente informado!')
+  st.write('**Bienvenido(a)** :blue[**' + usuario + '**] a tu aplicación de consulta de información financiera y eventos importantes. Aquí podrás encontrar datos actualizados sobre la TRM, DTF, pico y placa, frases inspiradoras del día y recomendaciones de libros. ¡Explora y mantente informado!')
   st.sidebar.write(co.ENCABEZADO)
 
   fechacol = fu.obtener_fecha_hora_local("America/Bogota")

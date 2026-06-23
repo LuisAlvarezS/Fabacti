@@ -30,7 +30,7 @@ def acceso():
                 if fu.verificar_usuario(username, password):
                     st.session_state['usuario'] = username
                     generarmenu(username)
-                    #st.rerun()
+                    st.rerun()
                 else:
                     st.error("Credenciales incorrectas")
     return()
