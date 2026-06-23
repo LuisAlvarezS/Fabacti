@@ -52,7 +52,7 @@ def fabacti():
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
-    dtf1.metric('**DTF** Vigefncia: ' + fechainicio_dtf.strftime("%Y-%m-%d") + ' - ' + fechafin_dtf.strftime("%Y-%m-%d"), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
+    dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf.strftime("%Y-%m-%d")) + ' - ' + str(fechafin_dtf.strftime("%Y-%m-%d")), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
   with frases:
     # Obtener frase del dia
