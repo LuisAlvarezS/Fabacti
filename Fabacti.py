@@ -36,8 +36,6 @@ def fabacti():
   
 # Proceso de DTF
   valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
-  fechainicio_dtf = datetime.strptime(str(fechainicio_dtf), "%d%m%Y").date()
-  fechafin_dtf = datetime.strptime(str(fechafin_dtf), "%d%m%Y").date()
   dtf = str('{:,.2f} '.format(float(valor_dtf)))
   dtfhistorico, deltadtf = fu.dtftodos()
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
