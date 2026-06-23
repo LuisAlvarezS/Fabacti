@@ -23,6 +23,7 @@ def acceso():
     #Loading the Form:
     if not st.session_state["login_form"]:
         st.session_state["login_form"] = True
+        st.rerun()
         with st.form("login_form"):
             st.write("🔒 Iniciar sesión")
             username = st.text_input("Username")
@@ -31,7 +32,7 @@ def acceso():
             if submitted:
                 if fu.verificar_usuario(username, password):
                     st.session_state['usuario'] = username
-                    del st.session_state["form_loaded"]
+                    del st.session_state["login_form"]
                     st.rerun()
                 else:
                     st.error("Credenciales incorrectas")
