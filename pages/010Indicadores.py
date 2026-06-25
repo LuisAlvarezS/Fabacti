@@ -19,7 +19,9 @@ if 'usuario' in st.session_state:
         "Fecha": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
         "Colombia": [67, 68, 67, 63, 66, 61, 71]
         })
+    
     fig = go.Figure()
+
     fig.add_trace(go.Scatter(x=datos['Fecha'], y=datos['Colombia'], mode='lines+markers', name='Colombia'))
     fig.update_layout(xaxis_title='Fecha', yaxis_title='Índice de Innovación')
     fig.update_layout(
