@@ -39,7 +39,7 @@ def fabacti(usuario=None):
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
   proceso.empty()
 
-  trm, dtf1, picoplaca, frases, libro = st.columns(5, border = True)  
+  trm, dtf1 = st.columns(2, border = True)  
   
   with trm:
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
@@ -47,6 +47,7 @@ def fabacti(usuario=None):
   with dtf1:
     dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' - ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
+  picoplaca, frases, libro = st.columns(3, border = True)
   with frases:
     # Obtener frase del dia
     wfrase, wautor = fu.frase()
