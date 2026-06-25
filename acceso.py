@@ -19,9 +19,9 @@ def acceso():
     if st.session_state.mostrar_form:
         with st.form("login_form"):
             st.write("🔒 Iniciar sesión")
-            username = st.text_input("Username")
-            password = st.text_input("Password", type="password")
-            submitted = st.form_submit_button("Submit")
+            username = st.text_input("Usuario")
+            password = st.text_input("Clave de acceso", type="password")
+            submitted = st.form_submit_button("Iniciar sesión")
             if submitted:
                 if fu.verificar_usuario(username, password):
                     st.session_state['usuario'] = username
