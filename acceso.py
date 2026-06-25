@@ -1,7 +1,5 @@
-import sys
 
 import streamlit as st
-from datetime import datetime, timedelta
 
 import funciones as fu
 
