@@ -3,7 +3,7 @@
 
 import streamlit as st
 import pandas as pd
-
+import plotly.graph_objects as go
 import constantes as co
 
 
@@ -12,17 +12,20 @@ if 'usuario' in st.session_state:
     st.write( ":red[FABACTI] :registered: ")
     st.sidebar.write(co.ENCABEZADO)
 
-    st.subheader('Indice Global de Innovación')
+    st.subheader('Posicion de Colombia en el Índice Global de Innovación')
     st.divider()
-    indice_global_innovacion = [ {"fecha": "2019", "valor": 67}, {"fecha": "2020", "valor": 68}, {"fecha": "2021", "valor": 67}, {"fecha": "2022", "valor": 63}, {"fecha": "2023", "valor": 66}, {"fecha": "2024", "valor": 61}, {"fecha": "2025", "valor": 71} ]
  
     datos = pd.DataFrame({
         "Fecha": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
-        "Colombia": [67, 68, 67, 63, 66, 61, 71], 
-        "Suiza": [65, 64, 62, 60, 58, 56, 54], 
-        "Chile": [60, 59, 57, 55, 53, 51, 49]
+        "Colombia": [67, 68, 67, 63, 66, 61, 71]
         })
- 
-    st.line_chart(datos, x='Fecha', y=['Colombia', 'Suiza', 'Chile'], x_label='Fecha', y_label='Índice de Innovación', width='stretch')
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=datos['Fecha'], y=datos['Colombia'], mode='lines+markers', name='Colombia'))
+    fig.update_layout(xaxis_title='Fecha', yaxis_title='Índice de Innovación')
+    fig.update_layout(
+            yaxis=dict(autorange='reversed',
+                       range=[0, 100])
+    )
+    st.plotly_chart(fig, use_container_width=True, theme="streamlit", config={"displayModeBar": False})
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ") 

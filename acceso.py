@@ -18,15 +18,19 @@ def generarmenu(usuario):
         #     st.rerun()
 
 def acceso():
-    with st.form("login_form"):
-        st.write("🔒 Iniciar sesión")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            if fu.verificar_usuario(username, password):
-                st.session_state['usuario'] = username
-                st.rerun()
-            else:
-                st.error("Credenciales incorrectas")
+    if "mostrar_form" not in st.session_state:
+        st.session_state.mostrar_form = True
+    if st.session_state.mostrar_form:
+        with st.form("login_form"):
+            st.write("🔒 Iniciar sesión")
+            username = st.text_input("Username")
+            password = st.text_input("Password", type="password")
+            submitted = st.form_submit_button("Submit")
+            if submitted:
+                if fu.verificar_usuario(username, password):
+                    st.session_state['usuario'] = username
+                    st.session_state.mostrar_form = False
+                    st.rerun()
+                else:
+                    st.error("Credenciales incorrectas")
     return()
