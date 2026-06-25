@@ -4,8 +4,6 @@ import streamlit as st
 from datetime import datetime, timedelta
 
 import funciones as fu
-import constantes as co
-
 
 def generarmenu(usuario):
     with st.sidebar:
