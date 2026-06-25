@@ -1,5 +1,6 @@
 
 
+import time
 
 import streamlit as st
 import pandas as pd
@@ -10,9 +11,10 @@ import constantes as co
 if 'usuario' in st.session_state:
     # Encabezado
     st.write( ":red[FABACTI] :registered: ")
-    st.sidebar.write(co.ENCABEZADO)
+
     st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
+    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear(), help="Haga clic para cerrar sesión y borrar la información de usuario.")
+    st.sidebar.write(co.ENCABEZADO)
     
     st.subheader('Posicion de Colombia en el Índice Global de Innovación')
     st.divider()
@@ -38,4 +40,6 @@ if 'usuario' in st.session_state:
     )
     st.plotly_chart(fig, use_container_width=True, theme="streamlit", config={"displayModeBar": False})
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ") 
+    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
+    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
+    st.switch_page("Fabacti.py") 
