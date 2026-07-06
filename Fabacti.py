@@ -16,10 +16,18 @@ def fabacti(usuario=None):
   fechahoy = fechacol.date()  
   ndia = co.DIAS[fechahoy.weekday()]
   nmes = co.MESES[fechahoy.month - 1]
-
+  # Veriificar si es festivo en Colombia
+  is_festivo = fu.es_festivo_colombia(str(fechahoy))
   wevento = fu.evento(fechahoy)
-  st.success(ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento )
   
+  if is_festivo:
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento + ' :red[**FESTIVO**]'
+  else:
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento
+  st.success(mensaje, icon="✅")
+  
+  
+
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM

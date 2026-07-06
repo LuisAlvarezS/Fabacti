@@ -103,15 +103,18 @@ if 'usuario' in st.session_state:
                 wtexto.append(wpresidentes[i]['startPeriodDate'][:4] + "/" + wpresidentes[i]['endPeriodDate'][:4] + " " + wpresidentes[i]['name'] + " " + wpresidentes[i]['lastName'])
                 conimage += 1
         for k in range (0, conimage, 4):
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.image(wimages[k], width = 100, caption=wtexto[k])
-            with col2:
-                st.image(wimages[k+1], width = 100, caption=wtexto[k+1])
-            with col3:
-                st.image(wimages[k+2], width = 100, caption=wtexto[k+2])
-            with col4:
-                st.image(wimages[k+3], width = 100, caption=wtexto[k+3])
+            try:
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.image(wimages[k], width = 100, caption=wtexto[k])
+                with col2:
+                    st.image(wimages[k+1], width = 100, caption=wtexto[k+1])
+                with col3:
+                    st.image(wimages[k+2], width = 100, caption=wtexto[k+2])
+                with col4:
+                    st.image(wimages[k+3], width = 100, caption=wtexto[k+3])
+            except:
+                pass
 
     with constitucion:
         urlconstitucion = 'https://api-colombia.com/api/v1/constitutionarticle'

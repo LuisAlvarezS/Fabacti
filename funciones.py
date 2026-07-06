@@ -7,7 +7,10 @@ from anyio import Path
 
 import streamlit as st
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, date
+
+from holidays_co import is_holiday_date
+
 import json
 import constantes as co
 import xmltodict
@@ -261,3 +264,24 @@ def verificar_usuario(nombre: str, clave: str) -> bool:
         stored_hash = row[0].encode("utf-8")
         return bcrypt.checkpw(clave.encode("utf-8"), stored_hash)
     return False
+
+
+def es_festivo_colombia(fecha_str):
+    """
+    Verifica si una fecha es festivo en Colombia.
+    
+    Parámetros:
+        fecha_str (str): Fecha en formato 'YYYY-MM-DD'
+    
+    Retorna:
+        bool: True si es festivo, False si no.
+    """
+    try:
+        # Convertir string a objeto date
+        fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
+        
+        # Verificar si es festivo
+        return is_holiday_date(fecha)
+    
+    except ValueError:
+        raise ValueError("Formato de fecha inválido. Use 'YYYY-MM-DD'.")
