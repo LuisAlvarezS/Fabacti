@@ -196,7 +196,7 @@ def evento(fecha):
     cursor.execute(consulta)
     res = cursor.fetchone()
     if res is None:
-        res = 'No hay eventos registrados para hoy'
+        res = ' '
     else:
         res = res[0]
     conn.close()
