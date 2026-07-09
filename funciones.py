@@ -22,7 +22,7 @@ from zoneinfo import ZoneInfo
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
     # Realizar la solicitud
-    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=30&$order=vigenciadesde%20DESC"
+    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=100&$order=vigenciadesde%20DESC"
     response = requests.get(URL_TRM, timeout=10)
     response.raise_for_status()
         
@@ -47,19 +47,6 @@ def frase():
         frase = 'La suerte existe, pero tiene que encontrarte trabajando.'
         autor = 'Pablo Picasso'
     return(frase, autor)
-
-# Funcion para mostrar todos los dias con su pico y placa, resaltando el dia actual
-def mostrartodopyp(fecha):
-    # fecha = datetime.now()
-    ndia = fecha.weekday()
-    texto = ''
-    contador = 0
-    for dia in co.DIAS:
-        if ndia == contador:
-            resaltar = dia + ': ' + co.PYP[contador]
-        texto = texto + dia + ': ' + co.PYP[contador] + '  '
-        contador += 1
-    return(texto, resaltar) 
 
 # Funcion para obtener una imgena aleatoria de una carpeta dada, se utiliza para mostrar el libro recomendado del dia
 def obtener_imagen_aleatoria(ruta_directorio):
@@ -285,3 +272,123 @@ def es_festivo_colombia(fecha_str):
     
     except ValueError:
         raise ValueError("Formato de fecha inválido. Use 'YYYY-MM-DD'.")
+
+# Funcion para mostrar todos los dias con su pico y placa, resaltando el dia actual
+def mostrartodopyp(fecha):
+    # fecha = datetime.now()
+    ndia = fecha.weekday()
+    texto = ''
+    contador = 0
+    if es_festivo_colombia(fecha.strftime("%Y-%m-%d")):
+        resaltar = 'Hoy es festivo, no aplica Pico y Placa'
+    else:
+        for dia in co.DIAS:
+            if ndia == contador:
+                resaltar = dia + ': ' + co.PYP[contador]
+            texto = texto + dia + ': ' + co.PYP[contador] + '  '
+            contador += 1
+    return(texto, resaltar) 
+
+def obtener_ibr():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
+    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+    dibr = valores['generic:ObsValue']['@value']
+    return(dibr)
+
+def obtener_uvr():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('UVR', 'DAILY', fechahoy, 'LATEST')
+    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+    duvr = 0
+    duvr = valores[0]['generic:ObsValue']['@value']
+    return(duvr)   
+
+def obtener_ibr():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
+    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+    dibr = valores['generic:ObsValue']['@value']
+    return(dibr)
+   
+def obtener_ipc():
+    fechahoy = datetime.now()
+    ipc = co.IPC2025
+    return(ipc)
+
+def obtener_smmlv():
+    fechahoy = datetime.now()
+    smmlv = co.SMMLV2026
+    return(smmlv)
+
+def obtener_tib():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('IR', 'DAILY', fechahoy, 'LATEST')
+    valor = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']['generic:ObsValue']['@value']
+    return(valor)
+
+def obtener_colcap():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('COLCAP', 'MONTHLY', fechahoy, 'LATEST')
+    valor = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']['generic:ObsValue']['@value']
+    return(valor)
+
+def obtener_tpm():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('CBR', 'DAILY', fechahoy, 'LATEST')
+    valor = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']['generic:ObsValue']['@value']
+    return(valor)
+
+def obtener_indicador_varios(indicador):
+    findicadores = {
+        'UVR': obtener_uvr,
+        'IBR': obtener_ibr,
+        'IPC': obtener_ipc,
+        'SMMLV': obtener_smmlv,
+        'TIB': obtener_tib,
+        'COLCAP': obtener_colcap,
+        'TPM': obtener_tpm
+    }
+    res = findicadores[indicador]()
+    return(res)
+
+def formatoindicador(indicador, dato):
+    if indicador in ['IBR','TIB','TPM']:
+        datof = str(' {:,.2f} % '.format(float(dato)))    
+    elif indicador == 'UVR':
+        datof = str(' ${:,.4f} '.format(float(dato)))
+    elif indicador == 'IPC':
+        datof = str(' {:,.2f} % '.format(float(dato)))
+    else:
+        datof = str(' ${:,.2f} '.format(float(dato)))
+    return(datof)
+
+def calcular_indicadores(trm):
+# Consultar y mostrar los valores para los indicadores UVR, IBR, IPC, TIB, SMMLV, COLCAP, TPM
+    fecha = datetime.now()
+    wfecha = fecha.strftime("%Y%m%d")
+    dis = '        '
+    textoindicadores = []
+    for i in co.INDICADORES:
+        try:
+            valor = obtener_indicador_varios(i)
+        except:
+            valor = 0
+        svalor = str(valor)
+        if i == 'SMMLV':
+            tabla = str.maketrans({'$': '', ',': ''})
+            resd = svalor.translate(tabla)
+            smmlvusd = str('USD {:,.2f} '.format(float(resd) / trm))
+            textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
+        elif i == 'IPC':
+            textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)
+        else:
+#        elif i not in ['IBR', 'UVR']:
+            textoindicadores.append(i + ':  ' + formatoindicador(i, svalor) + dis)
+        # if i == 'IBR':
+        #     wibr = svalor
+        # if i == 'UVR':
+        #     wuvr = svalor
+
+    textindicadores = "   ".join(map(str, textoindicadores))
+    return(textindicadores)

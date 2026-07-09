@@ -1,4 +1,6 @@
 
+from datetime import timedelta
+
 import streamlit as st
 
 import funciones as fu
@@ -24,10 +26,8 @@ def fabacti(usuario=None):
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento + ' :red[**FESTIVO**]'
   else:
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento
-  st.success(mensaje, icon="✅")
+  st.success(mensaje, icon="📆")
   
-  
-
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
@@ -38,7 +38,10 @@ def fabacti(usuario=None):
   deltatrm = trm - trmayer
   fdeltatrm = '{:,.2f} '.format(deltatrm)
   listatrm.reverse()
-  
+
+# Calcular los indicadores UVR, IBR, IPC, TIB, SMMLV, COLCAP, TPM
+  textoindicadores = fu.calcular_indicadores(trm)
+
 # Proceso de DTF
   valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
   fechainicio_dtf = str(fechainicio_dtf)[0:4] + '-' + str(fechainicio_dtf)[4:6] + '-' + str(fechainicio_dtf)[6:8]
@@ -48,13 +51,28 @@ def fabacti(usuario=None):
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
   proceso.empty()
 
-  trm, dtf1 = st.columns(2, border = True)  
-  
+# # Preparar infomacion IBR 
+#   ayer = fechahoy - timedelta(days=1)
+#   wayer = ayer.strftime("%Y%m%d")
+#   wibr = fu.obtener_indicador_varios('IBR')
+#   wibr = str('{:,.2f} '.format(float(wibr)))
+
+  trm, dtf1 = st.columns(2, border = True)   
   with trm:
     st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
     dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' - ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
+
+  # with ibr:
+  #   st.metric('**IBR**', wibr + ' %', delta_arrow='auto', delta_color="normal", chart_data=None, chart_type='line', width='stretch', height='content', help=co.NOTASIBR)
+
+  st.write('---')
+  # Mostrar indicadores economicos adicionales 
+  pos = textoindicadores.find('SMMLV')
+  st.text(textoindicadores[0:pos-1])
+  st.text(textoindicadores[pos:])
+  st.write('---')
 
   picoplaca, frases, libro = st.columns(3, border = True)
   with frases:
