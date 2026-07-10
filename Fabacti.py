@@ -43,6 +43,7 @@ def fabacti(usuario=None):
 # Calcular los indicadores UVR, IBR, IPC, TIB, SMMLV, COLCAP, TPM
   textoindicadores = fu.calcular_indicadores(trm)
 
+
 # Proceso de DTF
   valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
   fechainicio_dtf = str(fechainicio_dtf)[0:4] + '-' + str(fechainicio_dtf)[4:6] + '-' + str(fechainicio_dtf)[6:8]
