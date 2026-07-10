@@ -31,8 +31,9 @@ def fabacti(usuario=None):
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
-  listatrm = fu.obtener_trm()
+  listatrm, fecha_vigencia = fu.obtener_trm()
   trm = float(listatrm[0])
+  fecha_vigencia_trm = fecha_vigencia[0]
   ftrm = '${:,.2f} '.format(trm)
   trmayer = float(listatrm[1])
   deltatrm = trm - trmayer
@@ -59,7 +60,7 @@ def fabacti(usuario=None):
 
   trm, dtf1 = st.columns(2, border = True)   
   with trm:
-    st.metric('**TRM  - Dólar**', ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
+    st.metric('**TRM  - Dólar** Vigencia: ' + str(fecha_vigencia_trm)[0:10], ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
     dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' - ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
@@ -67,8 +68,8 @@ def fabacti(usuario=None):
   # with ibr:
   #   st.metric('**IBR**', wibr + ' %', delta_arrow='auto', delta_color="normal", chart_data=None, chart_type='line', width='stretch', height='content', help=co.NOTASIBR)
 
-  st.write('---')
   # Mostrar indicadores economicos adicionales 
+  st.write('---')
   pos = textoindicadores.find('SMMLV')
   st.text(textoindicadores[0:pos-1])
   st.text(textoindicadores[pos:])

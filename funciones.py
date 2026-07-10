@@ -31,9 +31,11 @@ def obtener_trm():
     if not data:
         return None
     listatrm = []
+    listavigencia = []
     for registro in data:
         listatrm.append(float(registro["valor"]))
-    return(listatrm) 
+        listavigencia.append(registro["vigenciadesde"])
+    return(listatrm, listavigencia)
 
 # Funcion para obtener la frase del dia
 def frase():
