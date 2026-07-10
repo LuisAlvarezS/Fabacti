@@ -13,14 +13,14 @@ cursor = conn.cursor()
 #     print(row)
 
 # Comando consulta registros
-cursor.execute("select * from usuarios  ")
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
+# cursor.execute("select * from usuarios  ")
+# rows = cursor.fetchall()
+# for row in rows:
+#     print(row)
 
 
 # # Comandos borrar registros
-#cursor.execute("delete from eventos where id_evento >= 13 ")
+#cursor.execute("delete from eventos where fecha >= '20260706' ")
 
 #cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260526', 'Aniversario 42 de bodas Luz Miriam y Luis Albeiro' )");
 
@@ -33,6 +33,18 @@ for row in rows:
 # cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260610', 'Cumpleaños Matias Escobar Alvarez')");
 # cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20261228', 'Cumpleaños Samuel Escobar Alvarez')");
 
-#conn.commit()
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260720', 'Subir a Cerro Tusa COMFAMA')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260710', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260717', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260724', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260731', 'Natacion COMFAMA La Estrella')");
+
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260807', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260814', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260821', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260828', 'Natacion COMFAMA La Estrella')");
+cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260904', 'Natacion COMFAMA La Estrella')");
+
+conn.commit()
 # Cerrar la conexión
-#conn.close()
+conn.close()
