@@ -27,15 +27,29 @@ def obtener_trm():
     response.raise_for_status()
         
     data = response.json()
-        
+    trm = data[0]["valor"]
+    f1, f2 = data[0]["vigenciadesde"], data[0]["vigenciadesde"]
+    f1 = str(f1)[0:4] + str(f1)[5:7] + str(f1)[8:10]
+    f2 = str(f2)[0:4] + str(f2)[5:7] + str(f2)[8:10]
+
+    conn = sqlite3.connect(co.BD)
     if not data:
         return None
-    listatrm = []
-    listavigencia = []
-    for registro in data:
-        listatrm.append(float(registro["valor"]))
-        listavigencia.append(registro["vigenciadesde"])
-    return(listatrm, listavigencia)
+    cursor = conn.cursor()
+    sqlinser = 'insert into valores_indicadores ( indicador, fechainicio, fechafin, valor) values ( "TRM", ?, ?, ?)'
+    datos = (f1, f2, trm )
+    cursor.execute(sqlinser, datos)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return()
+    
+    # listatrm = []
+    # listavigencia = []
+    # for registro in data:
+    #     listatrm.append(float(registro["valor"]))
+    #     listavigencia.append(registro["vigenciadesde"])
+    # return(listatrm, listavigencia)
 
 # Funcion para obtener la frase del dia
 def frase():
@@ -141,13 +155,13 @@ def almacenardtf():
     f2 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][6]['generic:ObsDimension']['@value']
 
     conn = sqlite3.connect(co.BD)
-    consulta= 'select count(*)  as total from dtf where  fechainicio >= ' + f1 + ' and  fechafin <= ' + f2 
+    consulta= 'select count(*)  as total from valores_indicadores where  indicador = "DTF" and fechainicio >= ' + f1 + ' and  fechafin <= ' + f2 
     df = pd.read_sql_query(consulta, conn)
     totales = df['total'][0]
 
     if totales == 0:
         cursor = conn.cursor()
-        sqlinser = 'insert into dtf ( fechainicio, fechafin, valor) values ( ?, ?, ?)'
+        sqlinser = 'insert into valores_indicadores ( indicador, fechainicio, fechafin, valor) values ( "DTF", ?, ?, ?)'
         datos = (f1, f2, dtf )
         cursor.execute(sqlinser, datos)
         conn.commit()
@@ -155,15 +169,34 @@ def almacenardtf():
     conn.close()
     return()
 
-def dtfactual():
+# def dtfactual():
+#     fecha = datetime.now()
+#     wfecha = fecha.strftime("%Y%m%d")
+#     conn = sqlite3.connect(co.BD)
+#     consulta= 'select count(*) as total from valores_indicadores where indicador = "DTF" and ' + wfecha + ' between fechainicio and fechafin' 
+#     df = pd.read_sql_query(consulta, conn)
+#     if df['total'][0] == 0:
+#         almacenardtf()
+#     consulta= 'select fechainicio, fechafin, valor from valores_indicadores where indicador = "DTF" and ' + wfecha + ' between fechainicio and fechafin' 
+#     df = pd.read_sql_query(consulta, conn)
+#     conn.close()
+#     return(df['valor'][0], df['fechainicio'][0], df['fechafin'][0])
+
+def consulta_indicador(indicador):
     fecha = datetime.now()
     wfecha = fecha.strftime("%Y%m%d")
     conn = sqlite3.connect(co.BD)
-    consulta= 'select count(*) as total from dtf where ' + wfecha + ' between fechainicio and fechafin' 
+    consulta= 'select count(*) as total from valores_indicadores where indicador = "' + indicador + '" and ' + wfecha + ' between fechainicio and fechafin' 
     df = pd.read_sql_query(consulta, conn)
-    if df['total'][0] == 0:
+    if df['total'][0] == 0 and indicador == "DTF":
         almacenardtf()
-    consulta= 'select fechainicio, fechafin, valor from dtf where ' + wfecha + ' between fechainicio and fechafin' 
+    elif df['total'][0] == 0 and indicador == "TRM":
+        obtener_trm()
+    if indicador == "DTF":
+        consulta = "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin"
+    elif indicador == "TRM":
+        consulta = "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' order by fechainicio desc limit 1"   
+#    consulta= "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin" 
     df = pd.read_sql_query(consulta, conn)
     conn.close()
     return(df['valor'][0], df['fechainicio'][0], df['fechafin'][0])
@@ -171,11 +204,19 @@ def dtfactual():
 # Devuelve la lista historica del DTF
 def dtftodos():
     conn = sqlite3.connect(co.BD)
-    consulta= 'select valor from dtf order by fechainicio' 
+    consulta= 'select valor from valores_indicadores where indicador = "DTF" order by fechainicio' 
     df = pd.read_sql_query(consulta, conn)
     conn.close()
     dfanterior = df['valor'][len(df)-2]
     return(df, dfanterior)
+
+def lista_valores_indicador(indicador):
+    conn = sqlite3.connect(co.BD)
+    consulta= 'select valor from valores_indicadores where indicador = "' + indicador + '" order by fechainicio' 
+    df = pd.read_sql_query(consulta, conn)
+    conn.close()
+    indicadoranterior = df['valor'][len(df)-2]
+    return(df, indicadoranterior)
 
 def evento(fecha):
     wfecha = str(fecha.strftime("%Y%m%d"))
@@ -216,6 +257,13 @@ def eventos():
 def datosdtf():
     conn = sqlite3.connect(co.BD)
     sqlsp = "select fechainicio, fechafin, valor from dtf order by fechainicio DESC"
+    df = pd.read_sql_query(sqlsp, conn)
+    conn.close()
+    return(df)
+
+def datos_todos_indicadores():
+    conn = sqlite3.connect(co.BD)
+    sqlsp = "select indicador, fechainicio, fechafin, valor from valores_indicadores order by indicador, fechainicio DESC"
     df = pd.read_sql_query(sqlsp, conn)
     conn.close()
     return(df)
@@ -306,12 +354,12 @@ def obtener_uvr():
     duvr = valores[0]['generic:ObsValue']['@value']
     return(duvr)   
 
-def obtener_ibr():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
-    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-    dibr = valores['generic:ObsValue']['@value']
-    return(dibr)
+# def obtener_ibr():
+#     fechahoy = datetime.now()
+#     datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
+#     valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+#     dibr = valores['generic:ObsValue']['@value']
+#     return(dibr)
    
 def obtener_ipc():
     fechahoy = datetime.now()
@@ -380,7 +428,7 @@ def calcular_indicadores(trm):
         if i == 'SMMLV':
             tabla = str.maketrans({'$': '', ',': ''})
             resd = svalor.translate(tabla)
-            smmlvusd = str('USD {:,.2f} '.format(float(resd) / trm))
+            smmlvusd = str('USD {:,.2f} '.format(float(resd) / float(trm)))
             textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
         elif i == 'IPC':
             textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)

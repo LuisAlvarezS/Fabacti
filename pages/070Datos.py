@@ -11,15 +11,16 @@ if 'usuario' in st.session_state:
 
     st.sidebar.write(co.ENCABEZADO)
 
-    eventos, dtf = st.tabs(['Eventos','DTF'])
+    eventos, indicadores = st.tabs(['Eventos','Indicadores'])
 
     with eventos:
         dserveventos = fu.eventos()
         st.dataframe(dserveventos, hide_index = True, column_config={'id_evento': None})
 
-    with dtf:
-        dservdtf = fu.datosdtf()
-        st.dataframe(dservdtf, hide_index = True, column_config={'iddtf': None})
+    with indicadores:
+        dserveindicadores = fu.datos_todos_indicadores()
+        st.dataframe(dserveindicadores, hide_index = True, column_config={'id_indicador': None})
+
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)

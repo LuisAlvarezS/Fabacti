@@ -31,25 +31,31 @@ def fabacti(usuario=None):
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
-  listatrm, fecha_vigencia = fu.obtener_trm()
-  trm = float(listatrm[0])
-  fecha_vigencia_trm = fecha_vigencia[0]
+#  listatrm, fecha_vigencia = fu.obtener_trm()
+  valor_trm, fecha_vigencia, fecha_vigencia2= fu.consulta_indicador('TRM')
+  trm = float(valor_trm)
+  fecha_vigencia_trm = fecha_vigencia
   ftrm = '${:,.2f} '.format(trm)
-  trmayer = float(listatrm[1])
+  listatrm, trmanterior = fu.lista_valores_indicador('TRM')
+  #trmayer = float(listatrm['valor'][1])
+  trmayer = trmanterior
   deltatrm = trm - trmayer
   fdeltatrm = '{:,.2f} '.format(deltatrm)
-  listatrm.reverse()
+  #listatrm.reverse()
 
 # Calcular los indicadores UVR, IBR, IPC, TIB, SMMLV, COLCAP, TPM
   textoindicadores = fu.calcular_indicadores(trm)
 
 
 # Proceso de DTF
-  valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
+  #valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
+  valor_dtf, fechainicio_dtf, fechafin_dtf = fu.consulta_indicador('DTF')
+  
   fechainicio_dtf = str(fechainicio_dtf)[0:4] + '-' + str(fechainicio_dtf)[4:6] + '-' + str(fechainicio_dtf)[6:8]
   fechafin_dtf = str(fechafin_dtf)[0:4] + '-' + str(fechafin_dtf)[4:6] + '-' + str(fechafin_dtf)[6:8]
   dtf = str('{:,.2f} '.format(float(valor_dtf)))
-  dtfhistorico, deltadtf = fu.dtftodos()
+  #dtfhistorico, deltadtf = fu.dtftodos()
+  dtfhistorico, deltadtf = fu.lista_valores_indicador('DTF')
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
   proceso.empty()
 
