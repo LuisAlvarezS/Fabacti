@@ -13,10 +13,12 @@ if 'usuario' in st.session_state:
 
     st.write("Fuentes de infomación: ")
     st.write(" - :blue[**Noticias**] :newspaper:  :green[**(NewsAPI)**] [https://newsapi.org/]")
+    textofuentes = ""
     for fuente in co.FUENTESNOTICIAS:
-        st.write(" - " + fuente)
-    st.write(" - :blue[**Frase del día**] :memo:  :green[**(Frasedeldia)**] :link[https://rasedeldia.azurewebsites.net/api/phrase]")
-    st.write(" - :blue[**Indicadores financieros**] :link[https://www.banrep.gov.co/es/estadisticas/indicadores-financieros]")
+        textofuentes = textofuentes + " - " + fuente
+    st.write(textofuentes)
+    st.write(" - :blue[**Frase del día**] :memo:  :green[**(Frasedeldia)**] [https://rasedeldia.azurewebsites.net/api/phrase]")
+    st.write(" - :blue[**Indicadores financieros**] [https://www.banrep.gov.co/es/estadisticas/indicadores-financieros]")
 
     st.write(co.COPYRIGHT)
 else:
