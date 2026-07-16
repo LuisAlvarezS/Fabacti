@@ -22,7 +22,7 @@ def fabacti(usuario=None):
   # Veriificar e indicar si es festivo en Colombia
   es_festivo = fu.es_festivo_colombia(str(fechahoy))
   if es_festivo:
-    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO**]'
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
   else:
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
   st.success(mensaje, icon="📆")
