@@ -1,8 +1,7 @@
 
-from datetime import timedelta
-
 import streamlit as st
 
+#from datetime import timedelta
 import funciones as fu
 import constantes as co
 import acceso as ac
@@ -14,43 +13,34 @@ def fabacti(usuario=None):
   st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
   st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
   st.sidebar.write(co.ENCABEZADO)
-  fechacol = fu.obtener_fecha_hora_local("America/Bogota")
-  fechahoy = fechacol.date()  
+  fechacolombia = fu.obtener_fecha_hora_local("America/Bogota")
+  fechahoy = fechacolombia.date()  
+  
   ndia = co.DIAS[fechahoy.weekday()]
   nmes = co.MESES[fechahoy.month - 1]
-  # Veriificar si es festivo en Colombia
-  is_festivo = fu.es_festivo_colombia(str(fechahoy))
-  wevento = fu.evento(fechahoy)
   
-  if is_festivo:
-    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento + ' :red[**FESTIVO**]'
+  # Veriificar e indicar si es festivo en Colombia
+  es_festivo = fu.es_festivo_colombia(str(fechahoy))
+  if es_festivo:
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO**]'
   else:
-    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + ' -> ' + wevento
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
   st.success(mensaje, icon="📆")
   
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
-#  listatrm, fecha_vigencia = fu.obtener_trm()
   valor_trm, fecha_vigencia, fecha_vigencia2= fu.consulta_indicador('TRM')
   trm = float(valor_trm)
-  fecha_vigencia_trm = fecha_vigencia
+  fecha_vigencia_trm = str(fecha_vigencia)[0:4] + '-' + str(fecha_vigencia)[4:6] + '-' + str(fecha_vigencia)[6:8]
   ftrm = '${:,.2f} '.format(trm)
   listatrm, trmanterior = fu.lista_valores_indicador('TRM')
-  #trmayer = float(listatrm['valor'][1])
   trmayer = trmanterior
   deltatrm = trm - trmayer
   fdeltatrm = '{:,.2f} '.format(deltatrm)
-  #listatrm.reverse()
-
-# Calcular los indicadores UVR, IBR, IPC, TIB, SMMLV, COLCAP, TPM
-  textoindicadores = fu.calcular_indicadores(trm)
-
 
 # Proceso de DTF
-  #valor_dtf, fechainicio_dtf, fechafin_dtf = fu.dtfactual()
   valor_dtf, fechainicio_dtf, fechafin_dtf = fu.consulta_indicador('DTF')
-  
   fechainicio_dtf = str(fechainicio_dtf)[0:4] + '-' + str(fechainicio_dtf)[4:6] + '-' + str(fechainicio_dtf)[6:8]
   fechafin_dtf = str(fechafin_dtf)[0:4] + '-' + str(fechafin_dtf)[4:6] + '-' + str(fechafin_dtf)[6:8]
   dtf = str('{:,.2f} '.format(float(valor_dtf)))
@@ -59,27 +49,33 @@ def fabacti(usuario=None):
   deltadtf = '{:,.2f} '.format(float(dtf) - deltadtf)
   proceso.empty()
 
-# # Preparar infomacion IBR 
-#   ayer = fechahoy - timedelta(days=1)
-#   wayer = ayer.strftime("%Y%m%d")
-#   wibr = fu.obtener_indicador_varios('IBR')
-#   wibr = str('{:,.2f} '.format(float(wibr)))
+# Proceso de IBR 
+  valor_ibr, fecha_vigencia_ibr, fecha_vigencia2 = fu.consulta_indicador('IBR')
+  fecha_vigencia_ibr_f = str(fecha_vigencia_ibr)[0:4] + '-' + str(fecha_vigencia_ibr)[4:6] + '-' + str(fecha_vigencia_ibr)[6:8]
+  valor_ibr_f = str('{:,.2f} '.format(float(valor_ibr)))
+  ibrhistorico, deltaibr = fu.lista_valores_indicador('IBR')
+  deltaibr = '{:,.2f} '.format(float(valor_ibr_f) - deltaibr)
 
-  trm, dtf1 = st.columns(2, border = True)   
-  with trm:
+  trm1, dtf1, ibr1 = st.columns(3, border = True)   
+  with trm1:
     st.metric('**TRM  - Dólar** Vigencia: ' + str(fecha_vigencia_trm)[0:10], ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=co.NOTASTRM)
   
   with dtf1:
-    dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' - ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
+    dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' / ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
-  # with ibr:
-  #   st.metric('**IBR**', wibr + ' %', delta_arrow='auto', delta_color="normal", chart_data=None, chart_type='line', width='stretch', height='content', help=co.NOTASIBR)
+  with ibr1:
+    ibr1.metric('**IBR** Vigencia: ' + str(fecha_vigencia_ibr_f), valor_ibr_f, deltaibr, delta_arrow='auto', delta_color="normal", chart_data=ibrhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASIBR)
+
+# Calcular los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
+  proceso = st.text('Calculando indicadores economicos adicionales, ... por favor espere ...')
+  textoindicadores = fu.calcular_indicadores(trm)
+  proceso.empty()
 
   # Mostrar indicadores economicos adicionales 
   st.write('---')
-  pos = textoindicadores.find('SMMLV')
-  st.text(textoindicadores[0:pos-1])
-  st.text(textoindicadores[pos:])
+  #pos = textoindicadores.find('SMMLV')
+  st.text(textoindicadores)
+  #st.text(textoindicadores[pos:])
   st.write('---')
 
   picoplaca, frases, libro = st.columns(3, border = True)

@@ -169,19 +169,6 @@ def almacenardtf():
     conn.close()
     return()
 
-# def dtfactual():
-#     fecha = datetime.now()
-#     wfecha = fecha.strftime("%Y%m%d")
-#     conn = sqlite3.connect(co.BD)
-#     consulta= 'select count(*) as total from valores_indicadores where indicador = "DTF" and ' + wfecha + ' between fechainicio and fechafin' 
-#     df = pd.read_sql_query(consulta, conn)
-#     if df['total'][0] == 0:
-#         almacenardtf()
-#     consulta= 'select fechainicio, fechafin, valor from valores_indicadores where indicador = "DTF" and ' + wfecha + ' between fechainicio and fechafin' 
-#     df = pd.read_sql_query(consulta, conn)
-#     conn.close()
-#     return(df['valor'][0], df['fechainicio'][0], df['fechafin'][0])
-
 def consulta_indicador(indicador):
     fecha = datetime.now()
     wfecha = fecha.strftime("%Y%m%d")
@@ -192,9 +179,11 @@ def consulta_indicador(indicador):
         almacenardtf()
     elif df['total'][0] == 0 and indicador == "TRM":
         obtener_trm()
+    elif df['total'][0] == 0 and indicador == "IBR":
+        obtener_ibr()
     if indicador == "DTF":
         consulta = "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin"
-    elif indicador == "TRM":
+    elif indicador == "TRM" or indicador == "IBR":
         consulta = "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' order by fechainicio desc limit 1"   
 #    consulta= "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin" 
     df = pd.read_sql_query(consulta, conn)
@@ -217,20 +206,6 @@ def lista_valores_indicador(indicador):
     conn.close()
     indicadoranterior = df['valor'][len(df)-2]
     return(df, indicadoranterior)
-
-def evento(fecha):
-    wfecha = str(fecha.strftime("%Y%m%d"))
-    conn = sqlite3.connect(co.BD)
-    cursor = conn.cursor()
-    consulta = "select evento from eventos where fecha =  '" + wfecha + "'"
-    cursor.execute(consulta)
-    res = cursor.fetchone()
-    if res is None:
-        res = ' '
-    else:
-        res = res[0]
-    conn.close()
-    return(res)
 
 def obtener_fecha_hora_local(zona: str = None) -> datetime:
     """
@@ -354,13 +329,6 @@ def obtener_uvr():
     duvr = valores[0]['generic:ObsValue']['@value']
     return(duvr)   
 
-# def obtener_ibr():
-#     fechahoy = datetime.now()
-#     datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
-#     valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-#     dibr = valores['generic:ObsValue']['@value']
-#     return(dibr)
-   
 def obtener_ipc():
     fechahoy = datetime.now()
     ipc = co.IPC2025
@@ -392,7 +360,6 @@ def obtener_tpm():
 def obtener_indicador_varios(indicador):
     findicadores = {
         'UVR': obtener_uvr,
-        'IBR': obtener_ibr,
         'IPC': obtener_ipc,
         'SMMLV': obtener_smmlv,
         'TIB': obtener_tib,
@@ -414,31 +381,56 @@ def formatoindicador(indicador, dato):
     return(datof)
 
 def calcular_indicadores(trm):
-# Consultar y mostrar los valores para los indicadores UVR, IBR, IPC, TIB, SMMLV, COLCAP, TPM
+# Consultar y mostrar los valores para los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
     fecha = datetime.now()
     wfecha = fecha.strftime("%Y%m%d")
-    dis = '        '
-    textoindicadores = []
-    for i in co.INDICADORES:
-        try:
-            valor = obtener_indicador_varios(i)
-        except:
-            valor = 0
-        svalor = str(valor)
-        if i == 'SMMLV':
-            tabla = str.maketrans({'$': '', ',': ''})
-            resd = svalor.translate(tabla)
-            smmlvusd = str('USD {:,.2f} '.format(float(resd) / float(trm)))
-            textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
-        elif i == 'IPC':
-            textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)
-        else:
-#        elif i not in ['IBR', 'UVR']:
-            textoindicadores.append(i + ':  ' + formatoindicador(i, svalor) + dis)
-        # if i == 'IBR':
-        #     wibr = svalor
-        # if i == 'UVR':
-        #     wuvr = svalor
-
-    textindicadores = "   ".join(map(str, textoindicadores))
+    try:
+        registro = open('datos/indicadores.txt', 'r').readline()
+    except:
+        registro = ''
+    if registro[0:8] == wfecha:
+        textindicadores = registro[9:]
+    else:
+        dis = '      '
+        textoindicadores = []
+        for i in co.INDICADORES:
+            try:
+                valor = obtener_indicador_varios(i)
+            except:
+                valor = 0
+            svalor = str(valor)
+            if i == 'SMMLV':
+                tabla = str.maketrans({'$': '', ',': ''})
+                resd = svalor.translate(tabla)
+                smmlvusd = str('USD {:,.2f} '.format(float(resd) / float(trm)))
+                textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
+            elif i == 'IPC':
+                textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)
+            else:
+                textoindicadores.append(i + ':  ' + formatoindicador(i, svalor) + dis)
+        textindicadores = "   ".join(map(str, textoindicadores))
+        open('datos/indicadores.txt', 'w').write(wfecha + ',' + textindicadores)
     return(textindicadores)
+
+def guardarevento(fecha, evento):
+    conn = sqlite3.connect(co.BD)
+    cursor = conn.cursor()
+    sqlinser = 'insert into eventos ( fecha, evento) values ( ?, ?)'
+    datos = (fecha, evento )
+    cursor.execute(sqlinser, datos)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return('Registro agregado')
+
+def existeevento(fecha,  evento):
+    conn = sqlite3.connect(co.BD)
+    consulta = f"select count(*) total from eventos where fecha = '{fecha}' and evento = '{evento}'"
+    #st.write(consulta)
+    df = pd.read_sql_query(consulta, conn)
+    conn.close()
+    total = df['total'][0]
+    if total == 0:
+        return(False)
+    else:
+        return(True)
