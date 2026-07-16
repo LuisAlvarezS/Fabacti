@@ -12,10 +12,10 @@ if 'usuario' in st.session_state:
     st.sidebar.write(co.ENCABEZADO)
 
     st.write("Fuentes de infomación: ")
-    st.write(" - :blue[**Noticias**] :newspaper:  :green[**(NewsAPI)**] :link[https://newsapi.org/]")
+    st.write(" - :blue[**Noticias**] :newspaper:  :green[**(NewsAPI)**] [https://newsapi.org/]")
     for fuente in co.FUENTESNOTICIAS:
         st.write(" - " + fuente)
-    st.write(" - :blue[**Frase del día**] :memo:  :green[**(rasedeldia)**] :link[https://rasedeldia.azurewebsites.net/api/phrase]")
+    st.write(" - :blue[**Frase del día**] :memo:  :green[**(Frasedeldia)**] :link[https://rasedeldia.azurewebsites.net/api/phrase]")
     st.write(" - :blue[**Indicadores financieros**] :link[https://www.banrep.gov.co/es/estadisticas/indicadores-financieros]")
 
     st.write(co.COPYRIGHT)
