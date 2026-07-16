@@ -19,7 +19,17 @@ if 'usuario' in st.session_state:
 
     with indicadores:
         dserveindicadores = fu.datos_todos_indicadores()
-        st.dataframe(dserveindicadores, hide_index = True, column_config={'id_indicador': None})
+        df_trm = dserveindicadores[dserveindicadores['indicador'] == 'TRM']
+        df_dtf = dserveindicadores[dserveindicadores['indicador'] == 'DTF']
+        df_ibr = dserveindicadores[dserveindicadores['indicador'] == 'IBR']
+
+        col_trm, col_dtf, col_ibr = st.tabs(['TRM','DTF','IBR'])
+        with col_trm:
+            st.dataframe(df_trm, hide_index = True, column_config={'id_valor_indicador': None})
+        with col_dtf:
+            st.dataframe(df_dtf, hide_index = True, column_config={'id_valor_indicador': None})
+        with col_ibr:
+            st.dataframe(df_ibr, hide_index = True, column_config={'id_valor_indicador': None})
 
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
