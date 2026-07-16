@@ -20,7 +20,7 @@ if 'usuario' in st.session_state:
     st.write(" - :blue[**Frase del día**] :memo:  :green[**(Frasedeldia)**] [https://rasedeldia.azurewebsites.net/api/phrase]")
     st.write(" - :blue[**Indicadores financieros**] [https://www.banrep.gov.co/es/estadisticas/indicadores-financieros]")
     st.write(" - :blue[**Indicadores financieros**] [https://www.datos.gov.co/resource/32sa-8pi3.json]")
-    st.write(" - :blue[**Indicadores financieros**] :green[**TRM, DTF, IBR, UVR, IPC, TIB, SMMLV, COLCAPTPM**]")
+    st.write(" - :blue[**Indicadores financieros**] :green[**TRM, DTF, IBR, UVR, IPC, TIB, SMMLV, COLCAP, TPM**]")
 
     st.write(" - :blue[**Informacion de Colombia**] [https://api-colombia.com/api/v1]")
     st.write(co.COPYRIGHT)
