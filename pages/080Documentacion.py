@@ -19,10 +19,10 @@ if 'usuario' in st.session_state:
     st.write("     - " + textofuentes)
     st.write(" - :blue[**Frase del día**] :memo:  :green[**(Frasedeldia)**] [https://rasedeldia.azurewebsites.net/api/phrase]")
     st.write(" - :blue[**Indicadores financieros**] [https://www.banrep.gov.co/es/estadisticas/indicadores-financieros]")
-    st.write(" - :blue[**Indicadores financieros**] [https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=100&$order=vigenciadesde%20DESC]")
-    st.write("Indicadores financieros: :blue[**TRM**], :blue[**DTF**], :blue[**IBR**], :blue[**UVR**], :blue[**IPC**], :blue[**TIB**], :blue[**SMMLV**], :blue[**COLCAP**], :blue[**TPM**]")
+    st.write(" - :blue[**Indicadores financieros**] [https://www.datos.gov.co/resource/32sa-8pi3.json]")
+    st.write(" - :blue[**Indicadores financieros**] :green[**TRM, DTF, IBR, UVR, IPC, TIB, SMMLV, COLCAPTPM**]")
 
-    st.write(" :blue[**Informacion de Colombia**] [https://api-colombia.com/api/v1]")
+    st.write(" - :blue[**Informacion de Colombia**] [https://api-colombia.com/api/v1]")
     st.write(co.COPYRIGHT)
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
