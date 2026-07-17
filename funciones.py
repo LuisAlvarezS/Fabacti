@@ -434,3 +434,24 @@ def existeevento(fecha,  evento):
         return(False)
     else:
         return(True)
+
+# Lista de libros
+def listalibros():
+    conn = sqlite3.connect(co.BD)
+    df = pd.read_sql_query("select id_libros, isbn, titulo, autor, leidom, leidoa, portada, resumen, categoria, fechapublicacion, editorial, paginas, comentario from libros", conn)
+    conn.close()
+    return(df)
+
+def lista_titulos():
+    conn = sqlite3.connect(co.BD)
+    consulta = 'select distinct titulo from libros order by titulo'
+    df = pd.read_sql_query(consulta, conn)
+    conn.close()
+    return(df)
+
+def lista_autores():
+    conn = sqlite3.connect(co.BD)
+    consulta = 'select distinct autor from libros order by autor'
+    df = pd.read_sql_query(consulta, conn)
+    conn.close()
+    return(df)
