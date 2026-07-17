@@ -2,8 +2,8 @@
 
 import streamlit as st
 
-import pandas as pd
-import sqlite3 as sql
+#import pandas as pd
+#import sqlite3 as sql
 import time
 import constantes as co
 import funciones as fu
