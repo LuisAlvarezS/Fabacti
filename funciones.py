@@ -169,6 +169,25 @@ def almacenardtf():
     conn.close()
     return()
 
+def obtener_ibr():
+    fechahoy = datetime.now()
+    datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
+
+    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+    dibr = valores['generic:ObsValue']['@value']
+    fechainicio = fechahoy.strftime("%Y%m%d")
+    fechafin = fechahoy.strftime("%Y%m%d")
+    
+    conn = sqlite3.connect(co.BD)
+    cursor = conn.cursor()
+    sqlinser = 'insert into valores_indicadores ( indicador, fechainicio, fechafin, valor) values ( "IBR", ?, ?, ?)'
+    datos = (fechainicio, fechafin, dibr )
+    cursor.execute(sqlinser, datos)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return()
+
 def consulta_indicador(indicador):
     fecha = datetime.now()
     wfecha = fecha.strftime("%Y%m%d")
@@ -313,13 +332,6 @@ def mostrartodopyp(fecha):
             texto = texto + dia + ': ' + co.PYP[contador] + '  '
             contador += 1
     return(texto, resaltar) 
-
-def obtener_ibr():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
-    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-    dibr = valores['generic:ObsValue']['@value']
-    return(dibr)
 
 def obtener_uvr():
     fechahoy = datetime.now()
