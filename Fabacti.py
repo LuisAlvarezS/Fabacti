@@ -66,17 +66,17 @@ def fabacti(usuario=None):
   with ibr1:
     ibr1.metric('**IBR** Vigencia: ' + str(fecha_vigencia_ibr_f), valor_ibr_f, deltaibr, delta_arrow='auto', delta_color="normal", chart_data=ibrhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASIBR)
 
-# Calcular los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
-  proceso = st.text('Calculando indicadores economicos adicionales, ... por favor espere ...')
-  textoindicadores = fu.calcular_indicadores(trm)
-  proceso.empty()
+# # Calcular los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
+#   proceso = st.text('Calculando indicadores economicos adicionales, ... por favor espere ...')
+#   textoindicadores = fu.calcular_indicadores(trm)
+#   proceso.empty()
 
-  # Mostrar indicadores economicos adicionales 
-  st.write('---')
-  #pos = textoindicadores.find('SMMLV')
-  st.text(textoindicadores)
-  #st.text(textoindicadores[pos:])
-  st.write('---')
+#   # Mostrar indicadores economicos adicionales 
+#   st.write('---')
+#   #pos = textoindicadores.find('SMMLV')
+#   st.text(textoindicadores)
+#   #st.text(textoindicadores[pos:])
+#   st.write('---')
 
   picoplaca, frases, libro = st.columns(3, border = True)
   with frases:
