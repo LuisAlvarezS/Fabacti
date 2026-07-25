@@ -5,16 +5,18 @@ import time
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import constantes as co
 
+from constantes import COPYRIGHT
+from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
+    presentar_encabezado(st.session_state['usuario'])
+    # # Encabezado
+    # st.write( ":red[FABACTI] :registered: ")
 
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear(), help="Haga clic para cerrar sesión y borrar la información de usuario.")
-    st.sidebar.write(co.ENCABEZADO)
+    # st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
+    # st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear(), help="Haga clic para cerrar sesión y borrar la información de usuario.")
+    # st.sidebar.write(co.ENCABEZADO)
     
     indicador1, indicador2 = st.columns(2)
 
@@ -68,6 +70,8 @@ if 'usuario' in st.session_state:
                     showlegend=False,
         )
         st.plotly_chart(fig, width='stretch', theme="streamlit", config={"displayModeBar": False})
+    st.divider()
+    st.write(COPYRIGHT)
 
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")

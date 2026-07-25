@@ -15,9 +15,30 @@ import json
 import constantes as co
 import xmltodict
 import pandas as pd
-import bcrypt
+
 
 from zoneinfo import ZoneInfo
+
+def presentar_encabezado(usuario):
+    st.write( ":red[FABACTI] :registered: ")
+    st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
+    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
+    st.sidebar.write(co.ENCABEZADO)
+
+    fechacolombia = obtener_fecha_hora_local("America/Bogota")
+    fechahoy = fechacolombia.date()  
+    ndia = co.DIAS[fechahoy.weekday()]
+    nmes = co.MESES[fechahoy.month - 1]
+    
+    # Veriificar e indicar si es festivo en Colombia
+    es_festivo = es_festivo_colombia(str(fechahoy))
+    if es_festivo:
+        mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
+    else:
+        mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year)
+    st.success(mensaje, icon="📆", title=':red[' + st.session_state['usuario']+ ']')
+    return(fechahoy)
 
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
@@ -241,7 +262,7 @@ def obtener_fecha_hora_local(zona: str = None) -> datetime:
     except Exception as e:
         raise ValueError(f"Error al obtener la hora: {e}")
     
-def eventos():
+def lista_eventos():
     conn = sqlite3.connect(co.BD)
     sqlsp = "select fecha, evento from eventos order by fecha DESC"
     df = pd.read_sql_query(sqlsp, conn)
@@ -261,41 +282,6 @@ def datos_todos_indicadores():
     df = pd.read_sql_query(sqlsp, conn)
     conn.close()
     return(df)
-
-def registrar_usuario(nombre: str, clave: str):
-    if not nombre  or not clave:
-        raise ValueError("Usuario y clave no pueden estar vacíos.")
-
-    # Generar hash seguro con bcrypt
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(clave.encode("utf-8"), salt)
-
-    conn = sqlite3.connect("datos/fabacti.db")
-    cursor = conn.cursor()
-    try:
-        cursor.execute(
-            "INSERT INTO usuarios (nombre, clave) VALUES (?, ?)",
-            (nombre, hashed.decode("utf-8"))
-        )
-        conn.commit()
-        print(f"Usuario '{nombre}' registrado correctamente.")
-    except sqlite3.IntegrityError:
-        print(f"Error: el usuario '{nombre}' ya existe.")
-    finally:
-        conn.close()
-
-def verificar_usuario(nombre: str, clave: str) -> bool:
-    conn = sqlite3.connect("datos/fabacti.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT clave FROM usuarios WHERE nombre = ?", (nombre,))
-    row = cursor.fetchone()
-    conn.close()
-
-    if row:
-        stored_hash = row[0].encode("utf-8")
-        return bcrypt.checkpw(clave.encode("utf-8"), stored_hash)
-    return False
-
 
 def es_festivo_colombia(fecha_str):
     """

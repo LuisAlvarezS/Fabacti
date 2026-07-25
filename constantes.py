@@ -21,7 +21,7 @@ DIAS = ['Lunes','Martes','Miercoles','Jueves','Viernes', 'Sabado', 'Domingo']
 MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 BD = 'datos/fabacti.db'
 
-# Constantes financieras pendientr desarrollar para su automatizacion algun API
+# Constantes financieras pendientes desarrollar para su automatizacion algun API
 SMMLV2026 = 1750905
 SMMLV2025 = 1423500
 IPC2025 = 5.1

@@ -2,20 +2,15 @@
 
 import streamlit as st
 
-#import pandas as pd
-#import sqlite3 as sql
 import time
-import constantes as co
-import funciones as fu
+
+from constantes import COPYRIGHT
+from funciones import presentar_encabezado, listalibros, lista_titulos, lista_autores
 
 if 'usuario' in st.session_state:
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
+    presentar_encabezado(st.session_state['usuario'])
 
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear(), help="Haga clic para cerrar sesión y borrar la información de usuario.")
-    st.sidebar.write(co.ENCABEZADO)
-    df = fu.listalibros()
+    df = listalibros()
     dlibr = df
     totallibros = len(dlibr)
     dlibr = dlibr.sort_values(by = 'titulo', ascending=True)
@@ -53,7 +48,7 @@ if 'usuario' in st.session_state:
         st.write(f'Total libros con portada: {ctp} de {ctl}')
 
     with consultatitulo:
-        libros = fu.lista_titulos()
+        libros = lista_titulos()
         buscar = st.selectbox('Seleccionar ',libros)  
         if buscar:
             libro = df[df['titulo'] == buscar]
@@ -84,7 +79,7 @@ if 'usuario' in st.session_state:
             st.write('Libro no encontrado')
 
     with consultaautor:
-        libros = fu.lista_autores()
+        libros = lista_autores()
         buscar = st.selectbox('Seleccionar ',libros)  
         if buscar:
             libro = df[df['autor'] == buscar]
@@ -118,6 +113,8 @@ if 'usuario' in st.session_state:
     with lista:
         st.dataframe(dlibr, column_config = {'id_libros':None,'Leidom':None, 'Leidoa':None,'portada':None})
 #        st.dataframe(dlibr, column_config = {'id_libros':None,'Leidom':None, 'Leidoa':None})
+    st.divider()
+    st.write(COPYRIGHT)
 
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")

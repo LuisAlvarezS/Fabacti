@@ -3,18 +3,13 @@ import streamlit as st
 import requests
 import json
 import time
-import constantes as co
 
+from constantes import COPYRIGHT
+from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
     st.write('<style>div.block-container{padding-top:2.5rem;}</style>', unsafe_allow_html=True)
-
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
-
-    st.sidebar.write(co.ENCABEZADO)
+    presentar_encabezado(st.session_state['usuario'])
 
     infognal , regiones, departamentos, presidentes, constitucion = st.tabs(["Informacion General","Regiones","Departamentos","Presidentes","Constitucion"]) 
 
@@ -130,6 +125,8 @@ if 'usuario' in st.session_state:
             st.write(warticulos[int(wseleccion)]['content'])
         else:
             st.write('Debe seleccionar el numero del articulo')
+    st.divider()
+    st.write(COPYRIGHT)
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)

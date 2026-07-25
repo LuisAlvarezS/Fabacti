@@ -1,24 +1,20 @@
 import streamlit as st
-import funciones as fu
-import constantes as co
 import time
 
-if 'usuario' in st.session_state:
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
+from constantes import COPYRIGHT
+from funciones import presentar_encabezado, lista_eventos, datos_todos_indicadores
 
-    st.sidebar.write(co.ENCABEZADO)
+if 'usuario' in st.session_state:
+    presentar_encabezado(st.session_state['usuario'])
 
     eventos, indicadores = st.tabs(['Eventos','Indicadores'])
 
     with eventos:
-        dserveventos = fu.eventos()
+        dserveventos = lista_eventos()
         st.dataframe(dserveventos, hide_index = True, column_config={'id_evento': None})
 
     with indicadores:
-        dserveindicadores = fu.datos_todos_indicadores()
+        dserveindicadores = datos_todos_indicadores()
         df_trm = dserveindicadores[dserveindicadores['indicador'] == 'TRM']
         df_dtf = dserveindicadores[dserveindicadores['indicador'] == 'DTF']
         df_ibr = dserveindicadores[dserveindicadores['indicador'] == 'IBR']
@@ -30,7 +26,8 @@ if 'usuario' in st.session_state:
             st.dataframe(df_dtf, hide_index = True, column_config={'id_valor_indicador': None})
         with col_ibr:
             st.dataframe(df_ibr, hide_index = True, column_config={'id_valor_indicador': None})
-
+    st.divider()
+    st.write(COPYRIGHT)
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)

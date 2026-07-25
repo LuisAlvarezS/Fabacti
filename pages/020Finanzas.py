@@ -3,16 +3,11 @@ import time
 from datetime import date
 import yfinance as yf
 
-import constantes as co
-
+from constantes import COPYRIGHT
+from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
-
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
-    st.sidebar.write(co.ENCABEZADO)
+    presentar_encabezado(st.session_state['usuario'])
 
     st.subheader('Valor de las acciones de la bolsa de Nueva York NYSE')
     st.divider()
@@ -83,6 +78,7 @@ if 'usuario' in st.session_state:
         except:
             break
     st.divider()  
+    st.write(COPYRIGHT)
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)

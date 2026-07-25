@@ -1,3 +1,4 @@
+
 import streamlit as st
 
 import pandas as pd
@@ -6,17 +7,11 @@ from datetime import datetime
 import time
 
 from streamlit_calendar import calendar
-
-import constantes as co
-from funciones import guardarevento, existeevento
+from constantes import COPYRIGHT
+from funciones import presentar_encabezado, guardarevento, existeevento
 
 if 'usuario' in st.session_state:
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
-
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear(), help="Haga clic para cerrar sesión y borrar la información de usuario.")
-    st.sidebar.write(co.ENCABEZADO)
+    presentar_encabezado(st.session_state['usuario'])
         
     consulta, registro = st.tabs(['Consultar', 'Registrar'])
 
@@ -57,6 +52,8 @@ if 'usuario' in st.session_state:
                 else:
                     mensaje = guardarevento(wfecha, evento)
                 st.write(mensaje)
+    st.divider()
+    st.write(COPYRIGHT)
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)

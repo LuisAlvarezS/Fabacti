@@ -4,15 +4,11 @@ from datetime import datetime
 import json
 import requests
 
-import constantes as co
+from constantes import COPYRIGHT, FUENTESNOTICIAS, KEY_NEWSAPI
+from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
-    # Encabezado
-    st.write( ":red[FABACTI] :registered: ")
-    st.sidebar.write('**Usuario** :blue[**' +st.session_state['usuario'] + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
-
-    st.sidebar.write(co.ENCABEZADO)
+    presentar_encabezado(st.session_state['usuario'])
 
     st.title(' :red[NOTICIAS] ')
 
@@ -21,7 +17,7 @@ if 'usuario' in st.session_state:
     fecha = datetime.now()
     fecha = fecha.strftime('%Y%m%d')
 
-    url = f'https://newsapi.org/v2/everything?q={tema}&from={fecha}&sortBy=publishedAt&apiKey={co.KEY_NEWSAPI}'
+    url = f'https://newsapi.org/v2/everything?q={tema}&from={fecha}&sortBy=publishedAt&apiKey={KEY_NEWSAPI}'
     resp = requests.get(url)
     texto = json.loads(resp.text)
     articulos = texto['articles']
@@ -43,7 +39,7 @@ if 'usuario' in st.session_state:
     for i in range(1,totalarticulos):
         fuente = texto['articles'][i]['source']['name']
         fechapublicacion = texto['articles'][i]['publishedAt']
-        if fuente in co.FUENTESNOTICIAS:
+        if fuente in FUENTESNOTICIAS:
             c1, c2, c3, c4, c5 = st.columns(5)
             with c1:
                 autor = texto['articles'][i]['author']
@@ -61,8 +57,8 @@ if 'usuario' in st.session_state:
                 contenido = texto['articles'][i]['content']
                 if contenido != None:
                     st.write(contenido)
-            st.divider()
-    st.write(co.COPYRIGHT)
+    st.divider()
+    st.write(COPYRIGHT)
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
