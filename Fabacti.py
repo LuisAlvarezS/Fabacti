@@ -24,6 +24,7 @@ def fabacti(usuario=None):
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
   else:
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
+  mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year)
   st.success(mensaje, icon="📆")
   
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
@@ -100,12 +101,34 @@ def fabacti(usuario=None):
   proceso.empty()
 
 if __name__ == '__main__':
-    st.set_page_config(
-        page_title="FABACTI",
-        layout="wide",
-        initial_sidebar_state = "expanded"
-        )
+    # st.set_page_config(
+    #     page_title="FABACTI",
+    #     layout="wide",
+    #     initial_sidebar_state = "expanded"
+    #     )
  
+  # Configuración de la página para móviles
+    st.set_page_config(
+      page_title="FABACTI",
+      page_icon="📱",
+      layout="centered"  # "wide" para pantallas grandes
+      )
+
+    # Estilos CSS para mejorar vista en móviles
+    st.markdown("""
+        <style>
+        /* Ajustar tamaño de fuente y márgenes en móviles */
+        @media (max-width: 768px) {
+            .block-container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
     ac.acceso()
     if 'usuario' in st.session_state:
         fabacti(usuario=st.session_state['usuario'])
