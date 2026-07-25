@@ -20,7 +20,7 @@ import pandas as pd
 from zoneinfo import ZoneInfo
 
 def presentar_encabezado(usuario):
-    st.write( ":red[FABACTI] :registered: ")
+    #st.write( ":red[FABACTI] :registered: ")
     st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
     st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
     st.sidebar.write(co.ENCABEZADO)
@@ -31,13 +31,14 @@ def presentar_encabezado(usuario):
     nmes = co.MESES[fechahoy.month - 1]
     
     # Veriificar e indicar si es festivo en Colombia
+
     es_festivo = es_festivo_colombia(str(fechahoy))
     if es_festivo:
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
     else:
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year)
-    st.success(mensaje, icon="📆", title=':red[' + st.session_state['usuario']+ ']')
+    st.success(mensaje, icon="🌎", title=':red[FABACTI] :registered:  Usuario: :red[' + st.session_state['usuario']+ ']')
     return(fechahoy)
 
 # Funcion para consultar el TRM dada una fecha
