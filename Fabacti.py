@@ -32,7 +32,7 @@ def fabacti(usuario=None):
   valor_trm, fecha_vigencia, fecha_vigencia2= fu.consulta_indicador('TRM')
   trm = float(valor_trm)
   fecha_vigencia_trm = str(fecha_vigencia)[0:4] + '-' + str(fecha_vigencia)[4:6] + '-' + str(fecha_vigencia)[6:8]
-  ftrm = '${:,.2f} '.format(trm)
+  ftrm = '$ {:,.2f} '.format(trm)
   listatrm, trmanterior = fu.lista_valores_indicador('TRM')
   trmayer = trmanterior
   deltatrm = trm - trmayer
@@ -63,19 +63,19 @@ def fabacti(usuario=None):
     dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' / ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASDTF)
 
   with ibr1:
-    ibr1.metric('**IBR** Vigencia: ' + str(fecha_vigencia_ibr_f), valor_ibr_f, deltaibr, delta_arrow='auto', delta_color="normal", chart_data=ibrhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASIBR)
+    ibr1.metric('**IBR** Vigencia: ' + str(fecha_vigencia_ibr_f), valor_ibr_f + ' %', deltaibr, delta_arrow='auto', delta_color="normal", chart_data=ibrhistorico, chart_type='line', width='stretch', height='content',  help=co.NOTASIBR)
 
 # # Calcular los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
-  proceso = st.text('Calculando indicadores economicos adicionales, ... por favor espere ...')
-  textoindicadores = fu.calcular_indicadores(trm)
-  proceso.empty()
+#   proceso = st.info('Calculando indicadores economicos adicionales, ... un momento por favor ...')
+#   #textoindicadores = fu.calcular_indicadores(trm)
+#   listaindicadores = fu.calcular_indicadores(trm)
+#   textoindicadores = "   ".join([f"{item['indicador']}: {item['valor']}" for item in listaindicadores])
+#   proceso.empty()
 
-  # Mostrar indicadores economicos adicionales 
-  st.write('---')
-  #pos = textoindicadores.find('SMMLV')
-  st.text(textoindicadores)
-  #st.text(textoindicadores[pos:])
-  st.write('---')
+#   # Mostrar indicadores economicos adicionales 
+#   st.write('---')
+#   st.text(textoindicadores)
+#   st.write('---')
 
   picoplaca, frases, libro = st.columns(3, border = True)
   with frases:

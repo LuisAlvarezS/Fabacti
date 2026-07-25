@@ -396,33 +396,47 @@ def calcular_indicadores(trm):
 # Consultar y mostrar los valores para los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
     fecha = datetime.now()
     wfecha = fecha.strftime("%Y%m%d")
-    try:
-        registro = open('datos/indicadores.txt', 'r').readline()
-    except:
-        registro = ''
-    if registro[0:8] == wfecha:
-        textindicadores = registro[9:]
-    else:
-        dis = '      '
-        textoindicadores = []
-        for i in co.INDICADORES:
-            try:
-                valor = obtener_indicador_varios(i)
-            except:
-                valor = 0
-            svalor = str(valor)
-            if i == 'SMMLV':
-                tabla = str.maketrans({'$': '', ',': ''})
-                resd = svalor.translate(tabla)
-                smmlvusd = str('USD {:,.2f} '.format(float(resd) / float(trm)))
-                textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
-            elif i == 'IPC':
-                textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)
-            else:
-                textoindicadores.append(i + ':  ' + formatoindicador(i, svalor) + dis)
-        textindicadores = "   ".join(map(str, textoindicadores))
-        open('datos/indicadores.txt', 'w').write(wfecha + ',' + textindicadores)
-    return(textindicadores)
+
+    # opcion = st.selectbox("Indicadores Disponibles", co.INDICADORES)
+    # if opcion == 'Seleccione un indicador':
+    #     st.warning("Por favor, seleccione un indicador.")
+    #     return
+    # valor = obtener_indicador_varios(opcion)
+    
+    # indicador = opcion + ': ' + formatoindicador(opcion, valor)
+
+    lista = [{'indicador': i, 'valor': obtener_indicador_varios(i)} for i in co.INDICADORES]
+    #st.write(len(lista))
+    #st.write(lista)
+
+    # try:
+    #     registro = open('datos/indicadores.txt', 'r').readline()
+    # except:
+    #     registro = ''
+    # if registro[0:8] == wfecha:
+    #     textindicadores = registro[9:]
+    # else:
+    #     dis = '      '
+    #     textoindicadores = []
+    #     for i in co.INDICADORES:
+    #         try:
+    #             valor = obtener_indicador_varios(i)
+    #         except:
+    #             valor = 0
+    #         svalor = str(valor)
+    #         if i == 'SMMLV':
+    #             tabla = str.maketrans({'$': '', ',': ''})
+    #             resd = svalor.translate(tabla)
+    #             smmlvusd = str('USD {:,.2f} '.format(float(resd) / float(trm)))
+    #             textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
+    #         elif i == 'IPC':
+    #             textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)
+    #         else:
+    #             textoindicadores.append(i + ':  ' + formatoindicador(i, svalor) + dis)
+    #     textindicadores = "   ".join(map(str, textoindicadores))
+    #     open('datos/indicadores.txt', 'w').write(wfecha + ',' + textindicadores)
+    #return(textindicadores)
+    return(lista)
 
 def guardarevento(fecha, evento):
     conn = sqlite3.connect(co.BD)
