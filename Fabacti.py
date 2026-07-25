@@ -2,7 +2,7 @@
 import streamlit as st
 
 from funciones import obtener_fecha_hora_local, es_festivo_colombia, consulta_indicador, lista_valores_indicador, frase, mostrartodopyp, obtener_imagen_aleatoria, presentar_encabezado
-from constantes import NOTASFRASE, NOTASPICOYPLACA, NOTASLIBRO, NOTASTRM, NOTASDTF, NOTASIBR, COPYRIGHT, DIAS, MESES
+from constantes import NOTASFRASE, NOTASPICOYPLACA, NOTASLIBRO, NOTASTRM, NOTASDTF, NOTASIBR, COPYRIGHT
 import acceso as ac
 
 def fabacti(usuario=None):
