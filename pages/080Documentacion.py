@@ -5,7 +5,7 @@ from constantes import COPYRIGHT, FUENTESNOTICIAS
 from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
-    presentar_encabezado(st.session_state['usuario'])
+    presentar_encabezado()
     st.write("Fuentes de infomación: ")
     st.write(" - :blue[**Noticias**] :newspaper:  :green[**(NewsAPI)**] [https://newsapi.org/]")
     textofuentes = " "

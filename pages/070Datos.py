@@ -5,7 +5,7 @@ from constantes import COPYRIGHT
 from funciones import presentar_encabezado, lista_eventos, datos_todos_indicadores
 
 if 'usuario' in st.session_state:
-    presentar_encabezado(st.session_state['usuario'])
+    presentar_encabezado()
 
     eventos, indicadores = st.tabs(['Eventos','Indicadores'])
 

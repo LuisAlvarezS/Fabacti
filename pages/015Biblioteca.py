@@ -8,7 +8,7 @@ from constantes import COPYRIGHT
 from funciones import presentar_encabezado, listalibros, lista_titulos, lista_autores
 
 if 'usuario' in st.session_state:
-    presentar_encabezado(st.session_state['usuario'])
+    presentar_encabezado()
 
     df = listalibros()
     dlibr = df

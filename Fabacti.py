@@ -5,9 +5,9 @@ from funciones import obtener_fecha_hora_local, es_festivo_colombia, consulta_in
 from constantes import NOTASFRASE, NOTASPICOYPLACA, NOTASLIBRO, NOTASTRM, NOTASDTF, NOTASIBR, COPYRIGHT
 import acceso as ac
 
-def fabacti(usuario):
-  #usuario = ac.nombre_usuario(st.session_state['usuario'])
-  fechahoy = presentar_encabezado(usuario)
+def fabacti():
+  #nombre_usuario = ac.nombre_usuario(st.session_state['usuario'])
+  fechahoy = presentar_encabezado()
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
@@ -114,5 +114,6 @@ if __name__ == '__main__':
 
     ac.acceso()
     if 'usuario' in st.session_state:
-        nusuario = ac.nombre_usuario(st.session_state['usuario'])
-        fabacti(nusuario)
+        #nusuario = ac.nombre_usuario(st.session_state['usuario'])
+        #fabacti(st.session_state['usuario'])
+        fabacti()

@@ -7,7 +7,7 @@ from constantes import COPYRIGHT
 from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
-    presentar_encabezado(st.session_state['usuario'])
+    presentar_encabezado()
 
     st.subheader('Valor de las acciones de la bolsa de Nueva York NYSE')
     st.divider()

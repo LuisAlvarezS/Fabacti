@@ -8,7 +8,7 @@ from constantes import COPYRIGHT, FUENTESNOTICIAS, KEY_NEWSAPI
 from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
-    presentar_encabezado(st.session_state['usuario'])
+    presentar_encabezado()
 
     st.title(' :red[NOTICIAS] ')
 

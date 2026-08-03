@@ -16,11 +16,14 @@ import constantes as co
 import xmltodict
 import pandas as pd
 
+from acceso import nombre_usuario
 
 from zoneinfo import ZoneInfo
 
-def presentar_encabezado(usuario):
+def presentar_encabezado():
     #st.write( ":red[FABACTI] :registered: ")
+    usuario = nombre_usuario(st.session_state['usuario'])
+            
     st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
     st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
     st.sidebar.write(co.ENCABEZADO)

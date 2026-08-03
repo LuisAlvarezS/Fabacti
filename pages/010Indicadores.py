@@ -8,11 +8,10 @@ import plotly.graph_objects as go
 
 from constantes import COPYRIGHT
 from funciones import presentar_encabezado
-from acceso import nombre_usuario
 
 if 'usuario' in st.session_state:
-    nusuario = nombre_usuario(st.session_state['usuario'])
-    presentar_encabezado(nusuario)
+    
+    presentar_encabezado()
     # # Encabezado
     # st.write( ":red[FABACTI] :registered: ")
 
