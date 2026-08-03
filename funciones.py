@@ -38,7 +38,7 @@ def presentar_encabezado(usuario):
     else:
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year)
-    st.success(mensaje, icon="🌎", title=':red[FABACTI] :registered:  Usuario: :red[' + st.session_state['usuario']+ ']')
+    st.success(mensaje, icon="🌎", title=':red[FABACTI] :registered:  Usuario: :red[' + usuario + ']')
     return(fechahoy)
 
 # Funcion para consultar el TRM dada una fecha

@@ -14,8 +14,8 @@ NOTASIBR = 'El indicador bancario de referencia IBR es una tasa de interés de r
 #INDICADORES = ['UVR','IPC','TIB','SMMLV','COLCAP','TPM']
 INDICADORES = ['IPC','SMMLV']
 
-PYP = ['1-7','0-3','4-6','5-9','2-8','No Aplica','No Aplica']
-#PYP = ['5-8','1-4','0-2','3-6','7-9','No Aplica','No Aplica']
+#PYP = ['1-7','0-3','4-6','5-9','2-8','No Aplica','No Aplica']
+PYP = ['5-8','1-4','0-2','3-6','7-9','No Aplica','No Aplica']
 
 DIAS = ['Lunes','Martes','Miercoles','Jueves','Viernes', 'Sabado', 'Domingo']
 MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']

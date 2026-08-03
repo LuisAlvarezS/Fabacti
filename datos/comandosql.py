@@ -29,10 +29,10 @@ cursor = conn.cursor()
 
 
 # Comando consulta registros de usuarios
-# cursor.execute("select * from usuarios  ")
-# rows = cursor.fetchall()
-# for row in rows:
-#     print(row)
+cursor.execute("select * from usuarios  ")
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
 
 # # Comando consulta registros de indicadores
 # cursor.execute("select * from valores_indicadores  ")
@@ -69,12 +69,21 @@ cursor = conn.cursor()
 # df = pd.read_sql_query(consulta, conn)
 # print(df.iloc[0]['total'])
 
-# Comando consulta registros de indicadores
-cursor.execute("select * from libros  ")
+# # Comando consulta registros de indicadores
+# cursor.execute("select * from libros  ")
+# rows = cursor.fetchall()
+# for row in rows:
+#      print(row)
+
+
+cursor.execute("""
+SELECT sql 
+FROM sqlite_master 
+WHERE type='table' AND name='usuarios';
+""")
 rows = cursor.fetchall()
 for row in rows:
-     print(row)
-
+    print(row)
 
 conn.commit()
 # Cerrar la conexión

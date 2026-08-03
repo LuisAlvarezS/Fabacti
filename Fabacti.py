@@ -5,8 +5,9 @@ from funciones import obtener_fecha_hora_local, es_festivo_colombia, consulta_in
 from constantes import NOTASFRASE, NOTASPICOYPLACA, NOTASLIBRO, NOTASTRM, NOTASDTF, NOTASIBR, COPYRIGHT
 import acceso as ac
 
-def fabacti(usuario=None):
-  fechahoy = presentar_encabezado(st.session_state['usuario'])
+def fabacti(usuario):
+  #usuario = ac.nombre_usuario(st.session_state['usuario'])
+  fechahoy = presentar_encabezado(usuario)
 
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
@@ -114,4 +115,5 @@ if __name__ == '__main__':
 
     ac.acceso()
     if 'usuario' in st.session_state:
-        fabacti(usuario=st.session_state['usuario'])
+        nusuario = ac.nombre_usuario(st.session_state['usuario'])
+        fabacti(nusuario)

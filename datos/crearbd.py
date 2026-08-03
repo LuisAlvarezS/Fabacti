@@ -4,9 +4,9 @@ import sqlite3
 conn = sqlite3.connect("fabacti.db")
 cursor = conn.cursor()
 
-# cursor.execute("""
-#                 DROP TABLE "indicadores"
-#                 """)
+cursor.execute("""
+                DROP TABLE "usuarios"
+                 """)
                
 # # Crear tabla dtf
 # cursor.execute("""
@@ -29,15 +29,23 @@ cursor = conn.cursor()
 # );	
 # """);
 
-# # Crear table usuarios
+# Crear table usuarios
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS "usuarios" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"nombre"	TEXT NOT NULL UNIQUE,
+	"clave"	TEXT NOT NULL UNIQUE,
+    "correo" TEXT NOT NULL UNIQUE,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+""");
+
+# # Adicionar campo correo, rol table de usuarios
 # cursor.execute("""
-# CREATE TABLE IF NOT EXISTS "usuarios" (
-# 	"id"	INTEGER NOT NULL UNIQUE,
-# 	"nombre"	TEXT NOT NULL UNIQUE,
-# 	"clave"	TEXT NOT NULL UNIQUE,
-# 	PRIMARY KEY("id" AUTOINCREMENT)
-# );
-# """);
+# 	alter table "usuarios" 
+#     add column correo text;	
+# """)
+
 
 # # Crea tabla de valores indicadores
 # cursor.execute("""
@@ -67,24 +75,24 @@ cursor = conn.cursor()
 #           """)
 
 
-cursor.execute("""
-               CREATE TABLE "libros" (
-	"id_libros"	INTEGER NOT NULL UNIQUE,
-	"isbn"	TEXT,
-	"titulo"	TEXT,
-	"autor"	TEXT,
-	"leidom"	TEXT,
-	"leidoa"	TEXT,
-	"portada"	TEXT,
-	"resumen"	TEXT,
-	"categoria"	INTEGER,
-	"fechapublicacion"	TEXT,
-	"editorial"	TEXT,
-	"paginas"	INTEGER,
-	"comentario"	TEXT,
-	PRIMARY KEY("id_libros" AUTOINCREMENT)
-)
-               """)
+# cursor.execute("""
+#                CREATE TABLE "libros" (
+# 	"id_libros"	INTEGER NOT NULL UNIQUE,
+# 	"isbn"	TEXT,
+# 	"titulo"	TEXT,
+# 	"autor"	TEXT,
+# 	"leidom"	TEXT,
+# 	"leidoa"	TEXT,
+# 	"portada"	TEXT,
+# 	"resumen"	TEXT,
+# 	"categoria"	INTEGER,
+# 	"fechapublicacion"	TEXT,
+# 	"editorial"	TEXT,
+# 	"paginas"	INTEGER,
+# 	"comentario"	TEXT,
+# 	PRIMARY KEY("id_libros" AUTOINCREMENT)
+# )
+#                """)
 
 conn.commit()
 conn.close()

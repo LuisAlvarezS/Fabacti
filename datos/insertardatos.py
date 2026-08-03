@@ -50,7 +50,7 @@ cursor = conn.cursor()
 
 # # Comandos borrar registros
 #cursor.execute("delete from valores_indicadores where id_valor_indicador in (39,40,41) " );
-cursor.execute("delete from valores_indicadores where indicador = 'IBR' and valor = 11.184  " );
+# cursor.execute("delete from valores_indicadores where indicador = 'IBR' and valor = 11.184  " );
 
 #cursor.execute("INSERT INTO eventos (fecha, evento) VALUES ('20260526', 'Aniversario 42 de bodas Luz Miriam y Luis Albeiro' )");
 
@@ -79,6 +79,13 @@ cursor.execute("delete from valores_indicadores where indicador = 'IBR' and valo
 # cursor.execute("UPDATE libros SET autor = 'Rhonda Byme' where titulo = 'El secreto'");
 # cursor.execute("UPDATE libros SET autor = 'Robin Norwood' where titulo = 'Las mujeres que aman demasiado'");
 
+
+cursor.execute("UPDATE usuarios SET nombre  = 'Luz Miriam Builes Zxapata' where id = 3")
+
+# cursor.execute(
+#             "INSERT INTO usuarios (nombre, clave, correo) VALUES (?, ?, ?)",
+#             ("admin", hashed.decode("utf-8", "albeiro.alvarez.sierra@gmail.com"))
+#         )
 
 
 conn.commit()
