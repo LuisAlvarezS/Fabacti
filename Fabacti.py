@@ -8,7 +8,6 @@ import acceso as ac
 def fabacti(usuario):
   #usuario = ac.nombre_usuario(st.session_state['usuario'])
   fechahoy = presentar_encabezado(usuario)
-
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
