@@ -84,8 +84,9 @@ def acceso():
             if submitted:
                 if es_correo_valido(correouser):
                     if verificar_usuario(correouser, password):
-                        
                         st.session_state['usuario'] = correouser
+                        st.session_state['correo_usuario'] = correouser
+                        st.session_state['nombre_usuario'] = nombre_usuario(correouser)
                         st.session_state.mostrar_form = False
                         st.rerun()
                     else:

@@ -76,14 +76,14 @@ for row in rows:
 #      print(row)
 
 
-cursor.execute("""
-SELECT sql 
-FROM sqlite_master 
-WHERE type='table' AND name='usuarios';
-""")
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
+# cursor.execute("""
+# SELECT sql 
+# FROM sqlite_master 
+# WHERE type='table' AND name='usuarios';
+# """)
+# rows = cursor.fetchall()
+# for row in rows:
+#     print(row)
 
 conn.commit()
 # Cerrar la conexión
