@@ -29,10 +29,10 @@ cursor = conn.cursor()
 
 
 # Comando consulta registros de usuarios
-cursor.execute("select * from usuarios  ")
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
+# cursor.execute("select * from usuarios  ")
+# rows = cursor.fetchall()
+# for row in rows:
+#     print(row)
 
 # # Comando consulta registros de indicadores
 # cursor.execute("select * from valores_indicadores  ")
@@ -75,7 +75,7 @@ for row in rows:
 # for row in rows:
 #      print(row)
 
-
+# estructura de la tabla usuarios
 # cursor.execute("""
 # SELECT sql 
 # FROM sqlite_master 
@@ -84,6 +84,18 @@ for row in rows:
 # rows = cursor.fetchall()
 # for row in rows:
 #     print(row)
+
+# Consulta de cantidad de registros de un indicador en un rango de fechas
+indicador = 'TRM'
+fecha = datetime.now()
+wfecha = fecha.strftime("%Y%m%d")
+
+cursor.execute("select count(*) as total from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin")
+rows = cursor.fetchall()
+for row in rows:
+     print(row)
+
+
 
 conn.commit()
 # Cerrar la conexión

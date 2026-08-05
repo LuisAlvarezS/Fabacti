@@ -37,7 +37,7 @@ def es_correo_valido(correo: str) -> bool:
 
 def registrar_usuario(nombre: str, clave: str, correo: str):
     if not nombre  or not clave or not correo:
-        raise ValueError("Usuari, clave o correo no pueden estar vacíos.")
+        raise ValueError("UsuariO, clave o correo no pueden estar vacíos.")
 
     # Generar hash seguro con bcrypt
     salt = bcrypt.gensalt()
@@ -75,7 +75,6 @@ def acceso():
     if st.session_state.mostrar_form:
         with st.form("login_form"):
             st.write("🔒 Iniciar sesión")
-#           username = st.text_input("Usuario")
             correouser = ""
             if not es_correo_valido(correouser): 
                 correouser  = st.text_input("Correo")                

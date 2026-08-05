@@ -11,7 +11,7 @@ def fabacti():
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
 # Proceso de TRM
-  valor_trm, fecha_vigencia, fecha_vigencia2= consulta_indicador('TRM')
+  valor_trm, fecha_vigencia, fecha_vigencia2 = consulta_indicador('TRM')
   trm = float(valor_trm)
   fecha_vigencia_trm = str(fecha_vigencia)[0:4] + '-' + str(fecha_vigencia)[4:6] + '-' + str(fecha_vigencia)[6:8]
   ftrm = '$ {:,.2f} '.format(trm)
@@ -90,30 +90,6 @@ if __name__ == '__main__':
         initial_sidebar_state = "expanded"
         )
  
-  # # Configuración de la página para móviles
-  #   st.set_page_config(
-  #     page_title="FABACTI",
-  #     page_icon="📱",
-  #     layout="centered"  # "wide" para pantallas grandes
-  #     )
-
-  #   # Estilos CSS para mejorar vista en móviles
-  #   st.markdown("""
-  #       <style>
-  #       /* Ajustar tamaño de fuente y márgenes en móviles */
-  #       @media (max-width: 768px) {
-  #           .block-container {
-  #               padding: 1rem;
-  #           }
-  #           h1 {
-  #               font-size: 1.8rem;
-  #           }
-  #       }
-  #       </style>
-  #       """, unsafe_allow_html=True)
-
     ac.acceso()
     if 'usuario' in st.session_state:
-        #nusuario = ac.nombre_usuario(st.session_state['usuario'])
-        #fabacti(st.session_state['usuario'])
         fabacti()

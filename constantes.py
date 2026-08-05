@@ -1,6 +1,5 @@
 
 # Archivo de constantes para la aplicación FABACTI
-
 ENCABEZADO = " :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]"
 COPYRIGHT = ":copyright: 2026 Todos los derechos reservados de autor :red[FABACTI] :registered:"
 
@@ -14,7 +13,7 @@ NOTASIBR = 'El indicador bancario de referencia IBR es una tasa de interés de r
 #INDICADORES = ['UVR','IPC','TIB','SMMLV','COLCAP','TPM']
 INDICADORES = ['IPC','SMMLV']
 
-#PYP = ['1-7','0-3','4-6','5-9','2-8','No Aplica','No Aplica']
+#PYP2026-1 = ['1-7','0-3','4-6','5-9','2-8','No Aplica','No Aplica']
 PYP = ['5-8','1-4','0-2','3-6','7-9','No Aplica','No Aplica']
 
 DIAS = ['Lunes','Martes','Miercoles','Jueves','Viernes', 'Sabado', 'Domingo']
@@ -27,9 +26,8 @@ SMMLV2025 = 1423500
 IPC2025 = 5.1
 IPC2024 = 5.2
 
-# URL Noticias
+# URL Noticias y fuentes de noticias
 KEY_NEWSAPI = 'a039a8295b894d07bf4b4c2d2601359c'
-#Fuentes de noticias
 FUENTESNOTICIAS = ['France24','DW Español','Xataka','ComputerHoy','Xataka.com', 'Xataka.com.co','Elespectador.com','Republica.com','El Financiero',
                    'El Mundo','Nacion.com','La Nacion','Elperiodico.com','Eleconomista.es','Www.abc.es',
                    'Eldiario.es','Jotdown.es','Elconfidencialdigital.com']
