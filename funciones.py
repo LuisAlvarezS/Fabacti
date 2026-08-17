@@ -39,6 +39,16 @@ def presentar_encabezado():
     st.success(mensaje, icon="🌎", title=':red[FABACTI] :registered:  Usuario: :red[' + usuario + ']')
     return(fechahoy)
 
+# Funcion para obtener el IPC de Colombia desde el Banco de la Republica
+def obtener_ipc():
+    URL_IPC = "https://www.datos.gov.co/resource/3hgb-duie.json?$limit=100&$order=vigenciadesde%20DESC"
+    response = requests.get(URL_IPC, timeout=10)
+    response.raise_for_status()
+        
+    data = response.json()
+    st.write(data)
+    return(data)
+
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
     # Realizar la solicitud
@@ -301,14 +311,13 @@ def mostrartodopyp(fecha):
     ndia = fecha.weekday()
     texto = ''
     contador = 0
+    for dia in co.DIAS:
+        if ndia == contador:
+            resaltar = dia + ': ' + co.PYP[contador]
+        texto = texto + dia + ': ' + co.PYP[contador] + '  '
+        contador += 1
     if es_festivo_colombia(fecha.strftime("%Y-%m-%d")):
-        resaltar = 'Hoy es festivo, no aplica Pico y Placa'
-    else:
-        for dia in co.DIAS:
-            if ndia == contador:
-                resaltar = dia + ': ' + co.PYP[contador]
-            texto = texto + dia + ': ' + co.PYP[contador] + '  '
-            contador += 1
+        resaltar = co.DIAS[ndia] + ' Festivo, no aplica Pico y Placa'
     return(texto, resaltar) 
 
 def obtener_uvr():

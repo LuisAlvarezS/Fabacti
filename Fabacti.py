@@ -1,7 +1,8 @@
 
 import streamlit as st
 
-from funciones import obtener_fecha_hora_local, es_festivo_colombia, consulta_indicador, lista_valores_indicador, frase, mostrartodopyp, obtener_imagen_aleatoria, presentar_encabezado
+from funciones import obtener_fecha_hora_local, es_festivo_colombia, consulta_indicador, lista_valores_indicador, frase, mostrartodopyp, obtener_ipc
+from funciones import obtener_imagen_aleatoria, presentar_encabezado
 from constantes import NOTASFRASE, NOTASPICOYPLACA, NOTASLIBRO, NOTASTRM, NOTASDTF, NOTASIBR, COPYRIGHT
 import acceso as ac
 
@@ -36,6 +37,9 @@ def fabacti():
   valor_ibr_f = str('{:,.2f} '.format(float(valor_ibr)))
   ibrhistorico, deltaibr = lista_valores_indicador('IBR')
   deltaibr = '{:,.2f} '.format(float(valor_ibr_f) - deltaibr)
+
+  datos_ipc = obtener_ipc()
+
 
   trm1, dtf1, ibr1 = st.columns(3, border = True)   
   with trm1:
