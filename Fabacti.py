@@ -1,13 +1,13 @@
 
 import streamlit as st
 
-from funciones import obtener_fecha_hora_local, es_festivo_colombia, consulta_indicador, lista_valores_indicador, frase, mostrartodopyp, obtener_ipc
+from funciones import calcular_indicadores, obtener_fecha_hora_local, es_festivo_colombia, consulta_indicador, lista_valores_indicador, frase, mostrartodopyp, obtener_ipc
 from funciones import obtener_imagen_aleatoria, presentar_encabezado
 from constantes import NOTASFRASE, NOTASPICOYPLACA, NOTASLIBRO, NOTASTRM, NOTASDTF, NOTASIBR, COPYRIGHT
 import acceso as ac
 
 def fabacti():
-  #nombre_usuario = ac.nombre_usuario(st.session_state['usuario'])
+
   fechahoy = presentar_encabezado()
   proceso = st.text('Cargando la información requerida, ... por favor espere ...')
 
@@ -38,30 +38,23 @@ def fabacti():
   ibrhistorico, deltaibr = lista_valores_indicador('IBR')
   deltaibr = '{:,.2f} '.format(float(valor_ibr_f) - deltaibr)
 
-  datos_ipc = obtener_ipc()
-
-
   trm1, dtf1, ibr1 = st.columns(3, border = True)   
-  with trm1:
-    st.metric('**TRM  - Dólar** Vigencia: ' + str(fecha_vigencia_trm)[0:10], ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=NOTASTRM)
-  
-  with dtf1:
-    dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' / ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=NOTASDTF)
+  trm1.metric('**TRM  - Dólar** Vigencia: ' + str(fecha_vigencia_trm)[0:10], ftrm, fdeltatrm, delta_arrow='auto', delta_color="normal", chart_data=listatrm, chart_type='line', width='stretch', height='content', help=NOTASTRM)
+  dtf1.metric('**DTF** Vigencia: ' + str(fechainicio_dtf) + ' / ' + str(fechafin_dtf), dtf + ' %', deltadtf, delta_arrow='auto', delta_color="normal", chart_data=dtfhistorico, chart_type='line', width='stretch', height='content',  help=NOTASDTF)
+  ibr1.metric('**IBR** Vigencia: ' + str(fecha_vigencia_ibr_f), valor_ibr_f + ' %', deltaibr, delta_arrow='auto', delta_color="normal", chart_data=ibrhistorico, chart_type='line', width='stretch', height='content',  help=NOTASIBR)
 
-  with ibr1:
-    ibr1.metric('**IBR** Vigencia: ' + str(fecha_vigencia_ibr_f), valor_ibr_f + ' %', deltaibr, delta_arrow='auto', delta_color="normal", chart_data=ibrhistorico, chart_type='line', width='stretch', height='content',  help=NOTASIBR)
+# Calcular los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
+  respuesta = st.checkbox('Calcular indicadores economicos adicionales', value=False, help='Haga clic para calcular los indicadores economicos adicionales: UVR, IPC, TIB, SMMLV, COLCAP, TPM')
+  if respuesta:
+      proceso = st.info('Calculando indicadores economicos adicionales, ... un momento por favor ...')
+      textoindicadores = calcular_indicadores(trm)
+      #textoindicadores = "   ".join([f"{item['indicador']}: {item['valor']}" for item in listaindicadores])
+      proceso.empty()
 
-# # Calcular los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
-#   proceso = st.info('Calculando indicadores economicos adicionales, ... un momento por favor ...')
-#   #textoindicadores = fu.calcular_indicadores(trm)
-#   listaindicadores = fu.calcular_indicadores(trm)
-#   textoindicadores = "   ".join([f"{item['indicador']}: {item['valor']}" for item in listaindicadores])
-#   proceso.empty()
-
-#   # Mostrar indicadores economicos adicionales 
-#   st.write('---')
-#   st.text(textoindicadores)
-#   st.write('---')
+      # Mostrar indicadores economicos adicionales 
+      st.write('---')
+      st.text(textoindicadores)
+      st.write('---')
 
   picoplaca, frases, libro = st.columns(3, border = True)
   with frases:

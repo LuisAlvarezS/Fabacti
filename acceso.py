@@ -75,6 +75,7 @@ def acceso():
     if st.session_state.mostrar_form:
         with st.form("login_form"):
             st.write("🔒 Iniciar sesión")
+            #correouser = "albeiro.alvarez.sierra@gmail.com"
             correouser = ""
             if not es_correo_valido(correouser): 
                 correouser  = st.text_input("Correo")                
