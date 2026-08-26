@@ -34,3 +34,10 @@ FUENTESNOTICIAS = ['France24','DW Español','Xataka','ComputerHoy','Xataka.com',
 
 #TOKEN_DATOS_ABIERTOS_COLOMBIA = "x2WRTPVBT8p6Pe3AJdOxmyUnq"
 #CLAVE_APLICACION = "8nsvp73igkk0f9l1nc6n1ue6b"
+
+# Colores hexdecimal
+C_ENERGIA = '#FF8000' # naranja
+C_GAS = '#00FF00'  # verde
+C_ACUEDUCTO = '#0000FF'  # azul
+C_ALCANTARILLADO = '#f988ff' # morado
+C_COSTO = '#000000'

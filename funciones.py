@@ -7,74 +7,61 @@ from anyio import Path
 
 import streamlit as st
 import requests
-from datetime import datetime, date
+from datetime import datetime
 
 from holidays_co import is_holiday_date
 
 import json
 import constantes as co
-import xmltodict
 import pandas as pd
 
 from zoneinfo import ZoneInfo
 
+# Verifica si una fecha es dia festivo en Colombia
+def es_festivo_colombia(fecha_str):
+    # Parámetros: fecha_str (str): Fecha en formato 'YYYY-MM-DD'
+    # Retorna: bool: True si es festivo, False si no
+    try:
+        # Convertir string a objeto date
+        fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
+        # Verificar si es festivo
+        return is_holiday_date(fecha)
+    except ValueError:
+        raise ValueError("Formato de fecha inválido. Use 'YYYY-MM-DD'.")
+
+# Función para obtener la fecha y hora local en una zona horaria específica
+def obtener_fecha_hora_local(zona: str = None) -> datetime:
+    try:
+        if zona:
+            return datetime.now(ZoneInfo(zona))
+        else:
+            # Hora local del sistema
+            return datetime.now()
+    except Exception as e:
+        raise ValueError(f"Error al obtener la hora: {e}")
+
+# Función para presentar el encabezado de la aplicación FABACTI
 def presentar_encabezado():
     usuario = st.session_state['nombre_usuario']       
     st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
     st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
     st.sidebar.write(co.ENCABEZADO)
-
     fechacolombia = obtener_fecha_hora_local("America/Bogota")
     fechahoy = fechacolombia.date()  
     ndia = co.DIAS[fechahoy.weekday()]
     nmes = co.MESES[fechahoy.month - 1]
-    
+    hora = fechacolombia.strftime("%H:%M:%S")
     # Veriificar e indicar si es festivo en Colombia
     es_festivo = es_festivo_colombia(str(fechahoy))
     if es_festivo:
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
     else:
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
-    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year)
+    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  ' + hora
     st.success(mensaje, icon="🌎", title=':red[FABACTI] :registered:  Usuario: :red[' + usuario + ']')
     return(fechahoy)
 
-# Funcion para obtener el IPC de Colombia desde el Banco de la Republica
-def obtener_ipc():
-    URL_IPC = "https://www.datos.gov.co/resource/3hgb-duie.json?$limit=100&$order=vigenciadesde%20DESC"
-    response = requests.get(URL_IPC, timeout=10)
-    response.raise_for_status()
-        
-    data = response.json()
-    st.write(data)
-    return(data)
-
-# Funcion para consultar el TRM dada una fecha
-def obtener_trm():
-    # Realizar la solicitud
-    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=100&$order=vigenciadesde%20DESC"
-    response = requests.get(URL_TRM, timeout=10)
-    response.raise_for_status()
-        
-    data = response.json()
-    trm = data[0]["valor"]
-    f1, f2 = data[0]["vigenciadesde"], data[0]["vigenciadesde"]
-    f1 = str(f1)[0:4] + str(f1)[5:7] + str(f1)[8:10]
-    f2 = str(f2)[0:4] + str(f2)[5:7] + str(f2)[8:10]
-
-    conn = sqlite3.connect(co.BD)
-    if not data:
-        return None
-    cursor = conn.cursor()
-    sqlinser = 'insert into valores_indicadores ( indicador, fechainicio, fechafin, valor) values ( "TRM", ?, ?, ?)'
-    datos = (f1, f2, trm )
-    cursor.execute(sqlinser, datos)
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return()
-
-# Funcion para obtener la frase del dia
+# Funcion para obtener una frase del dia
 def frase():
     url = 'https://frasedeldia.azurewebsites.net/api/phrase'
     try:
@@ -90,14 +77,12 @@ def frase():
 # Funcion para obtener una imgena aleatoria de una carpeta dada, se utiliza para mostrar el libro recomendado del dia
 def obtener_imagen_aleatoria(ruta_directorio):
     extensiones = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'}
-    
     try:
         imagenes = [
             os.path.join(ruta_directorio, archivo)
             for archivo in os.listdir(ruta_directorio)
             if Path(archivo).suffix.lower() in extensiones
         ]
-        
         if imagenes:
             return random.choice(imagenes)
         return None
@@ -105,205 +90,23 @@ def obtener_imagen_aleatoria(ruta_directorio):
         #print(f"Error: El directorio '{ruta_directorio}' no existe")
         return None
 
-# Funcion para obtener un indicador del Banco de la Republica de Colombia  
-def obtener_indicador(indicador, periodicidad, fecha, flow ):
-    # URL del servicio web SOAP Endpoint
-    url = "https://totoro.banrep.gov.co/OCDEv1.0/Services/NSIStdV21WsService"
-    # Encabecezado de la solicitud
-    headers = {
-    "Content-Type": "text/xml; charset=utf-8"
-    }
-    # Cuerpo de la solicitud SOAP, XML 
-    body = """<?xml version="1.0" encoding="UTF-8"?>
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:web="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/webservices"
-    xmlns:mes="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message"
-    xmlns:com="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common"
-    xmlns:quer="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/query">
-    <soapenv:Header/>
-    <soapenv:Body>
-    <web:GetGenericData>
-    <mes:GenericDataQuery>
-    <mes:Header> 
-    <mes:ID>""" + indicador + """</mes:ID>
-    <mes:Test>false</mes:Test>
-    <mes:Prepared>
-    """
-    #fechahoy = datetime.now()
-    fecha = fecha.strftime("%Y-%m-%d")
-    body = body + fecha + """ 
-    </mes:Prepared>
-    <mes:Sender id="Unknown">
-    </mes:Sender>
-    <mes:Receiver id="Unknown">
-    </mes:Receiver>
-    </mes:Header>
-    <mes:Query>
-    <quer:ReturnDetails detail="Full" observationAction="Active">
-    <quer:Structure structureID="StructureId" dimensionAtObservation="TIME_PERIOD">
-    <com:Structure>
-    <Ref agencyID="OECD" id="STES" version="3.0" local="false"
-    class="DataStructure" package="datastructure"/>
-    </com:Structure>
-    </quer:Structure>
-    </quer:ReturnDetails>
-    <quer:DataWhere>
-    <quer:DataSetID operator="equal">DF_""" + indicador + """_""" + periodicidad + """_""" + flow + """</quer:DataSetID>
-    <quer:Dataflow>
-    <Ref agencyID="ESTAT" id="DF_""" + indicador + """_""" + periodicidad + """_""" + flow + """" version="1.0" local="false"
-    class="Dataflow" package="datastructure"/>
-    </quer:Dataflow>
-    </quer:DataWhere>
-    </mes:Query>
-    </mes:GenericDataQuery>
-    </web:GetGenericData>
-    </soapenv:Body>
-    </soapenv:Envelope>"""
+# Funcion para consultar el TRM dada una fecha
+def obtener_trm():
+    # Realizar la solicitud
+    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=2&$order=vigenciadesde%20DESC"
+    response = requests.get(URL_TRM, timeout=10)
+    response.raise_for_status()
+    data = response.json()
+    trm = data[0]["valor"]
+    delta = float(data[0]["valor"]) - float(data[1]["valor"])
+    return(trm, delta)
 
-    # Enviar la solicitud utilizando el método POST
-    try:
-        response = requests.post(url, data=body, headers=headers)
-        data_dict = xmltodict.parse(response.content)
-        json_output = json.dumps(data_dict, indent= 4)
-        datos = json.loads(json_output)
-    except:
-        datos = ''
-    return(datos)
-
-def almacenardtf():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('DTF', 'DAILY', fechahoy, 'LATEST')
-    dtf = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
-    f1 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsDimension']['@value']
-    f2 = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][6]['generic:ObsDimension']['@value']
-
-    conn = sqlite3.connect(co.BD)
-    consulta= 'select count(*)  as total from valores_indicadores where  indicador = "DTF" and fechainicio >= ' + f1 + ' and  fechafin <= ' + f2 
-    df = pd.read_sql_query(consulta, conn)
-    totales = df['total'][0]
-
-    if totales == 0:
-        cursor = conn.cursor()
-        sqlinser = 'insert into valores_indicadores ( indicador, fechainicio, fechafin, valor) values ( "DTF", ?, ?, ?)'
-        datos = (f1, f2, dtf )
-        cursor.execute(sqlinser, datos)
-        conn.commit()
-        cursor.close()
-    conn.close()
-    return()
-
-def obtener_ibr():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('IBR', 'DAILY', fechahoy, 'LATEST')
-
-    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-    dibr = valores['generic:ObsValue']['@value']
-    fechainicio = fechahoy.strftime("%Y%m%d")
-    fechafin = fechahoy.strftime("%Y%m%d")
-    
-    conn = sqlite3.connect(co.BD)
-    cursor = conn.cursor()
-    sqlinser = 'insert into valores_indicadores ( indicador, fechainicio, fechafin, valor) values ( "IBR", ?, ?, ?)'
-    datos = (fechainicio, fechafin, dibr )
-    cursor.execute(sqlinser, datos)
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return()
-
-def consulta_indicador(indicador):
-    fecha = datetime.now()
-    wfecha = fecha.strftime("%Y%m%d")
-    conn = sqlite3.connect(co.BD)
-    consulta= 'select count(*) as total from valores_indicadores where indicador = "' + indicador + '" and ' + wfecha + ' between fechainicio and fechafin' 
-    df = pd.read_sql_query(consulta, conn)
-    if df['total'][0] == 0 and indicador == "DTF":
-        almacenardtf()
-    elif df['total'][0] == 0 and indicador == "TRM":
-        obtener_trm()
-    elif df['total'][0] == 0 and indicador == "IBR":
-        obtener_ibr()
-    if indicador == "DTF":
-        consulta = "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin"
-    elif indicador == "TRM" or indicador == "IBR":
-        consulta = "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' order by fechainicio desc limit 1"   
-#    consulta= "select fechainicio, fechafin, valor from valores_indicadores where indicador = '" + indicador + "' and " + wfecha + " between fechainicio and fechafin" 
-    df = pd.read_sql_query(consulta, conn)
-    conn.close()
-    return(df['valor'][0], df['fechainicio'][0], df['fechafin'][0])
-
-# Devuelve la lista historica del DTF
-def dtftodos():
-    conn = sqlite3.connect(co.BD)
-    consulta= 'select valor from valores_indicadores where indicador = "DTF" order by fechainicio' 
-    df = pd.read_sql_query(consulta, conn)
-    conn.close()
-    dfanterior = df['valor'][len(df)-2]
-    return(df, dfanterior)
-
-def lista_valores_indicador(indicador):
-    conn = sqlite3.connect(co.BD)
-    consulta= 'select valor from valores_indicadores where indicador = "' + indicador + '" order by fechainicio' 
-    df = pd.read_sql_query(consulta, conn)
-    conn.close()
-    indicadoranterior = df['valor'][len(df)-2]
-    return(df, indicadoranterior)
-
-def obtener_fecha_hora_local(zona: str = None) -> datetime:
-    """
-    Retorna la fecha y hora local actual.
-    Si se especifica una zona horaria válida (ej. 'America/Bogota'),
-    devuelve la hora en esa zona.
-    """
-    try:
-        if zona:
-            return datetime.now(ZoneInfo(zona))
-        else:
-            # Hora local del sistema
-            return datetime.now()
-    except Exception as e:
-        raise ValueError(f"Error al obtener la hora: {e}")
-    
 def lista_eventos():
     conn = sqlite3.connect(co.BD)
     sqlsp = "select fecha, evento from eventos order by fecha DESC"
     df = pd.read_sql_query(sqlsp, conn)
     conn.close()
     return(df)
-
-def datosdtf():
-    conn = sqlite3.connect(co.BD)
-    sqlsp = "select fechainicio, fechafin, valor from dtf order by fechainicio DESC"
-    df = pd.read_sql_query(sqlsp, conn)
-    conn.close()
-    return(df)
-
-def datos_todos_indicadores():
-    conn = sqlite3.connect(co.BD)
-    sqlsp = "select indicador, fechainicio, fechafin, valor from valores_indicadores order by indicador, fechainicio DESC"
-    df = pd.read_sql_query(sqlsp, conn)
-    conn.close()
-    return(df)
-
-def es_festivo_colombia(fecha_str):
-    """
-    Verifica si una fecha es festivo en Colombia.
-    
-    Parámetros:
-        fecha_str (str): Fecha en formato 'YYYY-MM-DD'
-    
-    Retorna:
-        bool: True si es festivo, False si no.
-    """
-    try:
-        # Convertir string a objeto date
-        fecha = datetime.strptime(fecha_str, "%Y-%m-%d").date()
-        
-        # Verificar si es festivo
-        return is_holiday_date(fecha)
-    
-    except ValueError:
-        raise ValueError("Formato de fecha inválido. Use 'YYYY-MM-DD'.")
 
 # Funcion para mostrar todos los dias con su pico y placa, resaltando el dia actual
 def mostrartodopyp(fecha):
@@ -319,90 +122,6 @@ def mostrartodopyp(fecha):
     if es_festivo_colombia(fecha.strftime("%Y-%m-%d")):
         resaltar = co.DIAS[ndia] + ' Festivo, no aplica Pico y Placa'
     return(texto, resaltar) 
-
-def obtener_uvr():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('UVR', 'DAILY', fechahoy, 'LATEST')
-    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-    duvr = 0
-    duvr = valores[0]['generic:ObsValue']['@value']
-    return(duvr)   
-
-def obtener_ipc():
-    fechahoy = datetime.now()
-    ipc = co.IPC2025
-    return(ipc)
-
-def obtener_smmlv():
-    fechahoy = datetime.now()
-    smmlv = co.SMMLV2026
-    return(smmlv)
-
-def obtener_tib():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('IR', 'DAILY', fechahoy, 'LATEST')
-    valor = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']['generic:ObsValue']['@value']
-    return(valor)
-
-def obtener_colcap():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('COLCAP', 'MONTHLY', fechahoy, 'LATEST')
-    valor = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']['generic:ObsValue']['@value']
-    return(valor)
-
-def obtener_tpm():
-    fechahoy = datetime.now()
-    datos = obtener_indicador('CBR', 'DAILY', fechahoy, 'LATEST')
-    valor = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs']['generic:ObsValue']['@value']
-    return(valor)
-
-def obtener_indicador_varios(indicador):
-    findicadores = {
-        'UVR': obtener_uvr,
-        'IPC': obtener_ipc,
-        'SMMLV': obtener_smmlv,
-        'TIB': obtener_tib,
-        'COLCAP': obtener_colcap,
-        'TPM': obtener_tpm
-    }
-    res = findicadores[indicador]()
-    return(res)
-
-def formatoindicador(indicador, dato):
-    if indicador in ['IBR','TIB','TPM']:
-        datof = str(' {:,.2f} % '.format(float(dato)))    
-    elif indicador == 'UVR':
-        datof = str(' ${:,.4f} '.format(float(dato)))
-    elif indicador == 'IPC':
-        datof = str(' {:,.2f} % '.format(float(dato)))
-    else:
-        datof = str(' ${:,.2f} '.format(float(dato)))
-    return(datof)
-
-def calcular_indicadores(trm):
-# Consultar y mostrar los valores para los indicadores UVR, IPC, TIB, SMMLV, COLCAP, TPM
-    fecha = datetime.now()
-    wfecha = fecha.strftime("%Y%m%d")
-
-    dis = '      '
-    textoindicadores = []
-    for i in co.INDICADORES:
-        try:
-            valor = obtener_indicador_varios(i)
-        except:
-            valor = 0
-        svalor = str(valor)
-        if i == 'SMMLV':
-            tabla = str.maketrans({'$': '', ',': ''})
-            resd = svalor.translate(tabla)
-            smmlvusd = str('USD {:,.2f} '.format(float(resd) / float(trm)))
-            textoindicadores.append(i + ': COP' + formatoindicador(i, svalor) + dis + ' SMMLV: ' + smmlvusd + dis)
-        elif i == 'IPC':
-            textoindicadores.append(i + ' 2025:  ' + formatoindicador(i, svalor) + dis)
-        else:
-            textoindicadores.append(i + ':  ' + formatoindicador(i, svalor) + dis)
-    textindicadores = "   ".join(map(str, textoindicadores))
-    return(textindicadores)
 
 def guardarevento(fecha, evento):
     conn = sqlite3.connect(co.BD)
@@ -447,3 +166,33 @@ def lista_autores():
     df = pd.read_sql_query(consulta, conn)
     conn.close()
     return(df)
+
+def tarjeta(col, titulo, valor, unidad, fecha, fuente, delta):
+    with col:
+        st.metric(label=f"{titulo}", value=f"{valor} {unidad}", delta=delta, delta_color="normal", help=f"Vigencia: {fecha}  Fuente: {fuente}")
+
+def obtener_anomes_seismeses_antes(anomes, meses):
+    """
+    Obtiene el año y mes correspondientes a una cantidad de meses antes de un año y mes dado.
+    Args:
+        anomes (str): Año y mes en formato 'YYYYMM'
+        meses (int): Cantidad de meses a restar
+    Returns:
+        str: Año y mes resultante en formato 'YYYYMM'
+    """
+    try:
+        anio = int(anomes[:4])
+        mes = int(anomes[4:])
+        
+        total_meses = anio * 12 + mes - meses
+        nuevo_anio = total_meses // 12
+        nuevo_mes = total_meses % 12
+        
+        if nuevo_mes == 0:
+            nuevo_mes = 12
+            nuevo_anio -= 1
+        
+        return f"{nuevo_anio:04d}{nuevo_mes:02d}"
+    except ValueError:
+        print("Error: El formato de 'anomes' debe ser 'YYYYMM'")
+        return None

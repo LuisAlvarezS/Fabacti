@@ -6,7 +6,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-from constantes import COPYRIGHT, NOTASTRM
+from constantes import COPYRIGHT
 from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:

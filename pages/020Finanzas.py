@@ -9,16 +9,16 @@ from funciones import presentar_encabezado
 if 'usuario' in st.session_state:
     presentar_encabezado()
 
-    st.subheader('Valor de las acciones de la bolsa de Nueva York NYSE')
+    st.subheader('Valor de las acciones en bolsa')
     st.divider()
     start_date = '2025-01-01'
     start_date2 = '2026-01-01'
     end_date = date.today().strftime("%Y-%m-%d")
 
-    listaacciones = ['Google','Apple','Microsoft','Amazon','Tesla','Meta','CitiGroup', 'Alibaba','S&P 500','AT&T', 'Intel', 'CocaCola', 'Exxon Mobil', 'Walt Disney', 'Toyota','Cisco','Oracle','Nike']
-    listasimbolos = ['GOOGL', 'AAPL', 'MSFT', 'AMZN', 'TSLA', 'META', 'C', 'BABA', 'FB', 'T', 'INTC', 'KO', 'XOM', 'DIS', 'TM', 'CSCO', 'ORCL', 'NKE']
+    listaacciones = ['Ecopetrol','Bancolombia', 'Google','Apple','Microsoft','Amazon','Tesla','Meta','CitiGroup', 'Alibaba','S&P 500','AT&T', 'Intel', 'CocaCola', 'Exxon Mobil', 'Walt Disney', 'Toyota','Cisco','Oracle','Nike']
+    listasimbolos = ['EC','CIB','GOOGL', 'AAPL', 'MSFT', 'AMZN', 'TSLA', 'META', 'C', 'BABA', 'FB', 'T', 'INTC', 'KO', 'XOM', 'DIS', 'TM', 'CSCO', 'ORCL', 'NKE']
 
-    datos = yf.Tickers('GOOGL AAPL MSFT AMZN TSLA META C BABA FB T INTC KO XOM DIS TM CSCO ORCL NKE')
+    datos = yf.Tickers('EC CIB GOOGL AAPL MSFT AMZN TSLA META C BABA FB T INTC KO XOM DIS TM CSCO ORCL NKE')
     data = yf.download(listasimbolos, start_date2, end_date)
     rendimientos = (data / data.iloc[0] - 1) * 100
     total = int(len(listaacciones))
