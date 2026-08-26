@@ -13,7 +13,6 @@ def nombre_usuario(correo):
     cursor.execute("SELECT nombre FROM usuarios WHERE correo = ?", (correo,))
     row = cursor.fetchone()
     conn.close()
-    #st.write(row)
     return(row[0])   
 
 def es_correo_valido(correo: str) -> bool:
