@@ -74,7 +74,7 @@ def acceso():
     if st.session_state.mostrar_form:
         with st.form("login_form"):
             st.write("🔒 Iniciar sesión")
-            lista_usuarios = ["albeiro.alvarez.sierra@gmail.com", "luzmiriam1@gmail.com", "lalbeiro.alvarez@udea.edu.co"]
+            lista_usuarios = ["albeiro.alvarez.sierra@gmail.com", "luzmiriam16@gmail.com", "lalbeiro.alvarez@udea.edu.co"]
             correouser = ""
             if not es_correo_valido(correouser): 
                 correouser  = st.selectbox("Correo", lista_usuarios)
