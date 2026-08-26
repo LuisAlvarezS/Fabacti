@@ -75,10 +75,10 @@ def acceso():
     if st.session_state.mostrar_form:
         with st.form("login_form"):
             st.write("🔒 Iniciar sesión")
-            #correouser = "albeiro.alvarez.sierra@gmail.com"
+            lista_usuarios = ["albeiro.alvarez.sierra@gmail.com", "luzmiriam1@gmail.com", "lalbeiro.alvarez@udea.edu.co"]
             correouser = ""
             if not es_correo_valido(correouser): 
-                correouser  = st.text_input("Correo")                
+                correouser  = st.selectbox("Correo", lista_usuarios)
             password = st.text_input("Clave de acceso", type="password")
             submitted = st.form_submit_button("Iniciar sesión")
             if submitted:
