@@ -12,6 +12,8 @@ def fabacti():
 
 # Proceso de TRM
   valor_trm, delta_trm = fu.obtener_trm()
+  valor_trm = '$ {:,.2f} '.format(float(valor_trm))
+  delta_trm = '{:,.2f} '.format(float(delta_trm))
   procesos.empty()
 
   c1, c2, c3, c4, c5 = st.columns(5, border = True)
