@@ -99,7 +99,9 @@ def obtener_trm():
     data = response.json()
     trm = data[0]["valor"]
     delta = float(data[0]["valor"]) - float(data[1]["valor"])
-    return(trm, delta)
+    trm = '$ {:,.2f} '.format(float(trm))
+    delta_trm = '{:,.2f} '.format(float(delta))
+    return(trm, delta_trm)
 
 def lista_eventos():
     conn = sqlite3.connect(co.BD)

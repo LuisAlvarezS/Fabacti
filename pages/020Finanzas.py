@@ -15,10 +15,10 @@ if 'usuario' in st.session_state:
     start_date2 = '2026-01-01'
     end_date = date.today().strftime("%Y-%m-%d")
 
-    listaacciones = ['Ecopetrol','Bancolombia', 'Google','Apple','Microsoft','Amazon','Tesla','Meta','CitiGroup', 'Alibaba','S&P 500','AT&T', 'Intel', 'CocaCola', 'Exxon Mobil', 'Walt Disney', 'Toyota','Cisco','Oracle','Nike']
-    listasimbolos = ['EC','CIB','GOOGL', 'AAPL', 'MSFT', 'AMZN', 'TSLA', 'META', 'C', 'BABA', 'FB', 'T', 'INTC', 'KO', 'XOM', 'DIS', 'TM', 'CSCO', 'ORCL', 'NKE']
+    listaacciones = ['Oro','Bolsa Colombia','Ecopetrol','Bancolombia', 'Google','Apple','Microsoft','Amazon','Tesla','Meta','CitiGroup', 'Alibaba','S&P 500','AT&T', 'Intel', 'CocaCola', 'Exxon Mobil', 'Walt Disney', 'Toyota','Cisco','Oracle','Nike']
+    listasimbolos = ['GC=F','ICOLCAP.CL','EC','CIB','GOOGL', 'AAPL', 'MSFT', 'AMZN', 'TSLA', 'META', 'C', 'BABA', 'FB', 'T', 'INTC', 'KO', 'XOM', 'DIS', 'TM', 'CSCO', 'ORCL', 'NKE']
 
-    datos = yf.Tickers('EC CIB GOOGL AAPL MSFT AMZN TSLA META C BABA FB T INTC KO XOM DIS TM CSCO ORCL NKE')
+    datos = yf.Tickers( 'GC=F ICOLCAP.CL EC CIB GOOGL AAPL MSFT AMZN TSLA META C BABA FB T INTC KO XOM DIS TM CSCO ORCL NKE')
     data = yf.download(listasimbolos, start_date2, end_date)
     rendimientos = (data / data.iloc[0] - 1) * 100
     total = int(len(listaacciones))

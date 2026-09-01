@@ -8,17 +8,14 @@ import acceso as ac
 def fabacti():
 
   fechahoy = fu.presentar_encabezado()
-  proceso = st.text('Cargando la información requerida, ... por favor espere  ...')
+  procesos = st.text('Cargando la información requerida, ... por favor espere  ...')
 
 # Proceso de TRM
   valor_trm, delta_trm = fu.obtener_trm()
-  trm = '$ {:,.2f} '.format(float(valor_trm))
-  delta_trm = '{:,.2f} '.format(float(delta_trm))
-
-  proceso.empty()
+  procesos.empty()
 
   c1, c2, c3, c4, c5 = st.columns(5, border = True)
-  fu.tarjeta(c1, "TRM - Dólar", trm, "", fechahoy, "Banco de la República", delta_trm)
+  fu.tarjeta(c1, "TRM - Dólar", valor_trm, "", fechahoy, "Banco de la República", delta_trm)
 
 # Muestra la información de Pico y Placa, Frase del día y Libro recomendado
   picoplaca, frases, libro = st.columns(3, border = True)
@@ -42,7 +39,7 @@ def fabacti():
 
   st.divider()
   st.write(co.COPYRIGHT)
-  proceso.empty()
+  procesos.empty()
 
 if __name__ == '__main__':
     st.set_page_config(
