@@ -3,6 +3,7 @@ import os
 import random
 import sqlite3
 
+from altair.datasets import url
 from anyio import Path
 
 import streamlit as st
@@ -90,15 +91,21 @@ def obtener_imagen_aleatoria(ruta_directorio):
         #print(f"Error: El directorio '{ruta_directorio}' no existe")
         return None
 
+   
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
     # Realizar la solicitud
-    URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=2&$order=vigenciadesde%20DESC"
-    response = requests.get(URL_TRM, timeout=10)
-    response.raise_for_status()
-    data = response.json()
-    trm = data[0]["valor"]
-    delta = float(data[0]["valor"]) - float(data[1]["valor"])
+    try:
+        URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=2&$order=vigenciadesde%20DESC"
+        response = requests.get(URL_TRM, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        trm = data[0]["valor"]
+        delta = float(data[0]["valor"]) - float(data[1]["valor"])
+    except Exception as e:
+        #print(f"Error al obtener el TRM: {e}")
+        trm = 0
+        delta = 0
     return(trm, delta)
 
 def lista_eventos():
@@ -196,3 +203,16 @@ def obtener_anomes_seismeses_antes(anomes, meses):
     except ValueError:
         print("Error: El formato de 'anomes' debe ser 'YYYYMM'")
         return None
+
+def obtener_clima():
+    url_cilma = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m'
+    fechacolombia = obtener_fecha_hora_local("America/Bogota")
+    hora = int(fechacolombia.strftime("%H"))
+    try:
+        df = pd.read_json(url_cilma)
+        temperatura = df['hourly']['temperature_2m'][hora]
+        return(temperatura) 
+#        return(temperatura)
+    except Exception as e:
+        #print(f"Error al obtener el clima: {e}")
+        return(None)
