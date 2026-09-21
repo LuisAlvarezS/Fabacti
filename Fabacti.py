@@ -1,6 +1,3 @@
-
-from turtle import right
-
 import streamlit as st
 
 import funciones as fu
