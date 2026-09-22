@@ -11,8 +11,9 @@ def fabacti():
   procesos = st.text('Cargando la información requerida, ... por favor espere  ...')
 
 # Indicadores
-  
-  valor_trm = '$ {:,.2f} '.format(float(fu.obtener_trm()))
+  wtrm = fu.obtener_trm()
+
+  valor_trm = '$ {:,.2f} '.format(float(wtrm))
   valor_oro = '$ {:,.2f} '.format(fi.valor_oro())
   valor_euro = '$ {:,.2f} '.format(fi.valor_euro())
   valor_cafe = 'US$ {:,.2f} '.format(fi.valor_cafe())
