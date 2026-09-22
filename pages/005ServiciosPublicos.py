@@ -33,7 +33,7 @@ if 'usuario' in st.session_state and st.session_state['usuario'] == 'albeiro.alv
     datosconsumo = dserv[['Unidad','AnoMesFacturacion','Energia','Acueducto','Gas']]
     datoscosto = dserv[['Unidad','AnoMesFacturacion','CEnergia', 'CGas','CAcueducto','CAlcantarillado','CGas','OtrasEntidades','CostoServicio']]
 
-    pinares, terraverde, towers, riviere, remanso, paulita, riviere2, graficas, datosserv = st.tabs(['Pinares701','Terraverde406','77Towers1901','LaRiviere1519','ElRemanso318','LaPaulita104','LaRiviere1915','Graficas','Datos detallados'])
+    pinares, terraverde, towers, riviere, remanso, paulita, riviere2, graficas, datosserv, datosserv_edicion = st.tabs(['Pinares701','Terraverde406','77Towers1901','LaRiviere1519','ElRemanso318','LaPaulita104','LaRiviere1915','Graficas','Datos detallados','Edición de datos'])
         
     with pinares:
         apto = 'Pinares701'
@@ -282,6 +282,9 @@ if 'usuario' in st.session_state and st.session_state['usuario'] == 'albeiro.alv
         
     with datosserv:
         st.dataframe(dserv, hide_index = True, column_config={'id_serviciospublicos': None})
+
+    with datosserv_edicion:
+        st.data_editor(dserv, hide_index = True, column_config={'id_serviciospublicos': None})
 
     with graficas:
         graficas = ['Consumos Promedios','Costos Totales','Valor diario por servicios']
