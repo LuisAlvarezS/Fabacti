@@ -10,24 +10,19 @@ def fabacti():
   fechahoy = fu.presentar_encabezado()
   procesos = st.text('Cargando la información requerida, ... por favor espere  ...')
 
-# Proceso de TRM
-  valor_trm, delta_trm = fu.obtener_trm()
-  valor_trm = '$ {:,.2f} '.format(float(valor_trm))
-  delta_trm = '{:,.2f} '.format(float(delta_trm))
-
-# Clima
-  clima = fu.obtener_clima()
-
-# Otros indicadores
+# Indicadores
+  
+  valor_trm = '$ {:,.2f} '.format(float(fu.obtener_trm()))
   valor_oro = '$ {:,.2f} '.format(fi.valor_oro())
   valor_euro = '$ {:,.2f} '.format(fi.valor_euro())
   valor_cafe = 'US$ {:,.2f} '.format(fi.valor_cafe())
   valor_petroleo = 'US$ {:,.2f} '.format(fi.valor_petroleo())
+  clima = fu.obtener_clima()
 
   procesos.empty()
 
   c1, c2, c3 = st.columns(3, border = True)
-  fu.tarjeta(c1, "TRM - Dólar", valor_trm, "", fechahoy, "Banco de la República", delta_trm)
+  fu.tarjeta(c1, "TRM - Dólar", valor_trm, "", fechahoy, "Banco de la República", "")
   fu.tarjeta(c2, "Euro", valor_euro, "", fechahoy, "Yahoo Finance", "")
   fu.tarjeta(c3, "Café", valor_cafe, "", fechahoy, "Yahoo Finance", "")
 

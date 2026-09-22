@@ -96,17 +96,14 @@ def obtener_imagen_aleatoria(ruta_directorio):
 def obtener_trm():
     # Realizar la solicitud
     try:
-        URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=2&$order=vigenciadesde%20DESC"
+        URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=100&$order=vigenciadesde%20DESC"
         response = requests.get(URL_TRM, timeout=10)
         response.raise_for_status()
         data = response.json()
         trm = data[0]["valor"]
-        delta = float(data[0]["valor"]) - float(data[1]["valor"])
     except Exception as e:
-        #print(f"Error al obtener el TRM: {e}")
         trm = 0
-        delta = 0
-    return(trm, delta)
+    return(trm)
 
 def lista_eventos():
     conn = sqlite3.connect(co.BD)

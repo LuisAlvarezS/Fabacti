@@ -4,8 +4,9 @@ import streamlit as st
 def valor_oro():
     try:
         oro = yf.Ticker("GC=F")
-        data_oro = oro.history(period="1d")
-        return data_oro['Open'].iloc[-1]
+        info_oro = oro.info
+        roro = info_oro.get('regularMarketPreviousClose', None)
+        return roro
     except Exception as e:
         print(f"Error al obtener el valor del oro: {e}")
         return None
@@ -13,8 +14,9 @@ def valor_oro():
 def valor_euro():
     try:
         euro = yf.Ticker("EURCOP=X")
-        data_euro = euro.history(period="1d")
-        return data_euro['Open'].iloc[-1]    
+        info_euro = euro.info
+        reuro = info_euro.get('regularMarketPreviousClose', None)
+        return reuro
     except Exception as e:
         print(f"Error al obtener el valor del euro: {e}")
         return None
@@ -22,8 +24,9 @@ def valor_euro():
 def valor_cafe():
     try:
         cafe = yf.Ticker("KC=F")
-        data_cafe = cafe.history(period="1d")
-        return data_cafe['Open'].iloc[-1] / 100
+        info_cafe = cafe.info
+        rcafe = info_cafe.get('regularMarketPreviousClose', None) / 100
+        return rcafe
     except Exception as e:
         print(f"Error al obtener el valor del café: {e}")
         return None
@@ -31,8 +34,9 @@ def valor_cafe():
 def valor_petroleo():
     try:
         petroleo = yf.Ticker("BZ=F")
-        data_petroleo = petroleo.history(period="1d")
-        return data_petroleo['Open'].iloc[-1]
+        info_petroleo = petroleo.info
+        rpetroleo = info_petroleo.get('regularMarketPreviousClose', None) 
+        return rpetroleo
     except Exception as e:
         print(f"Error al obtener el valor del petróleo: {e}")
         return None
