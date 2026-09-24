@@ -15,6 +15,7 @@ from holidays_co import is_holiday_date
 import json
 import constantes as co
 import pandas as pd
+import yfinance as yf
 
 from zoneinfo import ZoneInfo
 
@@ -58,8 +59,8 @@ def presentar_encabezado():
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
     else:
         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
-    mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  ' + hora
-    st.success(mensaje, icon="🌎", title=':red[FABACTI] :registered:  Usuario: :red[' + usuario + ']')
+    mensaje = mensaje + '  ' + hora
+    st.success(mensaje, title=':red[FABACTI] :registered: ')
     return(fechahoy)
 
 # Funcion para obtener una frase del dia
@@ -213,3 +214,24 @@ def obtener_clima():
     except Exception as e:
         #print(f"Error al obtener el clima: {e}")
         return(None)
+
+def obtener_precio_cierre(symbol):
+    try:
+        ticker = yf.Ticker(symbol)
+        info = ticker.info
+        precio_cierre = info.get('regularMarketPreviousClose', None)
+        return precio_cierre
+    except Exception as e:
+        #print(f"Error al obtener el precio de cierre de {symbol}: {e}")
+        return 0
+
+def obtener_symbol_yfinance(nombre):
+    mapping = {
+        "oro": "GC=F",
+        "euro": "EURUSD=X",
+        "cafe": "KC=F",
+        #"petroleo": "CL=F",
+        "petroleo": "BZ=F",
+    }
+    return mapping.get(nombre.lower(), None)
+    

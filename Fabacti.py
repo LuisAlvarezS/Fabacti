@@ -1,7 +1,6 @@
 import streamlit as st
 
 import funciones as fu
-import funcionesindicadores as fi
 import constantes as co
 import acceso as ac
 
@@ -12,12 +11,11 @@ def fabacti():
 
 # Indicadores
   wtrm = fu.obtener_trm()
-
   valor_trm = '$ {:,.2f} '.format(float(wtrm))
-  valor_oro = '$ {:,.2f} '.format(fi.valor_oro())
-  valor_euro = '$ {:,.2f} '.format(fi.valor_euro())
-  valor_cafe = 'US$ {:,.2f} '.format(fi.valor_cafe())
-  valor_petroleo = 'US$ {:,.2f} '.format(fi.valor_petroleo())
+  valor_oro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("oro")))
+  valor_euro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("euro")))
+  valor_cafe = 'US$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("cafe")))
+  valor_petroleo = 'US$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("petroleo")))
   clima = fu.obtener_clima()
 
   procesos.empty()
@@ -31,7 +29,7 @@ def fabacti():
   fu.tarjeta(c4, "Oro", valor_oro, "", fechahoy, "Yahoo Finance", "")
   fu.tarjeta(c5, "Petróleo", valor_petroleo, "", fechahoy, "Yahoo Finance", "")
   fu.tarjeta(c6, "Clima", clima, "°C", fechahoy, "Open Meteo", "")
-
+ 
 # Muestra la información de Pico y Placa, Frase del día y Libro recomendado
   picoplaca, frases, libro = st.columns(3, border = True)
   with picoplaca:
