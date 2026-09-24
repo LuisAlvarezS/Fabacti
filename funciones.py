@@ -228,7 +228,7 @@ def obtener_precio_cierre(symbol):
 def obtener_symbol_yfinance(nombre):
     mapping = {
         "oro": "GC=F",
-        "euro": "EURUSD=X",
+        "euro": "EURCOP=X",
         "cafe": "KC=F",
         #"petroleo": "CL=F",
         "petroleo": "BZ=F",

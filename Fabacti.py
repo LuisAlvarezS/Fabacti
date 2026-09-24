@@ -14,7 +14,9 @@ def fabacti():
   valor_trm = '$ {:,.2f} '.format(float(wtrm))
   valor_oro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("oro")))
   valor_euro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("euro")))
-  valor_cafe = 'US$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("cafe")))
+  valor_cafe = fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("cafe"))
+  valor_cafe = valor_cafe / 100
+  valor_cafe = 'US$ {:,.2f} '.format(valor_cafe)
   valor_petroleo = 'US$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("petroleo")))
   clima = fu.obtener_clima()
 
