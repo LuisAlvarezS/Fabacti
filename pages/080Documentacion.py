@@ -8,8 +8,9 @@ from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
+    st.title('Documentación del Proyecto')
     st.divider()
-    st.write("Fuentes de infomación: ")
+    st.subheader("Fuentes de infomación: ")
     st.divider()
     
     st.write("A continuación se presentan las fuentes de información utilizadas en el proyecto:")
@@ -26,7 +27,7 @@ if 'usuario' in st.session_state:
     st.write(" - :blue[**Informacion de Colombia**] [https://api-colombia.com/api/v1]")
 
     st.divider()
-    st.write("Herramientas de desarrollo: ")
+    st.subheader("Herramientas de desarrollo: ")
     st.divider()
     
     st.write("A continuación se presentan las herramientas de desarrollo utilizadas en el proyecto:")

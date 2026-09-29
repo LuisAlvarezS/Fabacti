@@ -14,7 +14,7 @@ if 'usuario' in st.session_state:
     dlibr = df
     totallibros = len(dlibr)
     dlibr = dlibr.sort_values(by = 'titulo', ascending=True)
-
+    st.title('Biblioteca')
     st.subheader(f"Total libros: {totallibros}")
 
     totallibros, consultatitulo, consultaautor, lista = st.tabs(['Libros', 'Consulta por titulo', 'Consulta por autor', 'Lista de libros'])

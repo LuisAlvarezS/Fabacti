@@ -1,4 +1,5 @@
 
+
 import os
 import random
 import sqlite3
@@ -13,6 +14,8 @@ from datetime import datetime
 from holidays_co import is_holiday_date
 
 import json
+
+from streamlit import version
 import constantes as co
 import pandas as pd
 import yfinance as yf
@@ -42,26 +45,26 @@ def obtener_fecha_hora_local(zona: str = None) -> datetime:
     except Exception as e:
         raise ValueError(f"Error al obtener la hora: {e}")
 
-# Función para presentar el encabezado de la aplicación FABACTI
-def presentar_encabezado():
-    usuario = st.session_state['nombre_usuario']       
-    st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
-    st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
-    st.sidebar.write(co.ENCABEZADO)
-    fechacolombia = obtener_fecha_hora_local("America/Bogota")
-    fechahoy = fechacolombia.date()  
-    ndia = co.DIAS[fechahoy.weekday()]
-    nmes = co.MESES[fechahoy.month - 1]
-    hora = fechacolombia.strftime("%H:%M:%S")
-    # Veriificar e indicar si es festivo en Colombia
-    es_festivo = es_festivo_colombia(str(fechahoy))
-    if es_festivo:
-        mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
-    else:
-        mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
-    mensaje = mensaje + '  ' + hora
-    st.success(mensaje, title=':red[FABACTI] :registered: ')
-    return(fechahoy)
+# # Función para presentar el encabezado de la aplicación FABACTI
+# def presentar_encabezado():
+#     usuario = st.session_state['nombre_usuario']       
+#     st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
+#     st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
+#     st.sidebar.write(co.ENCABEZADO)
+#     fechacolombia = obtener_fecha_hora_local("America/Bogota")
+#     fechahoy = fechacolombia.date()  
+#     ndia = co.DIAS[fechahoy.weekday()]
+#     nmes = co.MESES[fechahoy.month - 1]
+#     hora = fechacolombia.strftime("%H:%M:%S")
+#     # Veriificar e indicar si es festivo en Colombia
+#     es_festivo = es_festivo_colombia(str(fechahoy))
+#     if es_festivo:
+#         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
+#     else:
+#         mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
+#     mensaje = mensaje + '  ' + hora
+#     st.success(mensaje, title=':red[FABACTI] :registered: ')
+#     return(fechahoy)
 
 # Funcion para obtener una frase del dia
 def frase():
@@ -234,4 +237,37 @@ def obtener_symbol_yfinance(nombre):
         "petroleo": "BZ=F",
     }
     return mapping.get(nombre.lower(), None)
-    
+
+def presentar_encabezado():
+    CIUDAD = "Medellin, Colombia"
+    fechacolombia = obtener_fecha_hora_local("America/Bogota")
+    fechahoy = fechacolombia.date()  
+    ndia = co.DIAS[fechahoy.weekday()]
+    nmes = co.MESES[fechahoy.month - 1]
+    wfecha = str(fechahoy.day) + '/' + nmes + '/' + str(fechahoy.year)
+    version = "FABACTI Version: " + st.__version__
+    st.markdown(f"""
+      <style>
+      .barra {{
+         display: flex;
+         align-items: center;
+         border-top: 1px solid #555;
+         border-bottom: 1px solid #555;
+         padding: 14px 24px;
+         font-family: Helvetica, Arial, sans-serif;
+         color: #222;
+         gap: 24px;
+      }}
+      .barra .fecha {{ font-size: 1.05rem; padding-right: 24px; border-right: 2px solid #999; }}
+      .barra .dia {{ font-size: 1.6rem; font-weight: 800; letter-spacing: 3px; padding-right: 24px; border-right: 2px solid #999; }}
+      .barra .version {{ font-size: 1.05rem; }}
+            </style>
+      <div class="barra">
+         <span class="fecha">{CIUDAD} -  {wfecha}</span>
+         <span class="dia">{ndia}</span>
+         <span class="version">{version}</span>
+      </div>
+    """,
+    unsafe_allow_html=True,
+    )
+    return(fechahoy)

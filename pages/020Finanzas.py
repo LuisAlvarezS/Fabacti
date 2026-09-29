@@ -8,7 +8,7 @@ from funciones import presentar_encabezado
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
-
+    st.title('Finanzas')
     st.subheader('Valor de las acciones en bolsa')
     st.divider()
     start_date = '2025-01-01'

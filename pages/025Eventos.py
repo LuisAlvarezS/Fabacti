@@ -12,7 +12,7 @@ from funciones import presentar_encabezado, guardarevento, existeevento
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
-        
+    st.title('Eventos')
     consulta, registro = st.tabs(['Consultar', 'Registrar'])
 
     with consulta:

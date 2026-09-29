@@ -12,7 +12,7 @@ from funciones import presentar_encabezado
 if 'usuario' in st.session_state:
     
     presentar_encabezado()
-
+    st.title('Indicadores')
     innovación, publicoverde = st.tabs(["Innovación", "Espacio Público Verde"])
 
     with innovación:

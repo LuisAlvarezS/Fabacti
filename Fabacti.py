@@ -8,7 +8,7 @@ def fabacti():
 
   fechahoy = fu.presentar_encabezado()
   procesos = st.text('Cargando la información requerida, ... por favor espere  ...')
-
+  st.title("Indicadores Económicos y Clima")
 # Indicadores
   wtrm = fu.obtener_trm()
   valor_trm = '$ {:,.2f} '.format(float(wtrm))
@@ -31,7 +31,8 @@ def fabacti():
   fu.tarjeta(c4, "Oro", valor_oro, "", fechahoy, "Yahoo Finance", "")
   fu.tarjeta(c5, "Petróleo", valor_petroleo, "", fechahoy, "Yahoo Finance", "")
   fu.tarjeta(c6, "Clima", clima, "°C", fechahoy, "Open Meteo", "")
- 
+
+  st.title("Pico y Placa, Frase del Día y Libro Recomendado")
 # Muestra la información de Pico y Placa, Frase del día y Libro recomendado
   picoplaca, frases, libro = st.columns(3, border = True)
   with picoplaca:
