@@ -96,7 +96,6 @@ def obtener_imagen_aleatoria(ruta_directorio):
         #print(f"Error: El directorio '{ruta_directorio}' no existe")
         return None
 
-   
 # Funcion para consultar el TRM dada una fecha
 def obtener_trm():
     # Realizar la solicitud
