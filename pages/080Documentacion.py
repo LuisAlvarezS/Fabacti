@@ -23,7 +23,9 @@ if 'usuario' in st.session_state:
         textofuentes = textofuentes + " - " + fuente
     st.write("     - " + textofuentes)
     st.write(" - :blue[**Frase del día**] :memo:  :green[**(Frasedeldia)**] [https://rasedeldia.azurewebsites.net/api/phrase]")
-    st.write(" - :blue[**Indicadores financieros**] [https://www.datos.gov.co/resource/32sa-8pi3.json]")
+    st.write(" - :blue[**TRM**] [https://www.datos.gov.co/resource/32sa-8pi3.json]")
+    st.write(" - :blue[**IBR, DTF (Banco de la República)**] [https://www.banrep.gov.co/es/estadisticas]")
+    st.write(" - :blue[**Clima**] :sunny:  :green[**(Open Meteo)**] [https://open-meteo.com/]")
     st.write(" - :blue[**Informacion de Colombia**] [https://api-colombia.com/api/v1]")
 
     st.divider()

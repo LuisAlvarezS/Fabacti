@@ -17,6 +17,7 @@ import json
 
 from streamlit import version
 import constantes as co
+import fubancorepublica as fbr
 import pandas as pd
 import yfinance as yf
 
@@ -108,6 +109,27 @@ def obtener_trm():
     except Exception as e:
         trm = 0
     return(trm)
+
+
+# Función para obtener el valor del IBR (Indicador Bancario de Referencia)
+def obtener_ibr():
+    fechahoy = datetime.now()
+    datos = fbr.obtener_indicador('IBR')
+    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+    dibr = valores['generic:ObsValue']['@value']
+    #fbd.guardarindicador(fechahoy.strftime("%Y%m%d"), 'IBR', dibr)
+    return(dibr)
+
+# Función para obtener el valor del DTB (Depósito a Término)
+def obtener_dtf():
+    fechahoy = datetime.now()
+    datos = fbr.obtener_indicador('DTF')
+    #valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
+    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
+    dtf= valores
+    #dtf = valores['generic:ObsValue']['@value']
+    #fbd.guardarindicador(fechahoy.strftime("%Y%m%d"), 'DTF', dtf)
+    return(dtf)
 
 def lista_eventos():
     conn = sqlite3.connect(co.BD)
