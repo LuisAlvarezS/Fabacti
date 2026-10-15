@@ -12,7 +12,7 @@ def fabacti():
   if st.session_state.indicadores == False:
     st.session_state.indicadores = True
     # Obtener los indicadores económicos y clima
-    fu.obtener_indicadores()
+
   # Indicadores
     wtrm = fu.obtener_trm()
     valor_trm = '$ {:,.2f} '.format(float(wtrm))
