@@ -260,13 +260,13 @@ def obtener_symbol_yfinance(nombre):
     return mapping.get(nombre.lower(), None)
 
 def presentar_encabezado():
-    CIUDAD = "Medellin, Colombia"
+    ciudad = co.CIUDAD + ', ' + co.PAIS
     fechacolombia = obtener_fecha_hora_local("America/Bogota")
     fechahoy = fechacolombia.date()  
     ndia = co.DIAS[fechahoy.weekday()]
     nmes = co.MESES[fechahoy.month - 1]
     wfecha = str(fechahoy.day) + '/' + nmes + '/' + str(fechahoy.year)
-    version = "FABACTI Version: " + st.__version__
+    version = "FABACTI Version: " + co.VERSION_FABACTI
     st.markdown(f"""
       <style>
       .barra {{
@@ -284,7 +284,7 @@ def presentar_encabezado():
       .barra .version {{ font-size: 1.05rem; }}
             </style>
       <div class="barra">
-         <span class="fecha">{CIUDAD} -  {wfecha}</span>
+         <span class="fecha">{ciudad} -  {wfecha}</span>
          <span class="dia">{ndia}</span>
          <span class="version">{version}</span>
       </div>

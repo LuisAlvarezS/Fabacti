@@ -5,29 +5,26 @@ import constantes as co
 import acceso as ac
 
 def fabacti():
-  st.session_state.indicadores = False
+
   fechahoy = fu.presentar_encabezado()
   procesos = st.text('Cargando la información requerida, ... de las fuentes: Yahoo/Finance, Banco de la República, Datos abiertos de Colombia, Open Meteo ... por favor espere  ...')
   st.title("Indicadores Económicos y Clima")
-  if st.session_state.indicadores == False:
-    st.session_state.indicadores = True
-    # Obtener los indicadores económicos y clima
 
-  # Indicadores
-    wtrm = fu.obtener_trm()
-    valor_trm = '$ {:,.2f} '.format(float(wtrm))
-    valor_ibr = ' {:,.2f} %'.format(float(fu.obtener_ibr()))
-    valor_dtf = ' {:,.2f} %'.format(float(fu.obtener_dtf()))
-    valor_oro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("oro")))
-    valor_euro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("euro")))
-    valor_cafe = fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("cafe"))
-    valor_cafe = valor_cafe / 100
-    valor_cafe = 'US$ {:,.2f} '.format(valor_cafe)
-    valor_petroleo = 'US$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("petroleo")))
-    clima = fu.obtener_clima()
+  # Obtener los indicadores económicos y clima
+  wtrm = fu.obtener_trm()
+  valor_trm = '$ {:,.2f} '.format(float(wtrm))
+  valor_ibr = ' {:,.2f} %'.format(float(fu.obtener_ibr()))
+  valor_dtf = ' {:,.2f} %'.format(float(fu.obtener_dtf()))
+  valor_oro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("oro")))
+  valor_euro = '$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("euro")))
+  valor_cafe = fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("cafe"))
+  valor_cafe = valor_cafe / 100
+  valor_cafe = 'US$ {:,.2f} '.format(valor_cafe)
+  valor_petroleo = 'US$ {:,.2f} '.format(fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("petroleo")))
+  clima = fu.obtener_clima()
 
-    #st.write(valor_ibr + ' - IBR (Indicador Bancario de Referencia)')
-    #st.write(valor_dtf + ' - DTF (Depósito a Término)')
+  #st.write(valor_ibr + ' - IBR (Indicador Bancario de Referencia)')
+  #st.write(valor_dtf + ' - DTF (Depósito a Término)')
   procesos.empty()
 
   c1, c2, c3, c4 = st.columns(4, border = True)

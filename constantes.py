@@ -2,7 +2,9 @@
 # Archivo de constantes para la aplicación FABACTI
 ENCABEZADO = " :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]"
 COPYRIGHT = ":copyright: 2026 Todos los derechos reservados de autor :red[FABACTI] :registered:"
-
+VERSION_FABACTI = "2026.001"
+CIUDAD = 'Medellin'
+PAIS = 'Colombia'
 NOTASTRM = "La tasa de cambio representativa del mercado TRM es la cantidad de pesos colombianos por un dólar de los Estados Unidos. La '   TRM se calcula diariamente con base en las transacciones de compra y venta de dólares que se realizan en el mercado cambiario colombiano, y es publicada por la Superintendencia Financiera de Colombia."
 NOTASPICOYPLACA = 'El Pico y Placa es un sistema de restricción vehicular en Colombia que limita la circulación de vehículos en ciertas horas y días, basado en el último dígito de la placa.'
 NOTASFRASE = 'La frase del día es una cita inspiradora que se actualiza diariamente, diseñada para motivar y ofrecer una perspectiva positiva a los lectores. Fuente: rasedeldia.azurewebsites.net/api/phrase'
