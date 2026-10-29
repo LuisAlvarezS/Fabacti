@@ -7,7 +7,7 @@ import acceso as ac
 def fabacti():
 
   fechahoy = fu.presentar_encabezado()
-
+  
   if 'indicadores' not in st.session_state:
     st.session_state['indicadores'] = True
   if st.session_state['indicadores']:
