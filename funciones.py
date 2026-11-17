@@ -96,8 +96,8 @@ def obtener_imagen_aleatoria(ruta_directorio):
         #print(f"Error: El directorio '{ruta_directorio}' no existe")
         return None
 
-# Funcion para consultar el TRM dada una fecha
-def obtener_trm():
+# Funcion para consultar el TRM oficial vigente
+def obtener_trm_old():
     # Realizar la solicitud
     try:
         URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=100&$order=vigenciadesde%20DESC"
@@ -109,6 +109,29 @@ def obtener_trm():
         trm = 0
     return(trm)
 
+# Funcion para consultar el TRM oficial vigente
+def obtener_trm(fecha):
+    # Realizar la solicitud
+    try:
+
+        #URL_TRM = "https://api.dolarencolombia.co/v1/trm/latest"
+        URL_TRM = f"https://api.dolarencolombia.co/v1/trm/series?desde=2026-01-01&hasta={fecha}"
+        response = requests.get(URL_TRM, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        total_registros = data["total"] 
+        trm = data["datos"][total_registros - 1]["valor"]
+        fuentetrm = data["datos"][total_registros - 1]["fuente"]
+        vigenciatrm = data["datos"][total_registros - 1]["vigenciaHasta"]
+        deltatrm = data["datos"][total_registros - 2]["valor"]
+        deltatrm = float(trm) - float(deltatrm)
+        # Convertir la respuesta a un DataFrame de pandas
+        datos = json.loads(response.text)
+        df_trm = pd.json_normalize(datos, record_path="datos")[["valor"]]
+   
+    except Exception as e:
+        return(0,0,0,0,0)
+    return(trm, fuentetrm, vigenciatrm, deltatrm, df_trm)
 
 # Función para obtener el valor del IBR (Indicador Bancario de Referencia)
 def obtener_ibr():
@@ -196,9 +219,9 @@ def lista_autores():
     conn.close()
     return(df)
 
-def tarjeta(col, titulo, valor, unidad, fecha, fuente, delta):
+def tarjeta(col, titulo, valor, unidad, ayuda, fecha, fuente, delta, datos, tipo_grafica):
     with col:
-        st.metric(label=f"{titulo}", value=f"{valor} {unidad}", delta=delta, delta_color="normal", help=f"Vigencia: {fecha}  Fuente: {fuente}")
+        st.metric(label=f"{titulo}", value=f"{valor} {unidad}", delta=delta, delta_color="normal", help=f" {ayuda} Vigencia: {fecha}  Fuente: {fuente}", chart_data = datos, chart_type = tipo_grafica)
 
 def obtener_anomes_seismeses_antes(anomes, meses):
     """
@@ -244,6 +267,7 @@ def obtener_precio_cierre(symbol):
         ticker = yf.Ticker(symbol)
         info = ticker.info
         precio_cierre = info.get('regularMarketPreviousClose', None)
+        #hist = ticker.history(period="5d") 
         return precio_cierre
     except Exception as e:
         #print(f"Error al obtener el precio de cierre de {symbol}: {e}")
