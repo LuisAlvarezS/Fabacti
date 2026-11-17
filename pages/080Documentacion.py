@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-
+from pathlib import Path
 import yfinance
 
 from constantes import COPYRIGHT, FUENTESNOTICIAS
@@ -63,6 +63,9 @@ if 'usuario' in st.session_state:
         st.title('Mis Escritos')
         st.divider()
         st.write("A continuación se presentan los escritos del usuario:")
+        contenido = Path("datos/misescritos.md").read_text(encoding="utf-8")
+        st.markdown(contenido)
+
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
