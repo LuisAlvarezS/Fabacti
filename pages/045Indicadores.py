@@ -13,7 +13,7 @@ if 'usuario' in st.session_state:
     
     presentar_encabezado()
     st.title(':red[FABACTI] - Indicadores')
-    innovación, publicoverde = st.tabs(["Innovación", "Espacio Público Verde"])
+    innovación, publicoverde, proyeccioninfacion, tasadesempleo = st.tabs(["Innovación", "Espacio Público Verde","Proyección Inflación","Tasa de desempleo urbano"])
 
     with innovación:
 
@@ -67,9 +67,62 @@ if 'usuario' in st.session_state:
         )
         st.plotly_chart(fig2, width='stretch', theme="streamlit", config={"displayModeBar": False})
 
+    with proyeccioninfacion:
+
+        # Proyeción de la inflación en Colombia
+        st.subheader('Proyección de la inflación en Colombia')
+        st.divider()
+
+        datos_inflacion = pd.DataFrame({
+            "Fecha": ["2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
+            "Colombia": [5.6, 13.1, 9.3, 5.2, 5.1, 6.7, 5.5,4.1,3.6,3.3]
+            })
+
+        fig1 = go.Figure()
+
+        fig1.add_trace(go.Scatter(
+            x=datos_inflacion['Fecha'], y=datos_inflacion['Colombia'], mode='lines+markers+text', 
+            text=datos_inflacion['Colombia'], textposition='bottom center', textfont=dict(size=14, color='black'),
+            name='Colombia', line=dict(color='blue', width=2), marker=dict(size=12)
+        ))
+        fig1.update_layout(xaxis_title='Año', yaxis_title='Posición')
+        fig1.update_layout(
+                yaxis=dict(autorange=False,
+                    range=[0, 100],
+                    ),
+                    showlegend=False,
+        )
+        st.plotly_chart(fig1, width='stretch', theme="streamlit", config={"displayModeBar": False})
         st.divider()
         st.write(COPYRIGHT)
-    
+
+    with tasadesempleo:
+
+        # Indicador de Tasa de Desempleo Urbano en Colombia
+        st.subheader('Tasa de Desempleo Urbano en Colombia')
+        st.divider()
+
+        datos_tasadesempleo = pd.DataFrame({
+            "Fecha": ["2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
+            "Colombia": [15.2, 11.4, 10.4, 10.1, 8.6,9.0,9.3,9.4,9.6,9.9]
+            })
+
+        fig1 = go.Figure()
+
+        fig1.add_trace(go.Scatter(
+            x=datos_tasadesempleo['Fecha'], y=datos_tasadesempleo['Colombia'], mode='lines+markers+text', 
+            text=datos_tasadesempleo['Colombia'], textposition='bottom center', textfont=dict(size=14, color='black'),
+            name='Colombia', line=dict(color='blue', width=2), marker=dict(size=12)
+        ))
+        fig1.update_layout(xaxis_title='Año', yaxis_title='Tasa de Desempleo')
+        fig1.update_layout(
+                yaxis=dict(autorange=False,
+                    range=[0, 100],
+                    ),
+                    showlegend=False,
+        )
+        st.plotly_chart(fig1, width='stretch', theme="streamlit", config={"displayModeBar": False})
+
 else:
     st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
