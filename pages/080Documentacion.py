@@ -10,7 +10,7 @@ if 'usuario' in st.session_state:
     presentar_encabezado()
     documentacion, escritos = st.tabs(['Documentacion Aplicacion','Mis Escritos'])
     with documentacion:
-        st.title('Documentación del Proyecto')
+        st.title(':red[FABACTI] - Documentación del Proyecto')
         st.divider()
         st.subheader("Fuentes de infomación: ")
         st.divider()
@@ -60,7 +60,7 @@ if 'usuario' in st.session_state:
         
         st.write(COPYRIGHT)
     with escritos:
-        st.title('Mis Escritos')
+        st.title(':red[FABACTI] - Mis Escritos')
         st.divider()
         st.write("A continuación se presentan los escritos del usuario:")
         contenido = Path("datos/misescritos.md").read_text(encoding="utf-8")

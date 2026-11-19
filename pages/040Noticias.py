@@ -10,7 +10,7 @@ from funciones import presentar_encabezado
 if 'usuario' in st.session_state:
     presentar_encabezado()
 
-    st.title(' :red[NOTICIAS] ')
+    st.title(':red[FABACTI] - NOTICIAS ')
 
     # Noticias
     tema = 'Colombia'

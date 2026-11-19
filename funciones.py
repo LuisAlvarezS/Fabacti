@@ -263,15 +263,20 @@ def obtener_clima():
         return(None)
 
 def obtener_precio_cierre(symbol):
-    try:
+#    try:
         ticker = yf.Ticker(symbol)
         info = ticker.info
         precio_cierre = info.get('regularMarketPreviousClose', None)
-        #hist = ticker.history(period="5d") 
-        return precio_cierre
-    except Exception as e:
+        hist = ticker.history(period="30d")
+        lista = hist['Open'].tolist() 
+        for i, precio in enumerate(lista):
+            lista[i] = round(precio, 2)
+        datos = pd.DataFrame( lista, columns=['Open'], dtype=float)
+        delta = precio_cierre - datos['Open'].iloc[-1]
+        return precio_cierre, datos, delta
+ #   except Exception as e:
         #print(f"Error al obtener el precio de cierre de {symbol}: {e}")
-        return 0
+ #       return 0, [], 0
 
 def obtener_symbol_yfinance(nombre):
     mapping = {

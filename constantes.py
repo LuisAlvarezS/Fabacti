@@ -51,3 +51,5 @@ C_GAS = '#00FF00'  # verde
 C_ACUEDUCTO = '#0000FF'  # azul
 C_ALCANTARILLADO = '#f988ff' # morado
 C_COSTO = '#000000'
+
+LISTA_USUARIOS = ["albeiro.alvarez.sierra@gmail.com", "luzmiriam16@gmail.com", "lalbeiro.alvarez@udea.edu.co"]

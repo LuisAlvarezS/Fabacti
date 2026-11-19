@@ -10,7 +10,7 @@ from funciones import presentar_encabezado
 if 'usuario' in st.session_state:
     #st.write('<style>div.block-container{padding-top:2.5rem;}</style>', unsafe_allow_html=True)
     presentar_encabezado()
-    st.title('Informacion Colombia')
+    st.title(':red[FABACTI] - Informacion Colombia')
 
     infognal , regiones, departamentos, presidentes, constitucion = st.tabs(["Informacion General","Regiones","Departamentos","Presidentes","Constitucion"]) 
 
