@@ -11,7 +11,7 @@ def fabacti():
   if 'indicadores' not in st.session_state:
     st.session_state['indicadores'] = True
   if st.session_state['indicadores']:
-    with st.spinner(" :red[FABACTI] - Procesando datos ... Espere por favor ... ", show_time=True):
+    with st.spinner( co.APP + " - Procesando datos ... Espere por favor ... ", show_time=True):
       #procesos = st.text('Cargando la información requerida, ... de las fuentes: Superfinanciera (datos.gov.co),Yahoo/Finance, Banco de la República, Datos abiertos de Colombia, Open Meteo ... por favor espere  ...')
       st.session_state['indicadores'] = False
       # Obtener los indicadores económicos y clima

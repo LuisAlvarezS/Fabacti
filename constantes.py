@@ -1,6 +1,7 @@
 
 # Archivo de constantes para la aplicación FABACTI
 ENCABEZADO = " :red[FABACTI] :registered: :blue[Consultoría especializada en tecnologías de la información y las comunicaciones]"
+APP = " :red[Fabacti] :registered: "
 COPYRIGHT = ":copyright: 2026 Todos los derechos reservados de autor :red[FABACTI] :registered:"
 VERSION_FABACTI = "2026.001"
 CIUDAD = 'Medellin'

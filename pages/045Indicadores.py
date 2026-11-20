@@ -13,7 +13,7 @@ if 'usuario' in st.session_state:
     
     presentar_encabezado()
     st.title(':red[FABACTI] - Indicadores')
-    innovación, publicoverde, proyeccioninfacion, tasadesempleo = st.tabs(["Innovación", "Espacio Público Verde","Proyección Inflación","Tasa de desempleo urbano"])
+    innovación, publicoverde, proyeccioninfacion, tasadesempleo, pronosticotipocambio = st.tabs(["Innovación", "Espacio Público Verde","Proyección Inflación","Tasa de desempleo urbano", "Pronóstico Tipo de Cambio"])
 
     with innovación:
 
@@ -25,6 +25,8 @@ if 'usuario' in st.session_state:
             "Fecha": ["2019", "2020", "2021", "2022", "2023", "2024", "2025"],
             "Colombia": [67, 68, 67, 63, 66, 61, 71]
             })
+        rango_min = datos_pcii['Colombia'].min() - 5
+        rango_max = datos_pcii['Colombia'].max() + 5
 
         fig1 = go.Figure()
 
@@ -36,7 +38,7 @@ if 'usuario' in st.session_state:
         fig1.update_layout(xaxis_title='Año', yaxis_title='Posición')
         fig1.update_layout(
                 yaxis=dict(autorange='reversed',
-                    range=[0, 100],
+                    range=[rango_min, rango_max],
                     ),
                     showlegend=False,
         )
@@ -51,6 +53,8 @@ if 'usuario' in st.session_state:
             "Fecha": ["2006", "2019", "2022", "2026"],
             "Medellin": [6.87, 4.86, 4.80,5.31]
             })
+        rango_min = datos_ipcepv['Medellin'].min() - 1
+        rango_max = datos_ipcepv['Medellin'].max() + 1
 
         fig2 = go.Figure()
 
@@ -61,7 +65,7 @@ if 'usuario' in st.session_state:
         ))
         fig2.update_layout(xaxis_title='Año', yaxis_title='Indice')
         fig2.update_layout(
-                yaxis=dict(range=[0, 20],
+                yaxis=dict(range=[rango_min, rango_max],
                     ),
                     showlegend=False,
         )
@@ -77,6 +81,8 @@ if 'usuario' in st.session_state:
             "Fecha": ["2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
             "Colombia": [5.6, 13.1, 9.3, 5.2, 5.1, 6.7, 5.5,4.1,3.6,3.3]
             })
+        rango_min = datos_inflacion['Colombia'].min() - 5
+        rango_max = datos_inflacion['Colombia'].max() + 5
 
         fig1 = go.Figure()
 
@@ -88,7 +94,7 @@ if 'usuario' in st.session_state:
         fig1.update_layout(xaxis_title='Año', yaxis_title='Posición')
         fig1.update_layout(
                 yaxis=dict(autorange=False,
-                    range=[0, 100],
+                    range=[rango_min, rango_max],
                     ),
                     showlegend=False,
         )
@@ -106,6 +112,8 @@ if 'usuario' in st.session_state:
             "Fecha": ["2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
             "Colombia": [15.2, 11.4, 10.4, 10.1, 8.6,9.0,9.3,9.4,9.6,9.9]
             })
+        rango_min = datos_tasadesempleo['Colombia'].min() - 1
+        rango_max = datos_tasadesempleo['Colombia'].max() + 1
 
         fig1 = go.Figure()
 
@@ -117,7 +125,36 @@ if 'usuario' in st.session_state:
         fig1.update_layout(xaxis_title='Año', yaxis_title='Tasa de Desempleo')
         fig1.update_layout(
                 yaxis=dict(autorange=False,
-                    range=[0, 100],
+                    range=[rango_min, rango_max],
+                    ),
+                    showlegend=False,
+        )
+        st.plotly_chart(fig1, width='stretch', theme="streamlit", config={"displayModeBar": False})
+
+    with pronosticotipocambio:
+
+        # Indicador de Tasa de Desempleo Urbano en Colombia
+        st.subheader('Pronóstico del Tipo de Cambio en Colombia')
+        st.divider()
+
+        datos_pronosticotipocambio = pd.DataFrame({
+            "Fecha": ["2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
+            "ptcc": [3744, 4256, 4326, 4074, 4053,3417,3331,3495,3652,3756]
+            })
+        rango_min = datos_pronosticotipocambio['ptcc'].min() - 500
+        rango_max = datos_pronosticotipocambio['ptcc'].max() + 500
+    
+        fig1 = go.Figure()
+
+        fig1.add_trace(go.Scatter(
+            x=datos_pronosticotipocambio['Fecha'], y=datos_pronosticotipocambio['ptcc'], mode='lines+markers+text', 
+            text=datos_pronosticotipocambio['ptcc'], textposition='bottom center', textfont=dict(size=14, color='black'),
+            name='Pronóstico', line=dict(color='blue', width=2), marker=dict(size=12)
+        ))
+        fig1.update_layout(xaxis_title='Fuente: LSEK Worspace. Pronostico Grupo Cibest', yaxis_title='Pronóstico tipo de cambio')
+        fig1.update_layout(
+                yaxis=dict(autorange=False,
+                    range=[rango_min, rango_max],
                     ),
                     showlegend=False,
         )
