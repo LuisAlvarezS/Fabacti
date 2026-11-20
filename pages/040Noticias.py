@@ -4,13 +4,13 @@ from datetime import datetime
 import json
 import requests
 
-from constantes import COPYRIGHT, FUENTESNOTICIAS, KEY_NEWSAPI
-from funciones import presentar_encabezado
+from constantes import COPYRIGHT, FUENTESNOTICIAS, KEY_NEWSAPI, APP
+from funciones import presentar_encabezado, conectarse_fabacti
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
 
-    st.title(':red[FABACTI] - NOTICIAS ')
+    st.title(APP + " - NOTICIAS ")
 
     # Noticias
     tema = 'Colombia'
@@ -60,6 +60,4 @@ if 'usuario' in st.session_state:
     st.divider()
     st.write(COPYRIGHT)
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py") 
+    conectarse_fabacti()

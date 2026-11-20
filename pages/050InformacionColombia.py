@@ -4,13 +4,13 @@ import requests
 import json
 import time
 
-from constantes import COPYRIGHT
-from funciones import presentar_encabezado
+from constantes import COPYRIGHT, APP
+from funciones import presentar_encabezado, conectarse_fabacti
 
 if 'usuario' in st.session_state:
     #st.write('<style>div.block-container{padding-top:2.5rem;}</style>', unsafe_allow_html=True)
     presentar_encabezado()
-    st.title(':red[FABACTI] - Informacion Colombia')
+    st.title(APP + " - Informacion Colombia")
 
     infognal , regiones, departamentos, presidentes, constitucion = st.tabs(["Informacion General","Regiones","Departamentos","Presidentes","Constitucion"]) 
 
@@ -129,6 +129,4 @@ if 'usuario' in st.session_state:
     st.divider()
     st.write(COPYRIGHT)
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py") 
+    conectarse_fabacti()

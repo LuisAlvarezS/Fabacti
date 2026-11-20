@@ -6,13 +6,13 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-from constantes import COPYRIGHT
-from funciones import presentar_encabezado
+from constantes import COPYRIGHT, APP
+from funciones import presentar_encabezado, conectarse_fabacti
 
 if 'usuario' in st.session_state:
     
     presentar_encabezado()
-    st.title(':red[FABACTI] - Indicadores')
+    st.title(APP + " - Indicadores")
     innovación, publicoverde, proyeccioninfacion, tasadesempleo, pronosticotipocambio = st.tabs(["Innovación", "Espacio Público Verde","Proyección Inflación","Tasa de desempleo urbano", "Pronóstico Tipo de Cambio"])
 
     with innovación:
@@ -160,7 +160,7 @@ if 'usuario' in st.session_state:
         )
         st.plotly_chart(fig1, width='stretch', theme="streamlit", config={"displayModeBar": False})
 
+    st.divider()
+    st.write(COPYRIGHT)
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py") 
+    conectarse_fabacti()

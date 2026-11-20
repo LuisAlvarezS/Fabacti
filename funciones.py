@@ -10,7 +10,7 @@ from anyio import Path
 import streamlit as st
 import requests
 from datetime import datetime
-
+import time
 from holidays_co import is_holiday_date
 
 import json
@@ -307,36 +307,12 @@ def presentar_encabezado():
         mensaje = mensaje + '  ' + hora
         st.success(mensaje, title='Medellin, Colombia')
         st.write(co.ENCABEZADO)
-
-    # ciudad = co.CIUDAD + ', ' + co.PAIS
     fechacolombia = obtener_fecha_hora_local("America/Bogota")
     fechahoy = fechacolombia.date()  
-    # ndia = co.DIAS[fechahoy.weekday()]
-    # nmes = co.MESES[fechahoy.month - 1]
-    # wfecha = str(fechahoy.day) + '/' + nmes + '/' + str(fechahoy.year)
-    # version = "FABACTI Version: " + co.VERSION_FABACTI
-    # st.markdown(f"""
-    #   <style>
-    #   .barra {{
-    #      display: flex;
-    #      align-items: center;
-    #      border-top: 1px solid #555;
-    #      border-bottom: 1px solid #555;
-    #      padding: 14px 24px;
-    #      font-family: Helvetica, Arial, sans-serif;
-    #      color: #222;
-    #      gap: 24px;
-    #   }}
-    #   .barra .fecha {{ font-size: 1.05rem; padding-right: 24px; border-right: 2px solid #999; }}
-    #   .barra .dia {{ font-size: 1.6rem; font-weight: 800; letter-spacing: 3px; padding-right: 24px; border-right: 2px solid #999; }}
-    #   .barra .version {{ font-size: 1.05rem; }}
-    #         </style>
-    #   <div class="barra">
-    #      <span class="fecha">{ciudad} -  {wfecha}</span>
-    #      <span class="dia">{ndia}</span>
-    #      <span class="version">{version}</span>
-    #   </div>
-    # """,
-    # unsafe_allow_html=True,
-    # )
     return(fechahoy)
+
+def conectarse_fabacti():
+    st.write(co.APP +" :red[**Por favor inicie sesión para acceder a esta sección o el usuario no tiene permisos para esta opcion**] ")
+    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
+    st.switch_page("Fabacti.py") 
+    return()

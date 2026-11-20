@@ -15,7 +15,7 @@ import funcionessp as fsp
 
 if 'usuario' in st.session_state and st.session_state['usuario'] == 'albeiro.alvarez.sierra@gmail.com':
     fu.presentar_encabezado()
-    st.title(':red[FABACTI] - Servicios Publicos')
+    st.title(co.APP + " - Servicios Publicos")
     smeses = fu.obtener_anomes_seismeses_antes(datetime.datetime.now().strftime('%Y%m'), 12)
     smeses = smeses[:4] + '-' + smeses[4:]
 
@@ -309,8 +309,6 @@ if 'usuario' in st.session_state and st.session_state['usuario'] == 'albeiro.alv
                     x_label='Mes', y_label='Promedio Diario', 
                     color=[co.C_ENERGIA, co.C_GAS, co.C_ACUEDUCTO, co.C_COSTO])
     st.divider()
+    st.write(co.COPYRIGHT)
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección o el usuario no tiene permisos para esta opcion**] ")
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py") 
-
+    fu.conectarse_fabacti()

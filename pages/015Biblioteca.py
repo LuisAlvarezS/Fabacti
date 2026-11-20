@@ -4,8 +4,8 @@ import streamlit as st
 
 import time
 
-from constantes import COPYRIGHT
-from funciones import presentar_encabezado, listalibros, lista_titulos, lista_autores
+from constantes import COPYRIGHT, APP
+from funciones import presentar_encabezado, listalibros, lista_titulos, lista_autores, conectarse_fabacti
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
@@ -14,7 +14,7 @@ if 'usuario' in st.session_state:
     dlibr = df
     totallibros = len(dlibr)
     dlibr = dlibr.sort_values(by = 'titulo', ascending=True)
-    st.title(':red[FABACTI] - Biblioteca')
+    st.title(APP + " - Biblioteca")
     st.subheader(f"Total libros: {totallibros}")
 
     totallibros, consultatitulo, consultaautor, lista = st.tabs(['Libros', 'Consulta por titulo', 'Consulta por autor', 'Lista de libros'])
@@ -117,6 +117,4 @@ if 'usuario' in st.session_state:
     st.write(COPYRIGHT)
 
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py")     
+    conectarse_fabacti()

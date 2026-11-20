@@ -3,12 +3,12 @@ import time
 from datetime import date
 import yfinance as yf
 
-from constantes import COPYRIGHT
-from funciones import presentar_encabezado
+from constantes import COPYRIGHT, APP
+from funciones import presentar_encabezado, conectarse_fabacti
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
-    st.title(':red[FABACTI] - Finanzas')
+    st.title(APP + " - Finanzas")
     st.subheader('Valor de las acciones en bolsa')
     st.divider()
     start_date = '2025-01-01'
@@ -107,6 +107,4 @@ if 'usuario' in st.session_state:
     st.divider()  
     st.write(COPYRIGHT)
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")    
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py") 
+    conectarse_fabacti()

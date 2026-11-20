@@ -2,15 +2,16 @@ import streamlit as st
 import time
 from pathlib import Path
 import yfinance
+import os
 
-from constantes import COPYRIGHT, FUENTESNOTICIAS
-from funciones import presentar_encabezado
+from constantes import COPYRIGHT, FUENTESNOTICIAS, APP
+from funciones import presentar_encabezado, conectarse_fabacti
 
 if 'usuario' in st.session_state:
     presentar_encabezado()
-    documentacion, escritos = st.tabs(['Documentacion Aplicacion','Mis Escritos'])
+    documentacion, escritos, archivos = st.tabs(['Documentacion Aplicacion','Mis Escritos','Mis Archivos'])
     with documentacion:
-        st.title(':red[FABACTI] - Documentación del Proyecto')
+        st.title(APP + " - Documentación del Proyecto")
         st.divider()
         st.subheader("Fuentes de infomación: ")
         st.divider()
@@ -60,13 +61,17 @@ if 'usuario' in st.session_state:
         
         st.write(COPYRIGHT)
     with escritos:
-        st.title(':red[FABACTI] - Mis Escritos')
+        st.title(APP + " - Mis Escritos")
         st.divider()
         st.write("A continuación se presentan los escritos del usuario:")
         contenido = Path("datos/misescritos.md").read_text(encoding="utf-8")
         st.markdown(contenido)
-
+    with archivos:
+        contenido = os.listdir('./datos/pdf')
+        contenido.insert(0,'Seleccionar documento')
+        archivo = st.selectbox('Archivos', contenido)
+        if archivo != 'Seleccionar documento':
+            narchivo = './datos/pdf/' + archivo
+            st.pdf(narchivo)
 else:
-    st.write(" :red[**Por favor inicie sesión para acceder a esta sección.**] ")
-    with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
-    st.switch_page("Fabacti.py") 
+    conectarse_fabacti()

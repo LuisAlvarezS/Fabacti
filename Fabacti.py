@@ -68,19 +68,19 @@ def fabacti():
       st.session_state['clima'] = clima
       # procesos.empty()
   #st.success("Información cargada correctamente ...")
-  st.title(":red[FABACTI] - Indicadores Económicos y Clima")
-
-  c1, c2, c3, c4 = st.columns(4, border = True)
+  #st.title(co.APP +  " - Indicadores Económicos y Clima")
+  st.title(co.APP + " - Página principal")
+  c1, c2, c3 = st.columns(3, border = True)
   fu.tarjeta(c1, "TRM - Dólar", st.session_state['valor_trm'], "", co.NOTASTRM, st.session_state['vigenciatrm'], st.session_state['fuentetrm'], st.session_state['deltatrm'], st.session_state['df_trm'],"line")
   fu.tarjeta(c2, "Euro", st.session_state['valor_euro'], "", co.NOTASEURO, fechahoy, "Yahoo Finance", st.session_state['delta_euro'], st.session_state['lista_euro'],"line")
   fu.tarjeta(c3, "Café", st.session_state['valor_cafe'], "", co.NOTASCAFE, fechahoy, "Yahoo Finance", st.session_state['delta_cafe'], st.session_state['lista_cafe'],"line")
+
+  c4, c5, c6 = st.columns(3, border = True)
   fu.tarjeta(c4, "Oro", st.session_state['valor_oro'], "", co.NOTASORO, fechahoy, "Yahoo Finance", st.session_state['delta_oro'], st.session_state['lista_oro'],"line")
-
-  c5, c6, c7, c8 = st.columns(4, border = True)
   fu.tarjeta(c5, "Petróleo", st.session_state['valor_petroleo'], "", co.NOTASPETROLEO, fechahoy, "Yahoo Finance", st.session_state['delta_petroleo'], st.session_state['lista_petroleo'],"line")
-  fu.tarjeta(c8, "Clima", st.session_state['clima'], "°C", co.NOTASCLIMA, fechahoy, "Open Meteo",None,None,"line")
+  fu.tarjeta(c6, "Clima", st.session_state['clima'], "°C", co.NOTASCLIMA, fechahoy, "Open Meteo",None,None,"line")
 
-  st.title(":red[FABACTI] - Pico y Placa, Frase del Día y Libro Recomendado")
+  #st.title(co.APP +  " - Pico y Placa, Frase del Día y Libro Recomendado")
 # Muestra la información de Pico y Placa, Frase del día y Libro recomendado
   picoplaca, frases, libro = st.columns(3, border = True)
   with picoplaca:
