@@ -3,9 +3,8 @@ import streamlit as st
 
 import bcrypt
 import sqlite3
-
+import constantes as co
 import re
-
 
 def nombre_usuario(correo):
     conn = sqlite3.connect("datos/fabacti.db")
@@ -73,13 +72,16 @@ def acceso():
         st.session_state.mostrar_form = True
     if st.session_state.mostrar_form:
         with st.form("login_form"):
-            st.write("🔒 Iniciar sesión")
-            lista_usuarios = ["albeiro.alvarez.sierra@gmail.com", "luzmiriam16@gmail.com", "lalbeiro.alvarez@udea.edu.co"]
+            st.write( co.APP + " - Iniciar sesión")
+            lista_usuarios = co.LISTA_USUARIOS
             correouser = ""
             if not es_correo_valido(correouser): 
                 correouser  = st.selectbox("Correo", lista_usuarios)
+            #password = st.text_input("Clave de acceso", value = "CasiLoCogen*123", type="password")
             password = st.text_input("Clave de acceso", type="password")
             submitted = st.form_submit_button("Iniciar sesión")
+            st.divider()
+            st.write(co.COPYRIGHT)
             if submitted:
                 if es_correo_valido(correouser):
                     if verificar_usuario(correouser, password):

@@ -106,7 +106,7 @@ def fabacti():
 
 if __name__ == '__main__':
     st.set_page_config(
-        page_title="FABACTI",
+        page_title="Fabacti",
         layout="wide",
         page_icon="🌎",
         initial_sidebar_state = "expanded"
