@@ -117,15 +117,26 @@ if 'usuario' in st.session_state:
         resp_cons = requests.get(urlconstitucion)
         warticulos = json.loads(resp_cons.text)
         totalarticulos = len(warticulos)
-        larticulos = ['<seleccionar>']
-        for i in range(1,totalarticulos):
-            larticulos.append(i)
-        wseleccion = st.selectbox('Seleccionar articulo a consultar',larticulos)
-        if wseleccion != '<seleccionar>':
-            st.subheader(warticulos[int(wseleccion)]['title'] +  ' -- ' + warticulos[int(wseleccion)]['chapter'] )
-            st.write(warticulos[int(wseleccion)]['content'])
-        else:
-            st.write('Debe seleccionar el numero del articulo')
+        buscararticulo, buscarpalabra = st.columns(2)
+        with buscararticulo:
+            larticulos= []
+            for i in range(0, totalarticulos):
+                larticulos.append(int(warticulos[i]['articleNumber']))
+            larticulos = sorted(larticulos)
+            wseleccion = st.selectbox('Seleccionar articulo a consultar',larticulos)
+            for i in range(0, totalarticulos):
+                if int(warticulos[i]['articleNumber']) == wseleccion:
+                    st.subheader(warticulos[i]['title'] +  ' -- ' + warticulos[i]['chapter'] )
+                    st.write(warticulos[i]['content'])
+                    break 
+        with buscarpalabra:
+            wbuscar = st.text_input('Buscar palabra en articulos de la constitucion')
+            if wbuscar != "":
+                wbuscar = wbuscar.lower()
+                for i in range(0, totalarticulos):
+                    if wbuscar in warticulos[i]['content'].lower():
+                        st.subheader(warticulos[i]['title'] +  ' -- ' + warticulos[i]['chapter'] )
+                        st.write(warticulos[i]['content'])
     st.divider()
     st.write(COPYRIGHT)
 else:
