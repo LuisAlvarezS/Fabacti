@@ -80,8 +80,10 @@ def acceso():
             #password = st.text_input("Clave de acceso", value = "CasiLoCogen*123", type="password")
             password = st.text_input("Clave de acceso", type="password")
             submitted = st.form_submit_button("Iniciar sesión")
+
             st.divider()
             st.write(co.COPYRIGHT)
+            
             if submitted:
                 if es_correo_valido(correouser):
                     if verificar_usuario(correouser, password):
