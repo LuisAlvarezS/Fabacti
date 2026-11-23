@@ -267,7 +267,7 @@ def obtener_precio_cierre(symbol):
     try:
         ticker = yf.Ticker(symbol)
         info = ticker.info
-        precio_cierre = info.get('regularMarketPreviousClose', None)
+        precio_cierre = info.get('PreviousClose', None)
         hist = ticker.history(period="30d")
         lista = hist['Open'].tolist() 
         for i, precio in enumerate(lista):
