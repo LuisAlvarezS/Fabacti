@@ -7,6 +7,7 @@ import acceso as ac
 def fabacti():
 
   fechahoy = fu.presentar_encabezado()
+
   # indicadores económicos y clima
   if 'indicadores' not in st.session_state:
     st.session_state['indicadores'] = True
@@ -70,6 +71,7 @@ def fabacti():
   #st.success("Información cargada correctamente ...")
   #st.title(co.APP +  " - Indicadores Económicos y Clima")
   st.title(co.APP + " - Página principal")
+  fu.formato_fecha()
   c1, c2, c3 = st.columns(3, border = True)
   fu.tarjeta(c1, "TRM - Dólar", st.session_state['valor_trm'], "", co.NOTASTRM, st.session_state['vigenciatrm'], st.session_state['fuentetrm'], st.session_state['deltatrm'], st.session_state['df_trm'],"line")
   fu.tarjeta(c2, "Euro", st.session_state['valor_euro'], "", co.NOTASEURO, fechahoy, "Yahoo Finance", st.session_state['delta_euro'], st.session_state['lista_euro'],"line")

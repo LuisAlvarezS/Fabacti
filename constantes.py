@@ -29,6 +29,8 @@ PYP = ['5-8','1-4','0-2','3-6','7-9','No Aplica','No Aplica']
 
 DIAS = ['Lunes','Martes','Miercoles','Jueves','Viernes', 'Sabado', 'Domingo']
 MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+MESES_CORTOS = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC']
+
 BD = 'datos/fabacti.db'
 
 # Constantes financieras pendientes desarrollar para su automatizacion algun API

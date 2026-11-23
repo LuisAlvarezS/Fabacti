@@ -10,6 +10,7 @@ from anyio import Path
 import streamlit as st
 import requests
 from datetime import datetime
+from datetime import date
 import time
 from holidays_co import is_holiday_date
 
@@ -250,7 +251,7 @@ def obtener_anomes_seismeses_antes(anomes, meses):
         return None
 
 def obtener_clima():
-    url_cilma = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m'
+    url_cilma = 'https://api.open-meteo.com/v1/forecast?latitude=6.218564&longitude=75.567952&hourly=temperature_2m'
     fechacolombia = obtener_fecha_hora_local("America/Bogota")
     hora = int(fechacolombia.strftime("%H"))
     try:
@@ -316,3 +317,25 @@ def conectarse_fabacti():
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
     st.switch_page("Fabacti.py") 
     return()
+
+def formato_fecha():
+    hoy = date.today()
+    dia = f"{hoy.day:02d}"
+    mes = co.MESES_CORTOS[hoy.month - 1]
+    año = hoy.year
+    dia_semana = co.DIAS[hoy.weekday()].upper()
+
+    st.markdown(
+        f"""
+        <div style="border: 2px solid #000; width : fit_content; font-family: 'Comic Sans MS', cursive; text-align: center; background-color: #f0f0f0; border-radius: 8px;">
+           <div style= "padding: 6px 16px; font-size: 28px; border-bottom: 2px solid #333">
+             {dia} &nbsp; |&nbsp; {mes} &nbsp; |&nbsp; {año}
+              </div>
+            <div style="padding: 6px 16px; font-size: 20px; text-align: center;">
+                {dia_semana}
+           </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    return
