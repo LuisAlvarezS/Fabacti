@@ -6,7 +6,6 @@ import acceso as ac
 
 def fabacti():
   fechahoy = fu.presentar_encabezado()
-
 # indicadores económicos y clima
   if 'indicadores' not in st.session_state:
     st.session_state['indicadores'] = True
