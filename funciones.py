@@ -68,6 +68,17 @@ def presentar_sidebar():
     # st.sidebar.success(mensaje, title=':red[FABACTI] :registered: ')
     return()
 
+def frase_aleatoria():
+        frases = [
+            "La suerte existe, pero tiene que encontrarte trabajando. - Pablo Picasso",
+            "El éxito es la suma de pequeños esfuerzos repetidos día tras día. - Robert Collier",
+            "No cuentes los días, haz que los días cuenten. - Muhammad Ali",
+            "El único lugar donde el éxito viene antes que el trabajo es en el diccionario. - Vidal Sassoon",
+            "La vida es 10% lo que me ocurre y 90% cómo reacciono a ello. - Charles R. Swindoll"
+        ]
+        frase, autor = random.choice(frases).rsplit(" - ", 1)
+        return frase, autor
+
 # Funcion para obtener una frase del dia
 def frase():
     url = 'https://frasedeldia.azurewebsites.net/api/phrase'
@@ -77,8 +88,8 @@ def frase():
         frase = texto['phrase']
         autor = texto['author']
     except:
-        frase = 'La suerte existe, pero tiene que encontrarte trabajando.'
-        autor = 'Pablo Picasso'
+        frase = frase_aleatoria()
+        autor = ''
     return(frase, autor)
 
 # Funcion para obtener una imgena aleatoria de una carpeta dada, se utiliza para mostrar el libro recomendado del dia
@@ -267,12 +278,12 @@ def obtener_precio_cierre(symbol):
     try:
         ticker = yf.Ticker(symbol)
         info = ticker.info
-        precio_cierre = info.get('PreviousClose', None)
+        precio_cierre = info.get('previousClose', None)
         hist = ticker.history(period="30d")
         lista = hist['Open'].tolist() 
         for i, precio in enumerate(lista):
             lista[i] = round(precio, 2)
-        datos = pd.DataFrame( lista, columns=['Open'], dtype=float)
+        datos = pd.DataFrame( lista, columns=['Open'], dtype=float)  
         delta = precio_cierre - datos['Open'].iloc[-1]
         return precio_cierre, datos, delta
     except Exception as e:
@@ -328,7 +339,7 @@ def formato_fecha():
     st.markdown(
         f"""
         <div style="border: 2px solid #000; width : fit_content; font-family: 'Comic Sans MS', cursive; text-align: center; background-color: #f0f0f0; border-radius: 8px;">
-           <div style= "padding: 6px 16px; font-size: 28px; border-bottom: 2px solid #333">
+           <div style= "padding: 6px 16px; font-size: 20px; border-bottom: 2px solid #333">
              {dia} &nbsp; |&nbsp; {mes} &nbsp; |&nbsp; {año}
               </div>
             <div style="padding: 6px 16px; font-size: 20px; text-align: center;">

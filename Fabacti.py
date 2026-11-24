@@ -5,23 +5,23 @@ import constantes as co
 import acceso as ac
 
 def fabacti():
-
   fechahoy = fu.presentar_encabezado()
 
-  # indicadores económicos y clima
+# indicadores económicos y clima
   if 'indicadores' not in st.session_state:
     st.session_state['indicadores'] = True
   if st.session_state['indicadores']:
     with st.spinner( co.APP + " - Procesando datos ... Espere por favor ... ", show_time=True):
       #procesos = st.text('Cargando la información requerida, ... de las fuentes: Superfinanciera (datos.gov.co),Yahoo/Finance, Banco de la República, Datos abiertos de Colombia, Open Meteo ... por favor espere  ...')
       st.session_state['indicadores'] = False
-      # Obtener los indicadores económicos y clima
+
+    # Obtener los indicadores económicos y clima
       wtrm, fuentetrm, vigenciatrm, deltatrm, df_trm = fu.obtener_trm(fechahoy)
       valor_trm = '$ {:,.2f} '.format(float(wtrm))
       deltatrm = ' {:,.2f} '.format(float(deltatrm))
 
       valor_euro, lista_euro, delta_euro  = fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("euro"))
-      valor_euro = 'US$ {:,.2f} '.format(valor_euro)
+      valor_euro = '$ {:,.2f} '.format(float(valor_euro))
       delta_euro = ' {:,.2f} '.format(float(delta_euro))
 
       valor_cafe, lista_cafe, delta_cafe = fu.obtener_precio_cierre(fu.obtener_symbol_yfinance("cafe"))
@@ -39,8 +39,10 @@ def fabacti():
       delta_petroleo = ' {:,.2f} '.format(float(delta_petroleo))
 
       clima = fu.obtener_clima()
-    #   # Obtener frase del dia
+
+# Obtener frase del dia
       wfrase, wautor = fu.frase()
+      
       st.session_state['frase'] = wfrase
       st.session_state['autor'] = wautor
 
@@ -67,11 +69,9 @@ def fabacti():
       st.session_state['lista_petroleo'] = lista_petroleo
 
       st.session_state['clima'] = clima
-      # procesos.empty()
-  #st.success("Información cargada correctamente ...")
-  #st.title(co.APP +  " - Indicadores Económicos y Clima")
-  st.title(co.APP + " - Página principal")
-  fu.formato_fecha()
+
+  st.title(co.APP)
+  #fu.formato_fecha()
   c1, c2, c3 = st.columns(3, border = True)
   fu.tarjeta(c1, "TRM - Dólar", st.session_state['valor_trm'], "", co.NOTASTRM, st.session_state['vigenciatrm'], st.session_state['fuentetrm'], st.session_state['deltatrm'], st.session_state['df_trm'],"line")
   fu.tarjeta(c2, "Euro", st.session_state['valor_euro'], "", co.NOTASEURO, fechahoy, "Yahoo Finance", st.session_state['delta_euro'], st.session_state['lista_euro'],"line")
@@ -82,7 +82,6 @@ def fabacti():
   fu.tarjeta(c5, "Petróleo", st.session_state['valor_petroleo'], "", co.NOTASPETROLEO, fechahoy, "Yahoo Finance", st.session_state['delta_petroleo'], st.session_state['lista_petroleo'],"line")
   fu.tarjeta(c6, "Clima", st.session_state['clima'], "°C", co.NOTASCLIMA, fechahoy, "Open Meteo",None,None,"line")
 
-  #st.title(co.APP +  " - Pico y Placa, Frase del Día y Libro Recomendado")
 # Muestra la información de Pico y Placa, Frase del día y Libro recomendado
   picoplaca, frases, libro = st.columns(3, border = True)
   with picoplaca:
@@ -92,7 +91,7 @@ def fabacti():
     st.write(picoyplaca[0:10] + ', ' + picoyplaca[12:23] + ', ' + picoyplaca[25:39] + ', ' +  picoyplaca[41:52] + ', ' + picoyplaca[54:66])
 
   with frases:
-    # Obtener frase del dia
+  # Obtener frase del dia
     st.text('FRASE DEL DIA', help=co.NOTASFRASE) 
     st.write(st.session_state['frase'])
     st.write(' [' + st.session_state['autor'] + ']')
@@ -104,7 +103,6 @@ def fabacti():
 
   st.divider()
   st.write(co.COPYRIGHT)
-
 
 if __name__ == '__main__':
     st.set_page_config(
