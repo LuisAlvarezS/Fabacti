@@ -2,6 +2,7 @@
 
 import os
 import random
+import re
 import sqlite3
 
 from altair.datasets import url
@@ -76,7 +77,11 @@ def frase_aleatoria():
             "El único lugar donde el éxito viene antes que el trabajo es en el diccionario. - Vidal Sassoon",
             "La vida es 10% lo que me ocurre y 90% cómo reacciono a ello. - Charles R. Swindoll"
         ]
-        frase, autor = random.choice(frases).rsplit(" - ", 1)
+        wfrase = random.choice(frases)
+        partes = re.split(r'(?<=\.)\s*-\s*', wfrase)
+        frase = partes[0] + '/Local'
+        autor = partes[1] if len(partes) > 1 else ''
+        #print(f"Frase aleatoria seleccionada: '{frase}' - Autor: '{autor}'")
         return frase, autor
 
 # Funcion para obtener una frase del dia
@@ -85,11 +90,10 @@ def frase():
     try:
         resp = requests.get(url)
         texto = json.loads(resp.text)
-        frase = texto['phrase']
+        frase = texto['phrase'] 
         autor = texto['author']
     except:
-        frase = frase_aleatoria()
-        autor = ''
+        frase, autor = frase_aleatoria()
     return(frase, autor)
 
 # Funcion para obtener una imgena aleatoria de una carpeta dada, se utiliza para mostrar el libro recomendado del dia
