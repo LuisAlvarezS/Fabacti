@@ -289,10 +289,11 @@ def obtener_precio_cierre(symbol):
             lista[i] = round(precio, 2)
         datos = pd.DataFrame( lista, columns=['Open'], dtype=float)  
         delta = precio_cierre - datos['Open'].iloc[-1]
-        return precio_cierre, datos, delta
+        error=''
+        return precio_cierre, datos, delta,error
     except Exception as e:
         # print(f"Error al obtener el precio de cierre de {symbol}: {e}")
-        return 0, [], 0
+        return 0, [], 0, e
 
 def obtener_symbol_yfinance(nombre):
     mapping = {
