@@ -291,7 +291,7 @@ def obtener_precio_cierre(symbol):
         delta = precio_cierre - datos['Open'].iloc[-1]
         return precio_cierre, datos, delta
     except Exception as e:
-        #print(f"Error al obtener el precio de cierre de {symbol}: {e}")
+        # print(f"Error al obtener el precio de cierre de {symbol}: {e}")
         return 0, [], 0
 
 def obtener_symbol_yfinance(nombre):
