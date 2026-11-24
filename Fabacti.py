@@ -81,7 +81,7 @@ def fabacti():
     fu.tarjeta(c5, "Petróleo", st.session_state['valor_petroleo'], "", co.NOTASPETROLEO, fechahoy, "Yahoo Finance", st.session_state['delta_petroleo'], st.session_state['lista_petroleo'],"line")
   fu.tarjeta(c6, "Clima", st.session_state['clima'], "°C", co.NOTASCLIMA, fechahoy, "Open Meteo",None,None,"line")
 
-  st.write(f' Falla al consultar los indicadores, {st.session_state["werror"]} ') if st.session_state["werror"] != "" 
+  st.write(f' Falla al consultar los indicadores, {st.session_state["werror"]} ') if st.session_state["werror"] != "" else ""
 
 # Muestra la información de Pico y Placa, Frase del día y Libro recomendado
   picoplaca, frases, libro = st.columns(3, border = True)
