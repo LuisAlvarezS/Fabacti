@@ -221,3 +221,12 @@ juego. Normalmente no teníamos dinero para cosas extras de la escuela, pero lle
 ofrecer para tomar unas fotos para el recuerdo, y me dio por decir que si. Cuando llego con la
 foto y lo que se debía “se armó la de troya” y por supuesto el castigo fue tremendo. Al final se
 pago y esa foto es un recuerdo que llevo hasta la fecha.
+
+## Seguimos
+
+La señora de la casa dirariamente despertaba muy temprano, por eso de las 4 de ka mañana, atizaba el fogon y preparaba los almuerzoss, los fiambres para los trabajadores, luego emprendia a elaborar el desayuno para todos, alrededore de unos 10 trabajadores para el fiembre y unos 14 adicionales para el desayuno. Casi un ritual diario, elboarar los fiambres y el desayuno. Mientras tanto uno de los trabajadores bajaba el maiz de la troja y se preparaba para pilarlo.  Otros, al tanto, se dedicaban al ordeño, a picar la caña para las bestias, a preparar sus utencilios para el trabajo como tacizo, machete, preparar la soga, reparar monturas y enjalmas, entre otros utencilios. Todos ocupados en sus oficios. Ya desayunados y con el fiambre en la mano cada uno emprendia su labor, los agricultores en la siembra, deservando o sembrando y los de ganaderia a dar vueltas y a curar los ganados en los potreros. 
+
+El señor de la casa compartia en semana las labores de la finca y los fines de semana atendia su negocio en el pueblo. Su casa en el pueblo la habitabana suus hermanas las cuales dependian su sustento del señor y era ellas los que cuidaba los fines de semana de el, tanto en sus oficios .....
+
+
+continua ....
