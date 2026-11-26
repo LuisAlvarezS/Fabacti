@@ -2,8 +2,6 @@
 
 import streamlit as st
 
-import time
-
 from constantes import COPYRIGHT, APP
 from funciones import presentar_encabezado, listalibros, lista_titulos, lista_autores, conectarse_fabacti
 
@@ -18,7 +16,6 @@ if 'usuario' in st.session_state:
     st.subheader(f"Total libros: {totallibros}")
 
     totallibros, consultatitulo, consultaautor, lista = st.tabs(['Libros', 'Consulta por titulo', 'Consulta por autor', 'Lista de libros'])
-#    consultatitulo, consultaautor, lista = st.tabs(['Consulta por titulo', 'Consulta por autor', 'Lista de libros'])
 
     with totallibros:
         dft = df.sort_values(by = 'titulo', ascending = True)
@@ -112,7 +109,6 @@ if 'usuario' in st.session_state:
 
     with lista:
         st.dataframe(dlibr, column_config = {'id_libros':None,'Leidom':None, 'Leidoa':None,'portada':None})
-#        st.dataframe(dlibr, column_config = {'id_libros':None,'Leidom':None, 'Leidoa':None})
     st.divider()
     st.write(COPYRIGHT)
 

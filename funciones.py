@@ -5,23 +5,18 @@ import random
 import re
 import sqlite3
 
-from altair.datasets import url
 from anyio import Path
 
 import streamlit as st
 import requests
 from datetime import datetime
-from datetime import date
 import time
 from holidays_co import is_holiday_date
 
 import json
 
-from streamlit import version
 import constantes as co
-import fubancorepublica as fbr
 import pandas as pd
-import yfinance as yf
 
 from zoneinfo import ZoneInfo
 
@@ -54,19 +49,6 @@ def presentar_sidebar():
     st.sidebar.write('**Usuario** :blue[**' + usuario + '**]')
     st.sidebar.button("Cerrar sesión", on_click=lambda: st.session_state.clear())
     st.sidebar.write(co.ENCABEZADO)
-    # fechacolombia = obtener_fecha_hora_local("America/Bogota")
-    # fechahoy = fechacolombia.date()  
-    # ndia = co.DIAS[fechahoy.weekday()]
-    # nmes = co.MESES[fechahoy.month - 1]
-    # hora = fechacolombia.strftime("%H:%M:%S")
-    # # Veriificar e indicar si es festivo en Colombia
-    # es_festivo = es_festivo_colombia(str(fechahoy))
-    # if es_festivo:
-    #     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) + '  :red[**FESTIVO EN COLOMBIA**]'
-    # else:
-    #     mensaje = ndia + ', ' + str(fechahoy.day) + ' de ' + nmes + ' de ' + str(fechahoy.year) 
-    # mensaje = mensaje + '  ' + hora
-    # st.sidebar.success(mensaje, title=':red[FABACTI] :registered: ')
     return()
 
 def frase_aleatoria():
@@ -81,7 +63,6 @@ def frase_aleatoria():
         partes = re.split(r'(?<=\.)\s*-\s*', wfrase)
         frase = partes[0] + '/Local'
         autor = partes[1] if len(partes) > 1 else ''
-        #print(f"Frase aleatoria seleccionada: '{frase}' - Autor: '{autor}'")
         return frase, autor
 
 # Funcion para obtener una frase del dia
@@ -113,24 +94,9 @@ def obtener_imagen_aleatoria(ruta_directorio):
         return None
 
 # Funcion para consultar el TRM oficial vigente
-def obtener_trm_old():
-    # Realizar la solicitud
-    try:
-        URL_TRM = "https://www.datos.gov.co/resource/32sa-8pi3.json?$limit=100&$order=vigenciadesde%20DESC"
-        response = requests.get(URL_TRM, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        trm = data[0]["valor"]
-    except Exception as e:
-        trm = 0
-    return(trm)
-
-# Funcion para consultar el TRM oficial vigente
 def obtener_trm(fecha):
     # Realizar la solicitud
     try:
-
-        #URL_TRM = "https://api.dolarencolombia.co/v1/trm/latest"
         URL_TRM = f"https://api.dolarencolombia.co/v1/trm/series?desde=2026-01-01&hasta={fecha}"
         response = requests.get(URL_TRM, timeout=10)
         response.raise_for_status()
@@ -141,33 +107,11 @@ def obtener_trm(fecha):
         vigenciatrm = data["datos"][total_registros - 1]["vigenciaHasta"]
         deltatrm = data["datos"][total_registros - 2]["valor"]
         deltatrm = float(trm) - float(deltatrm)
-        # Convertir la respuesta a un DataFrame de pandas
         datos = json.loads(response.text)
-        df_trm = pd.json_normalize(datos, record_path="datos")[["valor"]]
-   
+        df_trm = pd.json_normalize(datos, record_path="datos")["valor"]
     except Exception as e:
         return(0,0,0,0,0)
     return(trm, fuentetrm, vigenciatrm, deltatrm, df_trm)
-
-# Función para obtener el valor del IBR (Indicador Bancario de Referencia)
-def obtener_ibr():
-    fechahoy = datetime.now()
-    datos = fbr.obtener_indicador('IBR')
-    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-    dibr = valores['generic:ObsValue']['@value']
-    #fbd.guardarindicador(fechahoy.strftime("%Y%m%d"), 'IBR', dibr)
-    return(dibr)
-
-# Función para obtener el valor del DTB (Depósito a Término)
-def obtener_dtf():
-    fechahoy = datetime.now()
-    datos = fbr.obtener_indicador('DTF')
-    #valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series'][1]['generic:Obs']
-    valores = datos['S:Envelope']['S:Body']['impl:GetGenericDataResponse']['message:GenericData']['message:DataSet']['generic:Series']['generic:Obs'][0]['generic:ObsValue']['@value']
-    dtf= valores
-    #dtf = valores['generic:ObsValue']['@value']
-    #fbd.guardarindicador(fechahoy.strftime("%Y%m%d"), 'DTF', dtf)
-    return(dtf)
 
 def lista_eventos():
     conn = sqlite3.connect(co.BD)
@@ -235,10 +179,6 @@ def lista_autores():
     conn.close()
     return(df)
 
-def tarjeta(col, titulo, valor, unidad, ayuda, fecha, fuente, delta, datos, tipo_grafica):
-    with col:
-        st.metric(label=f"{titulo}", value=f"{valor} {unidad}", delta=delta, delta_color="normal", help=f" {ayuda} Vigencia: {fecha}  Fuente: {fuente}", chart_data = datos, chart_type = tipo_grafica)
-
 def obtener_anomes_seismeses_antes(anomes, meses):
     """
     Obtiene el año y mes correspondientes a una cantidad de meses antes de un año y mes dado.
@@ -278,33 +218,6 @@ def obtener_clima():
         #print(f"Error al obtener el clima: {e}")
         return(None)
 
-def obtener_precio_cierre(symbol):
-    try:
-        ticker = yf.Ticker(symbol)
-        info = ticker.info
-        precio_cierre = info.get('previousClose', None)
-        hist = ticker.history(period="30d")
-        lista = hist['Open'].tolist() 
-        for i, precio in enumerate(lista):
-            lista[i] = round(precio, 2)
-        datos = pd.DataFrame( lista, columns=['Open'], dtype=float)  
-        delta = precio_cierre - datos['Open'].iloc[-1]
-        error=''
-        return precio_cierre, datos, delta,error
-    except Exception as e:
-        # print(f"Error al obtener el precio de cierre de {symbol}: {e}")
-        return 0, [], 0, e
-
-def obtener_symbol_yfinance(nombre):
-    mapping = {
-        "oro": "GC=F",
-        "euro": "EURCOP=X",
-        "cafe": "KC=F",
-        #"petroleo": "CL=F",
-        "petroleo": "BZ=F",
-    }
-    return mapping.get(nombre.lower(), None)
-
 def presentar_encabezado():
     with st.sidebar:
         usuario = st.session_state['nombre_usuario']       
@@ -333,25 +246,3 @@ def conectarse_fabacti():
     with st.spinner("Direccionando a la página de inicio ...", show_time=True):  time.sleep(2)
     st.switch_page("Fabacti.py") 
     return()
-
-def formato_fecha():
-    hoy = date.today()
-    dia = f"{hoy.day:02d}"
-    mes = co.MESES_CORTOS[hoy.month - 1]
-    año = hoy.year
-    dia_semana = co.DIAS[hoy.weekday()].upper()
-
-    st.markdown(
-        f"""
-        <div style="border: 2px solid #000; width : fit_content; font-family: 'Comic Sans MS', cursive; text-align: center; background-color: #f0f0f0; border-radius: 8px;">
-           <div style= "padding: 6px 16px; font-size: 20px; border-bottom: 2px solid #333">
-             {dia} &nbsp; |&nbsp; {mes} &nbsp; |&nbsp; {año}
-              </div>
-            <div style="padding: 6px 16px; font-size: 20px; text-align: center;">
-                {dia_semana}
-           </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-    return

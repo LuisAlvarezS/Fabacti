@@ -127,7 +127,7 @@ if 'usuario' in st.session_state:
             for i in range(0, totalarticulos):
                 if int(warticulos[i]['articleNumber']) == wseleccion:
                     st.subheader(warticulos[i]['title'] +  ' -- ' + warticulos[i]['chapter'] )
-                    st.write(warticulos[i]['content'])
+                    st.write(str(warticulos[i]['articleNumber']) + ' ' +warticulos[i]['content'])
                     break 
         with buscarpalabra:
             wbuscar = st.text_input('Buscar palabra en articulos de la constitucion')
@@ -136,7 +136,7 @@ if 'usuario' in st.session_state:
                 for i in range(0, totalarticulos):
                     if wbuscar in warticulos[i]['content'].lower():
                         st.subheader(warticulos[i]['title'] +  ' -- ' + warticulos[i]['chapter'] )
-                        st.write(warticulos[i]['content'])
+                        st.write(str(warticulos[i]['articleNumber']) + ' ' + warticulos[i]['content'])
     st.divider()
     st.write(COPYRIGHT)
 else:
